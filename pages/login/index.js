@@ -1,8 +1,8 @@
 import {Box, Button, Card, CircularProgress, Container, Grid, Hidden, TextField} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useStore} from 'laco-react';
-import UserStore from '../../src/store/UserStore';
-import {authenticate} from '../../src/apis/authentication';
+import UserStore from '../../src/store/UserStore.js';
+import {authenticate} from '../../src/apis/authentication.js';
 import {useSnackbar} from 'notistack';
 import {useRouter} from 'next/router';
 import {makeStyles} from "@material-ui/core/styles";
@@ -19,7 +19,7 @@ import Vector from "../../src/asset/login_vector.svg"
  */
 
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         backgroundImage: `url(${CoverImage})`,
         backgroundPosition: 'center',
@@ -30,9 +30,21 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('lg')]: {
+            padding: '0px 120px'
+        },
+        [theme.breakpoints.down('md')]: {
+            padding: '0px 80px'
+        },
+        [theme.breakpoints.down('sm')]: {
+            padding: '0px 60px'
+        },
+        [theme.breakpoints.down('xs')]: {
+            padding: '0px 8px'
+        },
 
-        // padding: '0px 60px'
-    }
+    },
+
 }));
 
 
@@ -78,32 +90,33 @@ const Login = () => {
 
     return (
 
-
         <Box className={classes.root}>
-            <Box maxWidth={'lg'} component={Container}  mx={8}>
-                <Grid container  justify={'center'} alignItems={'center'} height={'80vh'}
-                      component={Box} boxShadow={3} borderRadius={6} bgcolor={'background.default'} >
+            <Container maxWidth={'lg'}>
+                <Grid container justify={'center'} alignItems={'center'} height={'80vh'}
+                      component={Box} boxShadow={3} borderRadius={6} bgcolor={'background.default'}>
                     <Hidden smDown>
                         <Grid xs={12} sm={12} md={7} item container justify={'center'} alignItems={'center'}>
                             <img src={Vector} alt={'login'}/>
                         </Grid>
                     </Hidden>
                     <Grid xs={12} sm={12} md={5} item container justify={'center'} alignItems={'center'}>
-                        <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}
+                        <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} width={'100%'} p={4}
                              alignItems={'center'} height={'500px'}>
                             <TextField
-                                label={'Email'}
+                                fullWidth
                                 value={email}
                                 onChange={event => setEmail(event.target.value)}
                                 variant="outlined"
+                                placeholder={'Email'}
                             />
                             <TextField
-                                label={'Password'}
+                                fullWidth
                                 value={password}
                                 onChange={event => setPassword(event.target.value)}
                                 variant="outlined"
+                                placeholder={'Password'}
                             />
-                            <Button disabled={loading} onClick={() => handleLogin()} color="primary"
+                            <Button fullWidth disabled={loading} onClick={() => handleLogin()} color="primary"
                                     variant="contained">
                                 {loading ? <CircularProgress
                                     size={24}
@@ -112,7 +125,7 @@ const Login = () => {
                         </Box>
                     </Grid>
                 </Grid>
-            </Box>
+            </Container>
 
         </Box>
     )
