@@ -1,4 +1,4 @@
-import {Box, Button, Card, CircularProgress, Container, Grid, Hidden, TextField} from '@material-ui/core'
+import {Box, Button, CircularProgress, Container, Grid, Hidden, TextField} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useStore} from 'laco-react';
 import userStore from '../../src/store/userStore.js';
@@ -8,6 +8,9 @@ import {useRouter} from 'next/router';
 import {makeStyles} from "@material-ui/core/styles";
 import CoverImage from "../../src/asset/background.png"
 import Vector from "../../src/asset/login_vector.svg"
+import logo from "../../src/asset/logo.svg"
+import textLogo from "../../src/asset/text_logo.svg"
+import Typography from "@material-ui/core/Typography";
 
 
 /**
@@ -44,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
         },
 
     },
+    create: {
+        cursor: 'pointer',
+        userSelect: 'none',
+    }
 
 }));
 
@@ -101,7 +108,11 @@ const Login = () => {
                     </Hidden>
                     <Grid xs={12} sm={12} md={5} item container justify={'center'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} width={'100%'} p={4}
-                             alignItems={'center'} height={'500px'}>
+                             alignItems={'center'} height={'100%'}>
+                            <img src={logo} alt={'login'}/>
+                            <Box m={1}/>
+                            <img src={textLogo} alt={'login'}/>
+                            <Box m={2}/>
                             <TextField
                                 fullWidth
                                 value={email}
@@ -116,12 +127,24 @@ const Login = () => {
                                 variant="outlined"
                                 placeholder={'Password'}
                             />
+                            <Box m={1}/>
                             <Button fullWidth disabled={loading} onClick={() => handleLogin()} color="primary"
                                     variant="contained">
                                 {loading ? <CircularProgress
                                     size={24}
                                 /> : 'Login'}
                             </Button>
+                            <Box m={2}/>
+                            <Box display={'flex'} flexDirection={'row'} justifyContent={'center'}>
+                                <Box variant={'body2'} component={Typography}>
+                                    Don’t have an account ?
+                                </Box>
+                                <Box m={0.2}/>
+                                <Box variant={'body1'} component={Typography} color={'primary.main'}
+                                     className={classes.create}>
+                                    Create
+                                </Box>
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>
