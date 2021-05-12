@@ -161,23 +161,17 @@ theme = {
     overrides: {
         MuiInputBase: {
             input: {
+                height: 18,
                 backgroundColor: '#EEF0F5',
                 borderRadius: '5px',
                 fontSize: 14,
-                margin: '0 0 18px 0',
-                [theme.breakpoints.down('xs')]: {
-                    margin: '0 0 10px 0'
-                }
             }
         },
         MuiOutlinedInput: {
             notchedOutline: {
+                height: 18,
                 border: 'none',
                 borderColor: 'transparent',
-                margin: '0 0 18px 0',
-                [theme.breakpoints.down('xs')]: {
-                    margin: '0 0 10px 0'
-                }
             }
         },
         MuiButton: {
