@@ -1,7 +1,7 @@
 import {Box, Button, Card, CircularProgress, Container, Grid, Hidden, TextField} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useStore} from 'laco-react';
-import UserStore from '../../src/store/UserStore.js';
+import userStore from '../../src/store/userStore.js';
 import {authenticate} from '../../src/apis/authentication.js';
 import {useSnackbar} from 'notistack';
 import {useRouter} from 'next/router';
@@ -55,7 +55,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const {enqueueSnackbar} = useSnackbar();
     const Router = useRouter();
-    const {user} = useStore(UserStore);
+    const {user} = useStore(userStore);
     const classes = useStyles();
 
     useEffect(() => {
@@ -72,7 +72,7 @@ const Login = () => {
                 const {accessToken, user} = response;
                 console.log(accessToken, user);
                 localStorage.setItem('feathers-jwt', accessToken);
-                UserStore.set(() => ({token: accessToken, user}), 'login');
+                userStore.set(() => ({token: accessToken, user}), 'login');
                 enqueueSnackbar('Login successfully', {variant: 'success'});
                 if (user.role === 2) {
                     Router.replace('/admin/dashboard');

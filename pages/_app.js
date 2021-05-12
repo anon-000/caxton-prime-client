@@ -36,7 +36,7 @@ export default function MyApp(props) {
           const { accessToken, user } = response;
           console.log('app accesstoken',accessToken, user);
           localStorage.setItem('feathers-jwt', accessToken);
-          UserStore.set(() => ({ token: accessToken, user }), 'login');
+          userStore.set(() => ({ token: accessToken, user }), 'login');
           if (Router.pathname === '/login') {
             Router.replace('/').then(() => {
               setLoading(false);

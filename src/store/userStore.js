@@ -1,8 +1,8 @@
 import { Store } from 'laco';
 
-const UserStore = new Store({
+const userStore = new Store({
     user: null,
     token: ''
 }, 'user');
 
-export default UserStore;
+export default userStore;
