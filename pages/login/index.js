@@ -1,4 +1,14 @@
-import {Box, Button, CircularProgress, Container, Grid, Hidden, TextField} from '@material-ui/core'
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    Grid,
+    Hidden,
+    IconButton,
+    InputAdornment,
+    TextField
+} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useStore} from 'laco-react';
 import userStore from '../../src/store/userStore.js';
@@ -11,7 +21,8 @@ import Vector from "../../src/asset/login_vector.svg"
 import logo from "../../src/asset/logo.svg"
 import textLogo from "../../src/asset/text_logo.svg"
 import Typography from "@material-ui/core/Typography";
-
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 /**
  *
@@ -64,6 +75,8 @@ const Login = () => {
     const Router = useRouter();
     const {user} = useStore(userStore);
     const classes = useStyles();
+    const [showPassword, setShowPassword] = useState(false);
+
 
     useEffect(() => {
         console.log("login page");
@@ -94,6 +107,9 @@ const Login = () => {
         });
     };
 
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
+    const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
 
     return (
 
@@ -120,12 +136,28 @@ const Login = () => {
                                 variant="outlined"
                                 placeholder={'Email'}
                             />
+                            <Box m={0.6}/>
                             <TextField
+                                style={{backgroundColor: '#EEF0F5', height: 55, borderRadius: 6}}
                                 fullWidth
                                 value={password}
                                 onChange={event => setPassword(event.target.value)}
                                 variant="outlined"
                                 placeholder={'Password'}
+                                type={showPassword ? "text" : "password"}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
                             />
                             <Box m={1}/>
                             <Button fullWidth disabled={loading} onClick={() => handleLogin()} color="primary"
