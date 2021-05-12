@@ -1,4 +1,4 @@
-import {Box, Button, Card, CircularProgress, Container, Grid, TextField} from '@material-ui/core'
+import {Box, Button, Card, CircularProgress, Container, Grid, Hidden, TextField} from '@material-ui/core'
 import React, {useEffect, useState} from 'react'
 import {useStore} from 'laco-react';
 import UserStore from '../../src/store/UserStore';
@@ -22,12 +22,16 @@ import Vector from "../../src/asset/login_vector.svg"
 const useStyles = makeStyles(() => ({
     root: {
         backgroundImage: `url(${CoverImage})`,
+        backgroundPosition: 'center',
         backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
         height: '100vh',
+        width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '0px 60px'
+
+        // padding: '0px 60px'
     }
 }));
 
@@ -75,40 +79,42 @@ const Login = () => {
     return (
 
 
-        <div className={classes.root}>
-            <Container>
-                <Card style={{borderRadius: 6}}>
-                    <Grid container spacing={5}>
-                        <Grid xs={12} sm={12} md={7} item container justify={'center'}>
+        <Box className={classes.root}>
+            <Box maxWidth={'lg'} component={Container}  mx={8}>
+                <Grid container  justify={'center'} alignItems={'center'} height={'80vh'}
+                      component={Box} boxShadow={3} borderRadius={6} bgcolor={'background.default'} >
+                    <Hidden smDown>
+                        <Grid xs={12} sm={12} md={7} item container justify={'center'} alignItems={'center'}>
                             <img src={Vector} alt={'login'}/>
                         </Grid>
-                        <Grid xs={12} sm={12} md={5} item container justify={'center'}>
-                            <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}
-                                 alignItems={'center'} height={'500px'}>
-                                <TextField
-                                    label={'Email'}
-                                    value={email}
-                                    onChange={event => setEmail(event.target.value)}
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    label={'Password'}
-                                    value={password}
-                                    onChange={event => setPassword(event.target.value)}
-                                    variant="outlined"
-                                />
-                                <Button disabled={loading} onClick={() => handleLogin()} color="primary"  variant="contained">
-                                    {loading ? <CircularProgress
-                                        size={24}
-                                    /> : 'Login'}
-                                </Button>
-                            </Box>
-                        </Grid>
+                    </Hidden>
+                    <Grid xs={12} sm={12} md={5} item container justify={'center'} alignItems={'center'}>
+                        <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}
+                             alignItems={'center'} height={'500px'}>
+                            <TextField
+                                label={'Email'}
+                                value={email}
+                                onChange={event => setEmail(event.target.value)}
+                                variant="outlined"
+                            />
+                            <TextField
+                                label={'Password'}
+                                value={password}
+                                onChange={event => setPassword(event.target.value)}
+                                variant="outlined"
+                            />
+                            <Button disabled={loading} onClick={() => handleLogin()} color="primary"
+                                    variant="contained">
+                                {loading ? <CircularProgress
+                                    size={24}
+                                /> : 'Login'}
+                            </Button>
+                        </Box>
                     </Grid>
-                </Card>
-            </Container>
+                </Grid>
+            </Box>
 
-        </div>
+        </Box>
     )
 }
 
