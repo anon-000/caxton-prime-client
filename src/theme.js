@@ -84,7 +84,7 @@ let theme = createMuiTheme({
         },
         h4: {
             fontSize: 12,
-            fontWeight: 400,
+            fontWeight: 500,
             letterSpacing: '1px',
         },
         h5: {
@@ -93,7 +93,7 @@ let theme = createMuiTheme({
             letterSpacing: 0.7,
         },
         body1: {
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: 'bold',
         },
         body2: {
@@ -163,7 +163,8 @@ theme = {
             input: {
                 backgroundColor: '#EEF0F5',
                 borderRadius: '5px',
-                margin: '0 0 20px 0',
+                fontSize: 14,
+                margin: '0 0 18px 0',
                 [theme.breakpoints.down('xs')]: {
                     margin: '0 0 10px 0'
                 }
@@ -173,7 +174,7 @@ theme = {
             notchedOutline: {
                 border: 'none',
                 borderColor: 'transparent',
-                margin: '0 0 20px 0',
+                margin: '0 0 18px 0',
                 [theme.breakpoints.down('xs')]: {
                     margin: '0 0 10px 0'
                 }
