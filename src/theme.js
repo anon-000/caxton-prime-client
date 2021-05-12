@@ -22,147 +22,175 @@
 // export default theme;
 
 
-
-
-
-
-
-
-
-
-
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 
 let theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#9D97FF',
-      main: '#6C63FF',
-      dark: '#6157Ff',
+    palette: {
+        primary: {
+            light: '#FBCBD7',
+            main: '#F03D5F',
+            dark: '#B9223F',
+        },
+        secondary: {
+            light: '#96FFCC',
+            main: '#69F0AE',
+            dark: '#35DD8B'
+        },
+        background: {
+            default: '#ffffff'
+        },
     },
-    secondary: {
-      light: '#96FFCC',
-      main: '#69F0AE',
-      dark: '#35DD8B'
+    typography: {
+        fontFamily: 'poppins',
+        h1: {
+            fontSize: 50,
+            fontWeight: 'bold',
+            letterSpacing: '-0.2px',
+            lineHeight: '52px',
+            fontStyle: 'normal',
+            '@media (max-width:1050px)': {
+                fontSize: 33,
+                lineHeight: '40px',
+            },
+            '@media (max-width:900px)': {
+                fontSize: 24,
+                lineHeight: '30px',
+            },
+        },
+        h2: {
+            fontSize: 36,
+            fontWeight: 'bold',
+            letterSpacing: 0.3
+        },
+        h3: {
+            fontSize: 22,
+            fontWeight: '600',
+            letterSpacing: 'normal',
+            lineHeight: '24px',
+            fontStyle: 'normal',
+            '@media (max-width:1050px)': {
+                fontSize: 16,
+                lineHeight: '20px',
+            },
+            '@media (max-width:900px)': {
+                fontSize: 12,
+                lineHeight: '16px',
+                letterSpacing: '0.5px',
+            },
+            '@media (max-width:500px)': {
+                fontSize: 11,
+                lineHeight: '12px',
+            },
+        },
+        h4: {
+            fontSize: 12,
+            fontWeight: 400,
+            letterSpacing: '1px',
+        },
+        h5: {
+            fontWeight: 500,
+            fontSize: 26,
+            letterSpacing: 0.7,
+        },
+        body1: {
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        body2: {
+            fontWeight: 400,
+            letterSpacing: '1px',
+        },
+        subtitle1: {
+            fontSize: 18,
+            fontWeight: 400,
+            letterSpacing: '0.75px',
+            lineHeight: '22px',
+            '@media (max-width:1050px)': {
+                fontSize: 15,
+            },
+            '@media (max-width:900px)': {
+                fontSize: 13,
+                lineHeight: '15px',
+            },
+            '@media (max-width:500px)': {
+                fontSize: 12,
+                lineHeight: '15px',
+            },
+        },
+        subtitle2: {
+            fontSize: 17,
+            fontWeight: 600,
+            letterSpacing: '0.45px',
+            lineHeight: '22px',
+            '@media (max-width:1050px)': {
+                fontSize: 15,
+            },
+            '@media (max-width:900px)': {
+                fontSize: 14,
+                lineHeight: '15px',
+            },
+            '@media (max-width:500px)': {
+                fontSize: 14,
+                lineHeight: '15px',
+            },
+        },
+        caption: {
+            fontSize: 12,
+            fontWeight: 400,
+            letterSpacing: '1px',
+        }
     },
-    background: {
-      default: '#ffffff'
+    shape: {
+        borderRadius: 5,
     },
-  },
-  typography: {
-    fontFamily: 'poppins',
-    h1: {
-      fontSize: 50,
-      fontWeight: 'bold',
-      letterSpacing: '-0.2px',
-      lineHeight: '52px',
-      fontStyle: 'normal',
-      '@media (max-width:1050px)': {
-        fontSize: 33,
-        lineHeight: '40px',
-      },
-      '@media (max-width:900px)': {
-        fontSize: 24,
-        lineHeight: '30px',
-      },
+    props: {
+        MuiTab: {
+            disableRipple: true,
+        },
     },
-    h2: {
-      fontSize: 36,
-      fontWeight: 'bold',
-      letterSpacing: 0.3
+    mixins: {
+        toolbar: {
+            minHeight: 48,
+        },
     },
-    h3: {
-      fontSize: 22,
-      fontWeight: '600',
-      letterSpacing: 'normal',
-      lineHeight: '24px',
-      fontStyle: 'normal',
-      '@media (max-width:1050px)': {
-        fontSize: 16,
-        lineHeight: '20px',
-      },
-      '@media (max-width:900px)': {
-        fontSize: 12,
-        lineHeight: '16px',
-        letterSpacing: '0.5px',
-      },
-      '@media (max-width:500px)': {
-        fontSize: 11,
-        lineHeight: '12px',
-      },
-    },
-    h4: {
-      fontSize: 12,
-      fontWeight: 400,
-      letterSpacing: '1px',
-    },
-    h5: {
-      fontWeight: 500,
-      fontSize: 26,
-      letterSpacing: 0.7,
-    },
-    body1: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    body2: {
-      fontWeight: 400,
-      letterSpacing: '1px',
-    },
-    subtitle1: {
-      fontSize: 18,
-      fontWeight: 400,
-      letterSpacing: '0.75px',
-      lineHeight: '22px',
-      '@media (max-width:1050px)': {
-        fontSize: 15,
-      },
-      '@media (max-width:900px)': {
-        fontSize: 13,
-        lineHeight: '15px',
-      },
-      '@media (max-width:500px)': {
-        fontSize: 12,
-        lineHeight: '15px',
-      },
-    },
-    subtitle2: {
-      fontSize: 17,
-      fontWeight: 600,
-      letterSpacing: '0.45px',
-      lineHeight: '22px',
-      '@media (max-width:1050px)': {
-        fontSize: 15,
-      },
-      '@media (max-width:900px)': {
-        fontSize: 14,
-        lineHeight: '15px',
-      },
-      '@media (max-width:500px)': {
-        fontSize: 14,
-        lineHeight: '15px',
-      },
-    },
-    caption: {
-      fontSize: 12,
-      fontWeight: 400,
-      letterSpacing: '1px',
-    }
-  },
-  shape: {
-    borderRadius: 16,
-  },
-  props: {
-    MuiTab: {
-      disableRipple: true,
-    },
-  },
-  mixins: {
-    toolbar: {
-      minHeight: 48,
-    },
-  },
 });
+
+
+theme = {
+    ...theme,
+    overrides: {
+        MuiInputBase: {
+            input: {
+                backgroundColor: '#EEF0F5',
+                borderRadius: '5px',
+                margin: '0 0 20px 0',
+                [theme.breakpoints.down('xs')]: {
+                    margin: '0 0 10px 0'
+                }
+            }
+        },
+        MuiOutlinedInput: {
+            notchedOutline: {
+                border: 'none',
+                borderColor: 'transparent',
+                margin: '0 0 20px 0',
+                [theme.breakpoints.down('xs')]: {
+                    margin: '0 0 10px 0'
+                }
+            }
+        },
+        MuiButton: {
+            contained: {
+                height: '50px',
+                fontWeight: 'bold',
+                [theme.breakpoints.down('sm')]: {
+                    height: '40px'
+                }
+            }
+        },
+    }
+}
+
 
 // theme = {
 //   ...theme,
