@@ -1,43 +1,10 @@
-// import { createMuiTheme } from '@material-ui/core/styles';
-// import { red } from '@material-ui/core/colors';
-
-// // Create a theme instance.
-// const theme = createMuiTheme({
-//   palette: {
-//     primary: {
-//       main: '#556cd6',
-//     },
-//     secondary: {
-//       main: '#19857b',
-//     },
-//     error: {
-//       main: red.A400,
-//     },
-//     background: {
-//       default: '#fff',
-//     },
-//   },
-// });
-
-// export default theme;
-
-
-
-
-
-
-
-
-
-
-
 import { createMuiTheme } from '@material-ui/core/styles';
 
 let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#9D97FF',
-      main: '#6C63FF',
+      main: '#F03D5F',
       dark: '#6157Ff',
     },
     secondary: {
@@ -163,6 +130,32 @@ let theme = createMuiTheme({
     },
   },
 });
+
+theme = {
+  ...theme,
+  overrides: {
+    MuiInputBase:{
+      input:{
+        backgroundColor: '#EEF0F5',
+        borderRadius: '5px',
+        margin: '0 0 20px 0',
+        [theme.breakpoints.down('xs')]:{
+          margin: '0 0 10px 0'
+        }
+      }
+    },
+    MuiOutlinedInput:{
+      notchedOutline:{
+        border: 'none',
+        borderColor: 'transparent',
+        margin: '0 0 20px 0',
+        [theme.breakpoints.down('xs')]:{
+          margin: '0 0 10px 0'
+        }
+      }
+    }
+  }
+}
 
 // theme = {
 //   ...theme,
