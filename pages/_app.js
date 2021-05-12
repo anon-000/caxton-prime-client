@@ -17,7 +17,7 @@ export default function MyApp(props) {
   const [loading, setLoading] = useState(true);
 
   React.useEffect(() => {
-    console.log('app useEffect caleled');
+    console.log('app useEffect called');
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
@@ -54,13 +54,14 @@ export default function MyApp(props) {
           // });
         });
     } else {
-      if (Router.pathname !== '/login') {
-        Router.replace('/login').then(() => {
-          setLoading(false);
-        });
-      } else {
-        setLoading(false);
-      }
+      setLoading(false);
+      // if (Router.pathname !== '/login') {
+      //   Router.replace('/login').then(() => {
+      //     setLoading(false);
+      //   });
+      // } else {
+      //   setLoading(false);
+      // }
     }
   }, []);
 
