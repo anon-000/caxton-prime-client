@@ -6,7 +6,7 @@ import Axios from 'axios';
 
 export const cookieStorage = new CookieStorage();
 
-const restClient = rest('http://localhost:3030');
+const restClient = rest('https://caxton-prime-server.herokuapp.com');
 
 const app = feathers();
 

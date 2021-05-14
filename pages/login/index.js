@@ -86,6 +86,13 @@ const Login = () => {
     }, []);
 
     const handleLogin = () => {
+        if (email === '') {
+            enqueueSnackbar('Email is required', {variant: 'warning'});
+            return;
+        } else if (password === '') {
+            enqueueSnackbar('Password is required', {variant: 'warning'});
+            return;
+        }
         setLoading(true);
         authenticate(email, password)
             .then((response) => {
@@ -106,6 +113,10 @@ const Login = () => {
             setLoading(false);
         });
     };
+
+    const goToSignup = () => {
+        Router.replace('/signup');
+    }
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -173,6 +184,7 @@ const Login = () => {
                                 </Box>
                                 <Box m={0.2}/>
                                 <Box variant={'body1'} component={Typography} color={'primary.main'}
+                                     onClick={goToSignup}
                                      className={classes.create}>
                                     Create
                                 </Box>
