@@ -63,22 +63,22 @@ let theme = createMuiTheme({
             letterSpacing: 0.3
         },
         h3: {
-            fontSize: 22,
+            fontSize: 18,
             fontWeight: '600',
             letterSpacing: 'normal',
             lineHeight: '24px',
             fontStyle: 'normal',
             '@media (max-width:1050px)': {
-                fontSize: 16,
+                fontSize: 17,
                 lineHeight: '20px',
             },
             '@media (max-width:900px)': {
-                fontSize: 12,
+                fontSize: 17,
                 lineHeight: '16px',
                 letterSpacing: '0.5px',
             },
             '@media (max-width:500px)': {
-                fontSize: 11,
+                fontSize: 17,
                 lineHeight: '12px',
             },
         },
@@ -106,14 +106,14 @@ let theme = createMuiTheme({
             letterSpacing: '0.75px',
             lineHeight: '22px',
             '@media (max-width:1050px)': {
-                fontSize: 15,
+                fontSize: 17,
             },
             '@media (max-width:900px)': {
-                fontSize: 13,
+                fontSize: 16,
                 lineHeight: '15px',
             },
             '@media (max-width:500px)': {
-                fontSize: 12,
+                fontSize: 15,
                 lineHeight: '15px',
             },
         },
