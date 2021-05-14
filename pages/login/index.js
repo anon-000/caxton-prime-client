@@ -107,6 +107,10 @@ const Login = () => {
         });
     };
 
+    const goToSignup = () => {
+        Router.replace('/signup');
+    }
+
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
@@ -173,6 +177,7 @@ const Login = () => {
                                 </Box>
                                 <Box m={0.2}/>
                                 <Box variant={'body1'} component={Typography} color={'primary.main'}
+                                     onClick={goToSignup}
                                      className={classes.create}>
                                     Create
                                 </Box>
