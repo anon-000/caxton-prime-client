@@ -12,7 +12,6 @@ import {
 import React, {useEffect, useState} from 'react'
 import {useStore} from 'laco-react';
 import userStore from '../../src/store/userStore.js';
-import {authenticate} from '../../src/apis/authentication.js';
 import {useSnackbar} from 'notistack';
 import {useRouter} from 'next/router';
 import {makeStyles} from "@material-ui/core/styles";
@@ -93,25 +92,26 @@ const Login = () => {
             enqueueSnackbar('Password is required', {variant: 'warning'});
             return;
         }
-        setLoading(true);
-        authenticate(email, password)
-            .then((response) => {
-                const {accessToken, user} = response;
-                console.log(accessToken, user);
-                localStorage.setItem('feathers-jwt', accessToken);
-                userStore.set(() => ({token: accessToken, user}), 'login');
-                enqueueSnackbar('Login successfully', {variant: 'success'});
-                if (user.role === 2) {
-                    Router.replace('/admin/dashboard');
-                } else {
-                    Router.replace('/accountDetails');
-                }
-            })
-            .catch(error => {
-                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
-            }).finally(() => {
-            setLoading(false);
-        });
+        Router.replace('/student-onboarding');
+        // setLoading(true);
+        // authenticate(email, password)
+        //     .then((response) => {
+        //         const {accessToken, user} = response;
+        //         console.log(accessToken, user);
+        //         localStorage.setItem('feathers-jwt', accessToken);
+        //         userStore.set(() => ({token: accessToken, user}), 'login');
+        //         enqueueSnackbar('Login successfully', {variant: 'success'});
+        //         if (user.role === 2) {
+        //             Router.replace('/admin/dashboard');
+        //         } else {
+        //             Router.replace('/accountDetails');
+        //         }
+        //     })
+        //     .catch(error => {
+        //         enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
+        //     }).finally(() => {
+        //     setLoading(false);
+        // });
     };
 
     const goToSignup = () => {

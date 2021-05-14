@@ -16,6 +16,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import CoverImage from "../../src/asset/background.png"
 import Vector from "../../src/asset/student_onboarding_vector.svg"
 import Typography from "@material-ui/core/Typography";
+import SelectAvatar from "./components/select_avatar";
 
 /**
  *
@@ -75,9 +76,9 @@ const StudentOnBoarding = () => {
 
     const handleLogin = () => {
         if (username === '') {
-            enqueueSnackbar('Email is required', {variant: 'warning'});
+            enqueueSnackbar('User name is required', {variant: 'warning'});
         } else if (phone === '') {
-            enqueueSnackbar('Password is required', {variant: 'warning'});
+            enqueueSnackbar('Phone number is required', {variant: 'warning'});
         }
         // setLoading(true);
         // authenticate(username, phone)
@@ -119,6 +120,15 @@ const StudentOnBoarding = () => {
                                 Basic Details
                             </Typography>
                             <Box m={2}/>
+                            <Box display={'flex'} flexDirection={'column'} alignItems={'center'}
+                                 justifyContent={'center'} width={1}>
+                                <SelectAvatar/>
+                                <Box m={0.6}/>
+                                <Box component={Typography} variant={'caption'} color={'#757575'}>
+                                    Add Photo
+                                </Box>
+                            </Box>
+                            <Box m={1.6}/>
                             <TextField
                                 fullWidth
                                 value={username}
