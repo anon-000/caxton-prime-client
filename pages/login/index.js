@@ -86,6 +86,13 @@ const Login = () => {
     }, []);
 
     const handleLogin = () => {
+        if (email === '') {
+            enqueueSnackbar('Email is required', {variant: 'warning'});
+            return;
+        } else if (password === '') {
+            enqueueSnackbar('Password is required', {variant: 'warning'});
+            return;
+        }
         setLoading(true);
         authenticate(email, password)
             .then((response) => {

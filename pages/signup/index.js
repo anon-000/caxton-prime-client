@@ -111,7 +111,7 @@ const SignUp = () => {
                 if (user.role === 2) {
                     Router.replace('/admin/dashboard');
                 } else {
-                    Router.replace('/accountDetails');
+                    Router.replace('/');
                 }
             })
             .catch(error => {
@@ -184,8 +184,8 @@ const SignUp = () => {
                                 }}
                             />
                             <Box m={1}/>
-                            <RoleSelection type={role}/>
-                            <Box m={1}/>
+                            <RoleSelection type={role} onChanged={setRole}/>
+                            <Box m={1.5}/>
                             <Button fullWidth disabled={loading} onClick={() => handleLogin()} color="primary"
                                     variant="contained">
                                 {loading ? <CircularProgress
