@@ -39,7 +39,22 @@ export default function MyApp(props) {
                     console.log('app accesstoken', accessToken, user);
                     localStorage.setItem('feathers-jwt', accessToken);
                     userStore.set(() => ({token: accessToken, user}), 'user');
-                    setLoading(false);
+
+                    if (user["role"] === 1) {
+                        console.log("role 1", user["userName"], user["phone"]);
+                        if (!user["userName"] || !user["phone"]) {
+                            Router.replace('/student-onboarding').then(
+                                () => {
+                                    setLoading(false);
+                                }
+                            );
+                        } else {
+                            setLoading(false);
+                        }
+                    } else {
+                        setLoading(false);
+                    }
+
                     //   Router.replace('/').then(() => {
                     //     setLoading(false);
                     //   });
@@ -61,14 +76,13 @@ export default function MyApp(props) {
                     // });
                 });
         } else {
-            setLoading(false);
-            // if (Router.pathname !== '/login') {
-            //   Router.replace('/login').then(() => {
-            //     setLoading(false);
-            //   });
-            // } else {
-            //   setLoading(false);
-            // }
+            if (Router.pathname !== '/login' && Router.pathname !== '/signup') {
+                Router.replace('/login').then(() => {
+                    setLoading(false);
+                });
+            } else {
+                setLoading(false);
+            }
         }
     }, []);
 

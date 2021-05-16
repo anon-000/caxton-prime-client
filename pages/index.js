@@ -13,9 +13,9 @@ export default function Home() {
 
     useEffect(() => {
         console.log("dashboard page");
-        if (!user) {
-            Router.replace('/login');
-        }
+        // if (!user) {
+        //     Router.replace('/login');
+        // }
     }, []);
 
     const handleLogOut = () => {
