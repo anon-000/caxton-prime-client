@@ -81,10 +81,7 @@ const SignUp = () => {
 
 
     useEffect(() => {
-        console.log("login page");
-        // if (user) {
-        //     Router.replace('/');
-        // }
+        console.log("sign up page");
     }, []);
 
     const handleLogin = () => {

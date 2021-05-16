@@ -16,6 +16,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import CoverImage from "../../src/asset/background.png"
 import Vector from "../../src/asset/organization_onboarding_vector.svg"
 import Typography from "@material-ui/core/Typography";
+import {userPatch} from "../../src/apis/users";
 
 /**
  *
@@ -69,44 +70,45 @@ const OrganizationOnBoarding = () => {
 
 
     useEffect(() => {
-        console.log("on boarding page");
-        if (user) {
-            Router.replace('/');
-        }
+        console.log("organization on-boarding page");
     }, []);
 
     const handleOrganizationRequest = () => {
         if (phone === '') {
             enqueueSnackbar('Phone number is required', {variant: 'warning'});
+            return;
         } else if (lane === '') {
             enqueueSnackbar('Lane is required', {variant: 'warning'});
+            return;
         } else if (city === '') {
             enqueueSnackbar('City is required', {variant: 'warning'});
+            return;
         } else if (state === '') {
             enqueueSnackbar('State is required', {variant: 'warning'});
+            return;
         } else if (pin === '') {
             enqueueSnackbar('Pin is required', {variant: 'warning'});
+            return;
         }
 
-        // setLoading(true);
-        // authenticate(username, phone)
-        //     .then((response) => {
-        //         const {accessToken, user} = response;
-        //         console.log(accessToken, user);
-        //         localStorage.setItem('feathers-jwt', accessToken);
-        //         userStore.set(() => ({token: accessToken, user}), 'login');
-        //         enqueueSnackbar('Login successfully', {variant: 'success'});
-        //         if (user.role === 2) {
-        //             Router.replace('/admin/dashboard');
-        //         } else {
-        //             Router.replace('/accountDetails');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
-        //     }).finally(() => {
-        //     setLoading(false);
-        // });
+        setLoading(true);
+        userPatch(user['_id'], {
+            phone, "address": {
+                lane,
+                city,
+                state,
+                "pinCode": pin,
+            }
+        })
+            .then((response) => {
+                userStore.set(() => ({response}), 'user');
+                Router.replace('/');
+            })
+            .catch(error => {
+                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
+            }).finally(() => {
+            setLoading(false);
+        });
     };
 
 

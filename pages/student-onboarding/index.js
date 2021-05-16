@@ -73,7 +73,7 @@ const StudentOnBoarding = () => {
         console.log("user", user);
     }, []);
 
-    const handleLogin = () => {
+    const handleStudentOnBoarding = () => {
         if (username === '') {
             enqueueSnackbar('User name is required', {variant: 'warning'});
             return;
@@ -138,7 +138,7 @@ const StudentOnBoarding = () => {
                                 placeholder={'Phone number'}
                             />
                             <Box m={1}/>
-                            <Button fullWidth disabled={loading} onClick={() => handleLogin()} color="primary"
+                            <Button fullWidth disabled={loading} onClick={handleStudentOnBoarding} color="primary"
                                     variant="contained">
                                 {loading ? <CircularProgress
                                     size={24}

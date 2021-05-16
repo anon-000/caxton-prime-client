@@ -52,20 +52,17 @@ export default function MyApp(props) {
                             setLoading(false);
                         }
                     } else {
-                        setLoading(false);
+                        console.log("role 2", user["userName"], user["phone"]);
+                        if (!user["phone"] || !user["address"]) {
+                            Router.replace('/organization-onboarding').then(
+                                () => {
+                                    setLoading(false);
+                                }
+                            );
+                        } else {
+                            setLoading(false);
+                        }
                     }
-
-                    //   Router.replace('/').then(() => {
-                    //     setLoading(false);
-                    //   });
-                    // if (Router.pathname === '/login') {
-                    //   Router.replace('/').then(() => {
-                    //     setLoading(false);
-                    //   });
-                    // } else {
-                    //   setLoading(false);
-                    // }
-
                 })
                 .catch(() => {
                     console.log('catch method called');
