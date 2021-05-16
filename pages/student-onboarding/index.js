@@ -70,6 +70,7 @@ const StudentOnBoarding = () => {
 
     useEffect(() => {
         console.log("on boarding page");
+        console.log("user", user);
     }, []);
 
     const handleLogin = () => {

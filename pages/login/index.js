@@ -22,6 +22,7 @@ import textLogo from "../../src/asset/text_logo.svg"
 import Typography from "@material-ui/core/Typography";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import {authenticate} from "../../src/apis/authentication";
 
 /**
  *
@@ -92,26 +93,26 @@ const Login = () => {
             enqueueSnackbar('Password is required', {variant: 'warning'});
             return;
         }
-        Router.replace('/student-onboarding');
-        // setLoading(true);
-        // authenticate(email, password)
-        //     .then((response) => {
-        //         const {accessToken, user} = response;
-        //         console.log(accessToken, user);
-        //         localStorage.setItem('feathers-jwt', accessToken);
-        //         userStore.set(() => ({token: accessToken, user}), 'login');
-        //         enqueueSnackbar('Login successfully', {variant: 'success'});
-        //         if (user.role === 2) {
-        //             Router.replace('/admin/dashboard');
-        //         } else {
-        //             Router.replace('/accountDetails');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
-        //     }).finally(() => {
-        //     setLoading(false);
-        // });
+        setLoading(true);
+        authenticate(email, password)
+            .then((response) => {
+                const {accessToken, user} = response;
+                console.log(accessToken, user);
+                localStorage.setItem('feathers-jwt', accessToken);
+                userStore.set(() => ({token: accessToken, user}), 'user');
+                enqueueSnackbar('Login successfully', {variant: 'success'});
+                Router.replace('/');
+                // if (user.role === 2) {
+                //     Router.replace('/admin/dashboard');
+                // } else {
+                //     Router.replace('/accountDetails');
+                // }
+            })
+            .catch(error => {
+                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
+            }).finally(() => {
+            setLoading(false);
+        });
     };
 
     const goToSignup = () => {

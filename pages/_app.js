@@ -27,6 +27,7 @@ export default function MyApp(props) {
 
         const token = localStorage.getItem('feathers-jwt');
         console.log("token", token);
+        setLoading(true);
         if (token) {
             app
                 .authenticate({
@@ -38,6 +39,7 @@ export default function MyApp(props) {
                     console.log('app accesstoken', accessToken, user);
                     localStorage.setItem('feathers-jwt', accessToken);
                     userStore.set(() => ({token: accessToken, user}), 'user');
+                    setLoading(false);
                     //   Router.replace('/').then(() => {
                     //     setLoading(false);
                     //   });
@@ -48,7 +50,7 @@ export default function MyApp(props) {
                     // } else {
                     //   setLoading(false);
                     // }
-                    setLoading(false);
+
                 })
                 .catch(() => {
                     console.log('catch method called');

@@ -1,11 +1,22 @@
 import {Box, Button, Container, Grid, Typography} from '@material-ui/core'
 import app from "../src/apis";
 import {useRouter} from "next/router";
+import {useEffect} from "react";
+import {useStore} from "laco-react";
+import userStore from "../src/store/userStore";
 
 
 export default function Home() {
 
     const Router = useRouter();
+    const {user} = useStore(userStore);
+
+    useEffect(() => {
+        console.log("dashboard page");
+        if (!user) {
+            Router.replace('/login');
+        }
+    }, []);
 
     const handleLogOut = () => {
         app.logout();
@@ -56,7 +67,7 @@ export default function Home() {
                         </Box>
                     </Grid>
                     <Grid container direction={'column'} item xs={12} md={5}>
-                        <Button component={Box} m={3} width={'200px'} variant={'contained'}
+                        <Button component={Box} m={3} width={'200px'} variant={'contained'} onClick={handleLogOut}
                                 color={'primary'}>{'Logout'}</Button>
                         {/*<Button component={Box} width={'200px'} variant={'contained'} color={'secondary'} >{'Contact Us'}</Button>*/}
                     </Grid>
