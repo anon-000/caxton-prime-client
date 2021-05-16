@@ -49,10 +49,21 @@ export default function Home() {
                         xs={12} md={7}
                         // justify={'center'}
                         alignItems={'center'}
+
                     >
+                        <Box md={'30px'} display={'flex'} flexDirection={'row'}>
+                            <Typography variant={'h1'}>
+                                {'Hey'}
+                            </Typography>
+                            <Box mr={1}/>
+                            <Typography color={'primary'} variant={'h1'}>
+                                {user["name"] + '!'}
+                            </Typography>
+                        </Box>
+                        <Box m={5}/>
                         <Box md={'30px'} display={'flex'}>
                             <Typography variant={'h1'}>
-                                {'Welcome to '}
+                                {'\n Welcome to '}
                             </Typography>
                             <Box mr={1}/>
                             <Typography color={'primary'} variant={'h1'}>
