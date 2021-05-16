@@ -22,6 +22,7 @@ import Typography from "@material-ui/core/Typography";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import RoleSelection from "./components/role_selection";
+import {signUp} from "../../src/apis/users";
 
 /**
  *
@@ -81,9 +82,9 @@ const SignUp = () => {
 
     useEffect(() => {
         console.log("login page");
-        if (user) {
-            Router.replace('/');
-        }
+        // if (user) {
+        //     Router.replace('/');
+        // }
     }, []);
 
     const handleLogin = () => {
@@ -98,27 +99,25 @@ const SignUp = () => {
             enqueueSnackbar('Password is required', {variant: 'warning'});
             return;
         }
-        Router.replace('/organization-onboarding');
-
-        // setLoading(true);
-        // authenticate(email, password)
-        //     .then((response) => {
-        //         const {accessToken, user} = response;
-        //         console.log(accessToken, user);
-        //         localStorage.setItem('feathers-jwt', accessToken);
-        //         userStore.set(() => ({token: accessToken, user}), 'login');
-        //         enqueueSnackbar('Login successfully', {variant: 'success'});
-        //         if (user.role === 2) {
-        //             Router.replace('/admin/dashboard');
-        //         } else {
-        //             Router.replace('/');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
-        //     }).finally(() => {
-        //     setLoading(false);
-        // });
+        setLoading(true);
+        signUp(name, email, password, role)
+            .then((response) => {
+                const {accessToken, user} = response;
+                console.log(accessToken, user);
+                localStorage.setItem('feathers-jwt', accessToken);
+                userStore.set(() => ({token: accessToken, user}), 'user');
+                enqueueSnackbar('Account created successfully', {variant: 'success'});
+                if (user.role === 1) {
+                    Router.replace('/student-onboarding');
+                } else {
+                    Router.replace('/organization-onboarding');
+                }
+            })
+            .catch(error => {
+                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
+            }).finally(() => {
+            setLoading(false);
+        });
     };
 
     const goToLogin = () => {
