@@ -79,9 +79,9 @@ const Login = () => {
 
     useEffect(() => {
         console.log("login page");
-        if (user) {
-            Router.replace('/');
-        }
+        // if (user) {
+        //     Router.replace('/');
+        // }
     }, []);
 
     const handleLogin = () => {

@@ -17,6 +17,7 @@ import CoverImage from "../../src/asset/background.png"
 import Vector from "../../src/asset/student_onboarding_vector.svg"
 import Typography from "@material-ui/core/Typography";
 import SelectAvatar from "./components/select_avatar";
+import {userPatch} from "../../src/apis/users";
 
 /**
  *
@@ -69,36 +70,27 @@ const StudentOnBoarding = () => {
 
     useEffect(() => {
         console.log("on boarding page");
-        if (user) {
-            Router.replace('/');
-        }
     }, []);
 
     const handleLogin = () => {
         if (username === '') {
             enqueueSnackbar('User name is required', {variant: 'warning'});
+            return;
         } else if (phone === '') {
             enqueueSnackbar('Phone number is required', {variant: 'warning'});
+            return;
         }
-        // setLoading(true);
-        // authenticate(username, phone)
-        //     .then((response) => {
-        //         const {accessToken, user} = response;
-        //         console.log(accessToken, user);
-        //         localStorage.setItem('feathers-jwt', accessToken);
-        //         userStore.set(() => ({token: accessToken, user}), 'login');
-        //         enqueueSnackbar('Login successfully', {variant: 'success'});
-        //         if (user.role === 2) {
-        //             Router.replace('/admin/dashboard');
-        //         } else {
-        //             Router.replace('/accountDetails');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
-        //     }).finally(() => {
-        //     setLoading(false);
-        // });
+        setLoading(true);
+        userPatch(user['_id'], {"userName": username, phone})
+            .then((response) => {
+                userStore.set(() => ({response}), 'user');
+                Router.replace('/');
+            })
+            .catch(error => {
+                enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
+            }).finally(() => {
+            setLoading(false);
+        });
     };
 
 
