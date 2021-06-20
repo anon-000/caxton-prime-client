@@ -46,9 +46,10 @@ export default function MyApp(props) {
                 setLoading(false);
               });
             } else {
-              Router.replace("/student-dashboard").then(() => {
-                setLoading(false);
-              });
+              // Router.replace("/student-dashboard").then(() => {
+              //   setLoading(false);
+              // });
+              setLoading(false);
             }
           } else {
             console.log("role 2", user["userName"], user["phone"]);
