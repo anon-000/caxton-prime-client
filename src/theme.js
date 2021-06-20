@@ -43,7 +43,7 @@ let theme = createMuiTheme({
     typography: {
         fontFamily: 'poppins',
         h1: {
-            fontSize: 50,
+            fontSize: 33,
             fontWeight: 'bold',
             letterSpacing: '-0.2px',
             lineHeight: '52px',
