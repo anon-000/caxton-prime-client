@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 /**
  *
  * @createdBy Aurosmruti Das
@@ -7,15 +8,18 @@
  */
 import MyAppBar from "./components/my_app_bar";
 
-
 const StudentDashboard = () => {
-    return (
-        <>
-            <MyAppBar/>
-        </>
-    )
-}
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-export default StudentDashboard
+  useEffect(() => {
+    console.log("sstudent dashboard page :", currentIndex);
+  }, []);
 
+  return (
+    <>
+      <MyAppBar currentIndex={currentIndex} onChanged={setCurrentIndex} />
+    </>
+  );
+};
 
+export default StudentDashboard;
