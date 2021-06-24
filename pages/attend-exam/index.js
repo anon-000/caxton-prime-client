@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Container, Grid} from "@material-ui/core";
 import TimerCard from "./components/timer_card";
 import Box from "@material-ui/core/Box";
@@ -31,25 +31,40 @@ const useStyles = makeStyles((theme) => ({
 
 
 const AttendExam = () => {
-
+    const [selectedIndex, setCurrent] = useState(0);
     const classes = useStyles();
+    const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     useEffect(() => {
         console.log(" attend exam page :");
     }, []);
 
+
+    const handlePreviousClick = () => {
+        if (selectedIndex > 0) {
+            setCurrent(selectedIndex - 1);
+        }
+    }
+
+    const handleNextClick = () => {
+        if (selectedIndex < questions.length - 1) {
+            setCurrent(selectedIndex + 1);
+        }
+    }
+
+
     return (
         <div className={classes.root}>
             <Container>
-                <Box component={Grid}  spacing={3} container justify={"center"} alignItems={"center"} height={'100vh'}>
+                <Box component={Grid} spacing={3} container justify={"center"} alignItems={"center"} height={'100vh'}>
                     <Grid item xs={12} sm={12} md={7} justify={"center"} alignItems={"center"}>
                         <TimerCard/>
-                        <QuestionCard/>
+                        <QuestionCard index={selectedIndex}/>
                         <Box m={4}/>
-                        <ExamActions/>
+                        <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
                     </Grid>
                     <Grid item xs={12} sm={12} md={5} justify={"center"} alignItems={"center"}>
-                        <QuestionStatus />
+                        <QuestionStatus/>
                     </Grid>
                 </Box>
             </Container>

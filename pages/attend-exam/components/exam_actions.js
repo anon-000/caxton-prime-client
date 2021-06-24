@@ -12,7 +12,7 @@ import {Button} from "@material-ui/core";
 
 
 
-const ExamActions = () => {
+const ExamActions = ({previousClick, nextClick}) => {
 
     return (
         <Box display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -21,8 +21,7 @@ const ExamActions = () => {
                 bgcolor={'#ffffff'}
                 fullWidth
                 // disabled={loading}
-                onClick={() => {
-                }}
+                onClick={previousClick}
                 variant="outlined"
                 color="#3F3D56"
             >
@@ -32,8 +31,7 @@ const ExamActions = () => {
             <Button
                 fullWidth
                 // disabled={loading}
-                onClick={() => {
-                }}
+                onClick={nextClick}
                 color="primary"
                 variant="contained"
             >
