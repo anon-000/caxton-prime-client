@@ -90,7 +90,7 @@ let theme = createMuiTheme({
         h5: {
             fontWeight: 500,
             fontSize: 26,
-            letterSpacing: 0.7,
+            letterSpacing: 1.5,
         },
         body1: {
             fontSize: 14,
