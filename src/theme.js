@@ -175,6 +175,14 @@ theme = {
             }
         },
         MuiButton: {
+            outlined: {
+                height: '50px',
+                border: '1.5px solid',
+                backgroundColor: "#ffffff",
+                [theme.breakpoints.down('sm')]: {
+                    height: '40px'
+                }
+            },
             contained: {
                 height: '50px',
                 fontWeight: 'bold',

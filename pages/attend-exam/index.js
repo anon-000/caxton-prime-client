@@ -4,6 +4,7 @@ import TimerCard from "./components/timer_card";
 import Box from "@material-ui/core/Box";
 import {makeStyles} from "@material-ui/core/styles";
 import QuestionCard from "./components/question_card";
+import ExamActions from "./components/exam_actions";
 
 /**
  *
@@ -38,15 +39,17 @@ const AttendExam = () => {
     return (
         <Box className={classes.root}>
             <Container>
-                <Grid container justify={"center"} alignItems={"center"}>
+                <Box component={Grid} container justify={"center"} alignItems={"center"} height={'100vh'}>
                     <Grid item xs={12} sm={12} md={6} justify={"center"} alignItems={"center"}>
                         <TimerCard/>
-                        <QuestionCard />
+                        <QuestionCard/>
+                        <Box m={4}/>
+                        <ExamActions/>
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} justify={"center"} alignItems={"center"}>
                         r
                     </Grid>
-                </Grid>
+                </Box>
             </Container>
         </Box>
     );
