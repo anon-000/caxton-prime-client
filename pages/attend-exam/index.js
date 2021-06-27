@@ -20,8 +20,10 @@ import QuestionStatus from "./components/questions_status";
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: "#FFEBF0",
-        height: "100vh",
-        backgroundSize: "cover",
+        minHeight: "100vh",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     clickable: {
         cursor: "pointer",
@@ -34,7 +36,7 @@ const AttendExam = () => {
     const [selectedIndex, setCurrent] = useState(0);
     const [timerText, setTimerText] = useState('');
     const classes = useStyles();
-    const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+    const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
 
     useEffect(() => {
         console.log(" attend exam page :");
@@ -87,8 +89,8 @@ const AttendExam = () => {
     return (
         <div className={classes.root}>
             <Container>
-                <Box component={Grid} spacing={3} container justify={"center"} alignItems={"center"} height={'100vh'}>
-                    <Grid item xs={12} sm={12} md={7} justify={"center"} alignItems={"center"}>
+                <Box component={Grid} spacing={3} container justify={"center"} alignItems={"center"} height={'100%'}>
+                    <Grid item xs={12} sm={12} md={7}  >
                         <Box display={'flex'}>
                             <TimerCard title={timerText}/>
                         </Box>
@@ -96,7 +98,7 @@ const AttendExam = () => {
                         <Box m={4}/>
                         <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={5} justify={"center"} alignItems={"center"}>
+                    <Grid item xs={12} sm={12} md={5}>
                         <QuestionStatus questions={questions} currentIndex={selectedIndex} onChanged={jumpToIndex}/>
                     </Grid>
                 </Box>
