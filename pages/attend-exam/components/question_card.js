@@ -16,7 +16,7 @@ import OptionCard from "./option_card";
 
 const QuestionCard = ({index}) => {
         const options = ['I fucking dont know', "I think i know", "May be i know", "Yeah boi I know"];
-        const [selectedIndex, setCurrent] = useState(0);
+        const [selectedIndex, setCurrent] = useState();
 
 
         useEffect(() => {

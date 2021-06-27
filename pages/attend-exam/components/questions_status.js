@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {Button, Divider, Grid} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
 
 /**
  *
@@ -12,10 +13,29 @@ import {Button, Divider, Grid} from "@material-ui/core";
  */
 
 
+const useStyles = makeStyles((theme) => ({
+    clickable: {
+        cursor: "pointer",
+        userSelect: "none",
+    },
+}));
 
-const QuestionStatus = () => {
 
-    const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 12, 13, 14, 15, 16, 17, 18, 19, 20, 12, 13, 14, 15, 16, 17, 18, 19, 20, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+const QuestionType = ({color, text}) => {
+    return (
+        <Box display={'flex'} my={1} ml={5}>
+            <Box bgcolor={color} borderRadius={5} height={20} width={20} mr={1}/>
+            <Typography variant="subtitle">
+                {text}
+            </Typography>
+        </Box>
+    );
+}
+
+
+const QuestionStatus = ({currentIndex, onChanged, questions}) => {
+
+    const classes = useStyles();
 
     return (
         <Box display={'flex'} alignItems={'flex-end'} justifyContent={'center'} flexDirection={'column'}
@@ -25,25 +45,43 @@ const QuestionStatus = () => {
             </Typography>
             <Box m={1}/>
             <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
-            <Box component={Grid} container p={1} height={500} overflow="auto" flex={1} flexDirection="column"
-                 display="flex">
+            <Box component={Grid} container p={1}
+                 height={450} overflow="auto"
+            >
                 {
-                    questions.map((e) => {
+                    questions.map((e, i) => {
                         return (
-                            <Box component={Grid} display={'flex'} justify={"center"} alignItems={"center"} item xs={4}
-                                 sm={4} md={3}>
+                            <Box component={Grid}
+                                 display={'flex'} justify={"center"} alignItems={"center"}
+                                 item xs={4} sm={4} md={3}>
                                 <Box
-                                    mx={1} p={3}
-                                    bgcolor={'#F5FFCC'} borderRadius={1}
+                                    onClick={() => onChanged(i)} className={classes.clickable}
+                                    m={1} p={3}
+                                    fontWeight={600}
+                                    color={currentIndex === i ? '#ffffff' : '#000000'}
+                                    bgcolor={currentIndex === i ? '#F03D5F' : '#F5FFCC'}
+                                    borderRadius={1}
                                     textAlign={"center"}>
-                                    Q : {e}
+                                    Q : {i + 1}
                                 </Box>
                             </Box>
                         )
                     })
                 }
             </Box>
-            <Box m={1}/>
+            <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
+            <Box m={0.5}/>
+            <Grid container>
+                <Grid item md={6} xs={6} sm={6}>
+                    <QuestionType color={"#EBF4FF"} text={'Not visited : 12'}/>
+                    <QuestionType color={"#F03D5F"} text={'Current'}/>
+                </Grid>
+                <Grid item md={6} xs={6} sm={6}>
+                    <QuestionType color={"#FFEEF2"} text={'Skipped : 5'}/>
+                    <QuestionType color={"#F5FFCC"} text={'Answered : 12'}/>
+                </Grid>
+            </Grid>
+            <Box m={0.5}/>
             <Button
                 fullWidth
                 // disabled={loading}
@@ -59,4 +97,10 @@ const QuestionStatus = () => {
 };
 
 export default QuestionStatus;
+
+
+
+
+
+
 

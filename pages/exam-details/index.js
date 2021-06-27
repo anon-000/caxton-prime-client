@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Grid, Hidden, Typography } from "@material-ui/core";
+import {Box, CircularProgress, Grid, Hidden, Typography} from "@material-ui/core";
 import { Container } from "@material-ui/core";
 import vector from "../../src/asset/exam_details_vector.svg";
 import { Button } from "@material-ui/core";
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     // backgroundPosition: "center",
     // backgroundSize: "cover",
     // backgroundRepeat: "no-repeat",
-    // height: "100%",
+    height: 'calc(100vh - 48px)',
     // width: "100%",
     display: "flex",
     justifyContent: "center",
@@ -63,29 +63,27 @@ const ExamDetails = () => {
 
   return (
     <Box className={classes.root}>
-      <Container>
+      <Container maxWidth={'xl'}>
         <Box
           container
           display={"flex"}
           justify={"center"}
           alignItems={"center"}
-          spacing={1}
-          height={"100vh"}
+          height={"100%"}
           component={Grid}
         >
           <Box
             xs={12}
             sm={12}
-            md={6}
+            md={7}
             item
             component={Grid}
             //height={'100vh'}
             display={"flex"}
             justify={"center"}
             alignItems={"center"}
-            width={"100%"}
           >
-            <Box>
+            <Box px={3}>
               <Typography variant="h1">MECHANICS UNIT TEST</Typography>
               <Box display={"flex"}>
                 {tags.map((e, i) => (
@@ -140,7 +138,7 @@ const ExamDetails = () => {
           <Box
             xs={12}
             sm={12}
-            md={6}
+            md={5}
             item
             component={Grid}
             display={"flex"}
