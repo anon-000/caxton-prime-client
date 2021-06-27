@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const AttendExam = () => {
     const [selectedIndex, setCurrent] = useState(0);
     const classes = useStyles();
-    const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
     useEffect(() => {
         console.log(" attend exam page :");
@@ -52,6 +52,10 @@ const AttendExam = () => {
         }
     }
 
+    const jumpToIndex = (i) => {
+        setCurrent(i);
+    }
+
 
     return (
         <div className={classes.root}>
@@ -64,7 +68,7 @@ const AttendExam = () => {
                         <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
                     </Grid>
                     <Grid item xs={12} sm={12} md={5} justify={"center"} alignItems={"center"}>
-                        <QuestionStatus/>
+                        <QuestionStatus questions={questions} currentIndex={selectedIndex} onChanged={jumpToIndex}/>
                     </Grid>
                 </Box>
             </Container>
