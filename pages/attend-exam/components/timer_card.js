@@ -15,18 +15,19 @@ import timer from "../../../src/asset/timer.svg";
 
 
 
-const TimerCard = () => {
+const TimerCard = ({title}) => {
     useEffect(() => {
         console.log(" attend exam page :");
     }, []);
 
     return (
-        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} bgcolor={'#ffffff'} p={2} mt={2}
-             borderRadius={3} width={'220px'}>
-            <img src={timer} alt={'timer'}/>
+        <Box display={'flex'} alignItems={'center'} justifyContent={'center'}
+             bgcolor={'#ffffff'} p={2} mt={3}
+             borderRadius={3}>
+            <img src={timer} alt={'timer'} height={40}/>
             <Box m={0.5}/>
-            <Typography variant="h5">
-                01:03:10
+            <Typography variant="h6">
+                {title}
             </Typography>
         </Box>
     );
