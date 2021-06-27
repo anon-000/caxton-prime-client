@@ -57,7 +57,8 @@ export default function MyAppBar({ currentIndex, onChanged }) {
             component={Typography}
             fvariant="h6"
             className={classes.title}
-            borderBottom={currentIndex === 0 ? 3 : 0}
+            borderBottom={currentIndex === 0
+                ? 3 : 0}
             borderColor={currentIndex === 0 ? "#ffffff" : "#F03D5F"}
             px={1}
             py={0.3}

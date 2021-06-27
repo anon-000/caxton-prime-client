@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestionType = ({color, text}) => {
     return (
-        <Box display={'flex'} justifyContent={'center'} my={1}>
+        <Box display={'flex'} my={1} ml={5}>
             <Box bgcolor={color} borderRadius={5} height={20} width={20} mr={1}/>
             <Typography variant="subtitle">
                 {text}
@@ -74,11 +74,11 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
             <Grid container>
                 <Grid item md={6} xs={6} sm={6}>
                     <QuestionType color={"#EBF4FF"} text={'Not visited : 12'}/>
-                    <QuestionType color={"#EBF4FF"} text={'Not visited : 12'}/>
+                    <QuestionType color={"#F03D5F"} text={'Current'}/>
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
-                    <QuestionType color={"#EBF4FF"} text={'Not visited : 12'}/>
-                    <QuestionType color={"#EBF4FF"} text={'Not visited : 12'}/>
+                    <QuestionType color={"#FFEEF2"} text={'Skipped : 5'}/>
+                    <QuestionType color={"#F5FFCC"} text={'Answered : 12'}/>
                 </Grid>
             </Grid>
             <Box m={0.5}/>

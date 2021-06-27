@@ -23,6 +23,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import RoleSelection from "./components/role_selection";
 import {signUp} from "../../src/apis/users";
+import AttendExam from "../attend-exam";
 
 /**
  *
@@ -207,4 +208,5 @@ const SignUp = () => {
     )
 }
 
+SignUp.Layout = null;
 export default SignUp
