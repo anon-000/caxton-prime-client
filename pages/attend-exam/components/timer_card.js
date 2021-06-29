@@ -13,8 +13,6 @@ import timer from "../../../src/asset/timer.svg";
  */
 
 
-
-
 const TimerCard = ({title}) => {
     useEffect(() => {
         console.log(" attend exam page :");
@@ -22,6 +20,7 @@ const TimerCard = ({title}) => {
 
     return (
         <Box display={'flex'} alignItems={'center'} justifyContent={'center'}
+             boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
              bgcolor={'#ffffff'} p={2} mt={3}
              borderRadius={3}>
             <img src={timer} alt={'timer'} height={40}/>
