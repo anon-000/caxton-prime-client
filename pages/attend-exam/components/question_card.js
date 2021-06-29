@@ -12,10 +12,8 @@ import OptionCard from "./option_card";
  */
 
 
-
-
 const QuestionCard = ({index}) => {
-        const options = ['I fucking dont know', "I think i know", "May be i know", "Yeah boi I know"];
+        const options = ['I dont know', "I think i know", "May be i know", "Yeah boi I know"];
         const [selectedIndex, setCurrent] = useState();
 
 
@@ -25,6 +23,7 @@ const QuestionCard = ({index}) => {
 
         return (
             <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
+                 boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
                  bgcolor={'#ffffff'} p={3} mt={5}
                  borderRadius={3}>
                 <Typography variant="h3">

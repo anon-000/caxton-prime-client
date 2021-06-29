@@ -11,7 +11,7 @@ import {SnackbarProvider} from "notistack";
 import userStore from "../src/store/userStore";
 import DefaultLayout from "../src/layout/Layout";
 
-const Noop = ({ children }) => children;
+const Noop = ({children}) => children;
 
 export default function MyApp(props) {
     const {Component, pageProps} = props;
@@ -34,6 +34,7 @@ export default function MyApp(props) {
         }
 
         const token = localStorage.getItem("feathers-jwt");
+
         console.log("token", token);
         setLoading(true);
         if (token) {
@@ -71,13 +72,13 @@ export default function MyApp(props) {
                         }
                     }
                 })
-                .catch(() => {
+                .catch(async () => {
                     console.log("catch method called");
-                    // app.logout();
-                    // localStorage.removeItem('feathers-jwt');
-                    // Router.replace('/').then(() => {
-                    setLoading(false);
-                    // });
+                    await app.logout();
+                    localStorage.removeItem('feathers-jwt');
+                    Router.replace('/login').then(() => {
+                        setLoading(false);
+                    });
                 });
         } else {
             if (Router.pathname !== "/login" && Router.pathname !== "/signup") {

@@ -38,7 +38,9 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
     const classes = useStyles();
 
     return (
-        <Box display={'flex'} alignItems={'flex-end'} justifyContent={'center'} flexDirection={'column'}
+        <Box display={'flex'}
+             alignItems={'flex-end'} justifyContent={'center'} flexDirection={'column'}
+             boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
              bgcolor={'#ffffff'} p={2}>
             <Typography align={'right'} variant="subtitle1">
                 No. of Questions : 50

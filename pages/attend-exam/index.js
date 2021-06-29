@@ -16,10 +16,9 @@ import QuestionStatus from "./components/questions_status";
  */
 
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: "#FFEBF0",
+        backgroundColor: "#fcf8f8",
         minHeight: "100vh",
         display: 'flex',
         justifyContent: 'center',
@@ -57,7 +56,7 @@ const AttendExam = () => {
             let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             // Display the result in the element with id="demo"
-            setTimerText(days + "d : " + hours + "h : "
+            setTimerText(hours + "h : "
                 + minutes + "m : " + seconds + "s ");
 
             // If the count down is finished, write some text
@@ -90,7 +89,7 @@ const AttendExam = () => {
         <div className={classes.root}>
             <Container>
                 <Box component={Grid} spacing={3} container justify={"center"} alignItems={"center"} height={'100%'}>
-                    <Grid item xs={12} sm={12} md={7}  >
+                    <Grid item xs={12} sm={12} md={7}>
                         <Box display={'flex'}>
                             <TimerCard title={timerText}/>
                         </Box>
