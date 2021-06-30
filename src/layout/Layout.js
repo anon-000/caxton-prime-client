@@ -38,18 +38,18 @@ const useStyle = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: '#fcf8f8',
+        background: '#ffffff',
         // backgroundImage: `url(${BackImg})`,
         // backgroundPosition: 'bottom center',
         // backgroundRepeat: 'no-repeat',
         // backgroundAttachment: 'fixed',
         // backgroundSize: '100%',
-        // [theme.breakpoints.down('xs')]: {
-        //     padding: theme.spacing(4, 1),
-        //     // backgroundImage: `url(${BackImgMob})`,
-        //     // backgroundSize: 'cover',
-        //     // backgroundPosition: 'center',
-        // }
+        [theme.breakpoints.down('xs')]: {
+            padding: theme.spacing(6, 1),
+            // backgroundImage: `url(${BackImgMob})`,
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
+        }
     },
     footer: {
         padding: theme.spacing(2),

@@ -20,10 +20,10 @@ import TableComponent from "../../../src/components/table_component";
 
 const columns = [
     {
-        id: 'id',
+        id: 'code',
         label: 'Exam Id',
         minWidth: 170,
-        align: 'left',
+        align: 'center',
     },
     {
         id: 'title',
@@ -32,16 +32,16 @@ const columns = [
         align: 'left',
     },
     {
-        id: 'noOfQuestion',
+        id: 'questionCount',
         label: 'No of Questions',
         minWidth: 170,
-        align: 'left',
+        align: 'center',
     },
     {
         id: 'difficulty',
         label: 'Difficulty',
         minWidth: 170,
-        align: 'left',
+        align: 'center',
     },
 ];
 
@@ -49,7 +49,7 @@ const ExamsTable = () => {
 
     const [page, setPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState(20);
-    const [rowsPerPage] = React.useState(6);
+    const [rowsPerPage] = React.useState(12);
     const [exams, setExams] = React.useState([]);
     const [total, setTotal] = React.useState(0);
     const [rows, setRows] = React.useState([]);
@@ -76,6 +76,7 @@ const ExamsTable = () => {
                 if (res.data) {
                     let _allExams = res.data.map(each => {
                         return {
+                            code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                             ...each,
                         };
                     });
@@ -114,6 +115,7 @@ const ExamsTable = () => {
                 setTotal(res.total);
                 let _allCleaners = res.data.map(each => {
                     return {
+                        code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                         ...each,
                     };
                 });

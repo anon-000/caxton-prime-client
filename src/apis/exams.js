@@ -20,3 +20,10 @@ export const getAllExams = ($skip, $limit, $search) => examService.find({
         // $search
     }
 });
+
+
+export const getExamDetails = (id) => examService.get(id, {
+    query: {
+        $populate: 'examTags'
+    }
+});
