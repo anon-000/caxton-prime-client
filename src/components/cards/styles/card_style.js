@@ -22,7 +22,7 @@ const cardStyle = {
         color: "rgba(" + hexToRgb(blackColor) + ", 0.87)",
         background: whiteColor,
         width: "90%",
-        boxShadow: '2px 2px 6px rgba(18, 73, 84, 0.15)',
+        boxShadow: '1px 1px 3px rgba(18, 73, 84, 0.15)',
         position: "relative",
         display: "flex",
         flexDirection: "column",

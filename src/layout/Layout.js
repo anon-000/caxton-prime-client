@@ -38,7 +38,7 @@ const useStyle = makeStyles(theme => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: '#fcf8f8',
+        background: '#ffffff',
         // backgroundImage: `url(${BackImg})`,
         // backgroundPosition: 'bottom center',
         // backgroundRepeat: 'no-repeat',

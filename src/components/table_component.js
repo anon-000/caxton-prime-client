@@ -27,13 +27,15 @@ const useStyles = makeStyles({
         fontWeight: '700',
         fontSize: '14px',
         color: '#3A8899',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        padding: '18px 20px',
+        '&:hover': {backgroundColor: "#F03D5F"}
     },
     divider: {
         // '& .MuiDivider-root': {
         //     backgroundColor: '#124954'
         // }
-        backgroundColor: '#124954'
+        // backgroundColor: '#124954'
     }
 });
 
@@ -51,7 +53,14 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) =
                                 <TableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{minWidth: column.minWidth, fontWeight: 'bold', fontSize: '14px'}}
+                                    style={{
+                                        minWidth: column.minWidth,
+                                        fontWeight: '700',
+                                        fontSize: '14px',
+                                        backgroundColor: '#F03D5F',
+                                        color: '#ffffff',
+                                        padding: '20px 20px'
+                                    }}
                                 >
                                     {column.label}
                                     {column.component ? column.component : null}
@@ -59,13 +68,13 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) =
                             ))}
                         </TableRow>
                     </TableHead>
-                    <Divider
-                        className={classes.divider}
-                        style={{border: '1px solid #124954', width: `${columns.length * 100}%`}}
-                    />
+                    {/*<Divider*/}
+                    {/*    className={classes.divider}*/}
+                    {/*    style={{border: '1px solid #124954', width: `500%`}}*/}
+                    {/*/>*/}
                     <TableBody>
                         {rows.length > 0 ? (
-                            rows.map((row) => {
+                            rows.map((row, rIndex) => {
                                 return (
                                     <TableRow
                                         hover
@@ -83,6 +92,10 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) =
                                                     key={column.id}
                                                     align={column.align}
                                                     className={classes.tableCell}
+                                                    style={{
+                                                        backgroundColor: rIndex % 2 === 0 ? '#FAF7F7' : '#ffffff',
+                                                        border: '0px solid',
+                                                    }}
                                                 >
                                                     {
                                                         column.format && typeof value === 'number'
