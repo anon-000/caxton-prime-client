@@ -11,6 +11,7 @@ import React, {useState} from "react";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExamsTable from "./components/exams_table";
+import TopicFilter from "./components/topic_filter";
 
 
 const StudentExams = () => {
@@ -35,10 +36,10 @@ const StudentExams = () => {
                         variant="outlined"
                         placeholder={"Type to search"}
                     />
-                    <ExamsTable />
+                    <ExamsTable/>
                 </Grid>
                 <Grid item md={4} xs={12} sm={12}>
-                    f
+                    <TopicFilter/>
                 </Grid>
             </Grid>
         </Container>
