@@ -15,6 +15,7 @@ import app from "../apis";
 export const userService = app.service('user');
 export const examService = app.service('exams');
 export const uploadService = app.service('upload');
+export const tagsService = app.service('exam-tag');
 
 
 

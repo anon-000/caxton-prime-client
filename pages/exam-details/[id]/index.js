@@ -49,19 +49,14 @@ const useStyles = makeStyles((theme) => ({
 const ExamDetails = () => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
+    const [canAttend, setCanAttend] = useState(false);
     const [examLoading, setExamLoading] = useState(true);
     const [examData, setExamData] = useState(null);
+    const [timerText, setTimerText] = useState('00h : 00m : 00s');
     const {enqueueSnackbar} = useSnackbar();
     const Router = useRouter();
     const {id} = Router.query;
-    const tags = ["Physics", "Mechanics", "Quiz", "Trending", "Brainstorming"];
-    const guideLines = [
-        "Do not appear for exam before or after exam time. Login is for single use only. It will be deactivated automatically after first use.",
-        " If any student fail to apply for certificate then result will not be processed and certificate will not be dispatched. ",
-        "All our exam servers and backup server will be active for exam period, if any problem persists: It means there is problem in your computer, setting, Internet. ",
-        "Exam rules are very strict and important part so it must considered with priority and any type of negligence is not acceptable.",
-        "For any query / help or support: always submit new ticket from www.caxtonprime.co.in/support or www.ifs.edu.in/support or www.4n6.in/support or you can also send email to exam@forensic.co.in All times (exam times etc) are according to IST: Indian Standard Time.",
-    ];
+
     const colors = ["#0EA81D", "#FF0000", "#848708", "#4D59C2", "#FF00B8"];
     useEffect(() => {
         console.log("exam details page :");
@@ -70,6 +65,33 @@ const ExamDetails = () => {
             .then((res) => {
                 console.log(res);
                 setExamData(res);
+                let countDownDate = new Date("July 2, 2021 15:37:25").getTime();
+
+                let x = setInterval(function () {
+
+                    // Get today's date and time
+                    let now = new Date().getTime();
+
+                    // Find the distance between now and the count down date
+                    let distance = countDownDate - now;
+
+                    // Time calculations for days, hours, minutes and seconds
+                    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result in the element with id="demo"
+                    setTimerText(hours + "h : "
+                        + minutes + "m : " + seconds + "s ");
+
+                    // If the count down is finished, write some text
+                    if (distance < 0) {
+                        clearInterval(x);
+                        setTimerText('00:00:00');
+                        setCanAttend(true);
+                    }
+                }, 1000);
             })
             .catch((error) => {
                 enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
@@ -103,10 +125,10 @@ const ExamDetails = () => {
                             alignItems={"center"}
                         >
                             <Box px={3}>
-                                <Typography variant="h1">Physics Test</Typography>
-                                <Box m={1} />
-                                <Box display={"flex"} flexWrap={'wrap'} >
-                                    {tags.map((e, i) => (
+                                <Typography variant="h1">{examData.title}</Typography>
+                                <Box m={1}/>
+                                <Box display={"flex"} flexWrap={'wrap'}>
+                                    {examData.examTags.map((e, i) => (
                                         <Box
                                             fontSize={12}
                                             fontWeight={"bold"}
@@ -119,7 +141,7 @@ const ExamDetails = () => {
                                             mr={i === 0 ? 0 : 0}
                                             mt={1}
                                         >
-                                            {e}
+                                            {e.name}
                                         </Box>
                                     ))}
                                 </Box>
@@ -137,7 +159,7 @@ const ExamDetails = () => {
                                     Exam Guidelines
                                 </Box>
                                 <Box m={1.8}/>
-                                {guideLines.map((e) => (
+                                {examData.guidelines.map((e) => (
                                     <Box display={"flex"} my={1}>
                                         <Box
                                             bgcolor={"#F03D5F"}
@@ -183,7 +205,7 @@ const ExamDetails = () => {
                                     color="primary"
                                     variant="contained"
                                 >
-                                    {loading ? <CircularProgress size={24}/> : "Start Exam"}
+                                    {loading ? <CircularProgress size={24}/> : canAttend ? "Start Exam" : timerText}
                                 </Button>
                             </Box>
                         </Box>
