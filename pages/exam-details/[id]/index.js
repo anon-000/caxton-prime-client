@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme) => ({
 const ExamDetails = () => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
-    const [examLoading, setExamLoading] = useState(false);
-    const [exam, setExam] = useState();
+    const [examLoading, setExamLoading] = useState(true);
+    const [examData, setExamData] = useState(null);
     const {enqueueSnackbar} = useSnackbar();
     const Router = useRouter();
     const {id} = Router.query;
@@ -69,7 +69,7 @@ const ExamDetails = () => {
         getExamDetails(id)
             .then((res) => {
                 console.log(res);
-                // setExam(res);
+                setExamData(res);
             })
             .catch((error) => {
                 enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
@@ -87,13 +87,9 @@ const ExamDetails = () => {
         <Box className={classes.root}>
             <Container maxWidth={'xl'}>
                 {
-                    examLoading ? <CircularProgress size={64}/> : <Box
+                    examLoading ? <CircularProgress size={64}/> : <Grid
                         container
-                        display={"flex"}
-                        justify={"center"}
-                        alignItems={"center"}
-                        height={"100%"}
-                        component={Grid}
+                        spacing={0}
                     >
                         <Box
                             xs={12}
@@ -109,7 +105,7 @@ const ExamDetails = () => {
                             <Box px={3}>
                                 <Typography variant="h1">Physics Test</Typography>
                                 <Box m={1} />
-                                <Box display={"flex"}>
+                                <Box display={"flex"} flexWrap={'wrap'} >
                                     {tags.map((e, i) => (
                                         <Box
                                             fontSize={12}
@@ -121,6 +117,7 @@ const ExamDetails = () => {
                                             py={0.6}
                                             mx={i === 0 ? 0 : 1}
                                             mr={i === 0 ? 0 : 0}
+                                            mt={1}
                                         >
                                             {e}
                                         </Box>
@@ -128,7 +125,7 @@ const ExamDetails = () => {
                                 </Box>
                                 <Box m={1.5}/>
                                 <Typography variant="body2">
-                                    {exam}
+                                    {examData.description}
                                 </Typography>
                                 <Box m={2}/>
                                 <Box
@@ -190,7 +187,7 @@ const ExamDetails = () => {
                                 </Button>
                             </Box>
                         </Box>
-                    </Box>
+                    </Grid>
                 }
             </Container>
         </Box>

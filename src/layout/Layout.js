@@ -44,12 +44,12 @@ const useStyle = makeStyles(theme => ({
         // backgroundRepeat: 'no-repeat',
         // backgroundAttachment: 'fixed',
         // backgroundSize: '100%',
-        // [theme.breakpoints.down('xs')]: {
-        //     padding: theme.spacing(4, 1),
-        //     // backgroundImage: `url(${BackImgMob})`,
-        //     // backgroundSize: 'cover',
-        //     // backgroundPosition: 'center',
-        // }
+        [theme.breakpoints.down('xs')]: {
+            padding: theme.spacing(6, 1),
+            // backgroundImage: `url(${BackImgMob})`,
+            // backgroundSize: 'cover',
+            // backgroundPosition: 'center',
+        }
     },
     footer: {
         padding: theme.spacing(2),

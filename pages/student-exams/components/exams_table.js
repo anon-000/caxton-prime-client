@@ -23,7 +23,7 @@ const columns = [
         id: 'code',
         label: 'Exam Id',
         minWidth: 170,
-        align: 'left',
+        align: 'center',
     },
     {
         id: 'title',
@@ -35,13 +35,13 @@ const columns = [
         id: 'questionCount',
         label: 'No of Questions',
         minWidth: 170,
-        align: 'left',
+        align: 'center',
     },
     {
         id: 'difficulty',
         label: 'Difficulty',
         minWidth: 170,
-        align: 'left',
+        align: 'center',
     },
 ];
 

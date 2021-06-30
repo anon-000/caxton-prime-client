@@ -21,6 +21,7 @@ import {
 import TableSkeleton from './skeleton/Table_skeleton';
 import React from 'react';
 import PropTypes from 'prop-types';
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
     tableCell: {
@@ -29,7 +30,15 @@ const useStyles = makeStyles({
         color: '#3A8899',
         cursor: 'pointer',
         padding: '18px 20px',
-        '&:hover': {backgroundColor: "#F03D5F"}
+        border: '0px solid',
+    },
+    difficultyCell: {
+        fontWeight: '700',
+        fontSize: '12px',
+        color: '#ffffff',
+        cursor: 'pointer',
+        padding: '14px 12px',
+        border: '0px solid',
     },
     divider: {
         // '& .MuiDivider-root': {
@@ -81,6 +90,11 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) =
                                         role="button"
                                         tabIndex={-1}
                                         key={row.code}
+                                        style={{
+                                            backgroundColor: rIndex % 2 === 0 ? '#FAF7F7' : '#ffffff',
+                                            border: '0px solid',
+                                            '&:hover': {backgroundColor: "#F03D5F"}
+                                        }}
                                         onClick={() => {
                                             setRow(row);
                                         }}
@@ -88,14 +102,20 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) =
                                         {columns.map((column) => {
                                             let value = row[column.id];
                                             return (
-                                                <TableCell
+                                                column.id === "difficulty" ? <Box
+                                                    className={classes.difficultyCell}
+                                                    display={'flex'} flexDirection={'column'} justifyContent={'center'}
+                                                    alignItems={'center'}
+                                                >
+                                                    <Box display={'flex'}
+                                                         py={0.6} borderRadius={16} px={2}
+                                                         bgcolor={value === 1 ? "#0EA81D" : value === 2 ? "#F6A121" : "#A8140E"}>
+                                                        {value === 1 ? "Easy" : value === 2 ? "Medium" : "Difficult"}
+                                                    </Box>
+                                                </Box> : <TableCell
                                                     key={column.id}
                                                     align={column.align}
                                                     className={classes.tableCell}
-                                                    style={{
-                                                        backgroundColor: rIndex % 2 === 0 ? '#FAF7F7' : '#ffffff',
-                                                        border: '0px solid',
-                                                    }}
                                                 >
                                                     {
                                                         column.format && typeof value === 'number'
