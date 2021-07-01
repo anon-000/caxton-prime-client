@@ -65,7 +65,7 @@ const ExamDetails = () => {
             .then((res) => {
                 console.log(res);
                 setExamData(res);
-                let countDownDate = new Date("July 2, 2021 15:37:25").getTime();
+                let countDownDate = new Date("July 4, 2021 15:37:25").getTime();
 
                 let x = setInterval(function () {
 
@@ -103,6 +103,7 @@ const ExamDetails = () => {
     }, []);
 
     const handleStartExam = () => {
+        Router.push(`/attend-exam/${examData._id}`);
     };
 
     return (

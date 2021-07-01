@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import timer from "../../../src/asset/timer.svg";
+import timer from "../../../../src/asset/timer.svg";
 
 
 /**

@@ -48,7 +48,7 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
             <Box m={1}/>
             <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
             <Box component={Grid} container p={1}
-                 height={450} overflow="auto"
+                 height={450} overflow="auto" alignItems={'flex-start'}
             >
                 {
                     questions.map((e, i) => {
