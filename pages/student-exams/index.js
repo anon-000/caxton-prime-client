@@ -16,8 +16,15 @@ import TopicFilter from "./components/topic_filter";
 
 const StudentExams = () => {
 
-    const [query, setQuery] = useState("");
-    const [selectedTags, setTags] = useState([]);
+    const [tags, setTags] = useState([]);
+
+    const selectTags = (tag) => {
+        if (!tags.includes(tag)) {
+            tags.push(tag);
+            setTags(tags);
+            console.log(tags);
+        }
+    }
 
 
     return (
@@ -25,21 +32,10 @@ const StudentExams = () => {
             <Grid container>
                 <Grid item md={8} xs={12} sm={12}>
                     <Box m={6}/>
-                    <Typography variant="h3">
-                        Search for practice sets
-                    </Typography>
-                    <Box m={2}/>
-                    <TextField
-                        fullWidth
-                        value={query}
-                        onChange={(event) => setQuery(event.target.value)}
-                        variant="outlined"
-                        placeholder={"Type to search"}
-                    />
-                    <ExamsTable/>
+                    <ExamsTable selectedTags={tags}/>
                 </Grid>
                 <Grid item md={4} xs={12} sm={12}>
-                    <TopicFilter/>
+                    <TopicFilter onClicked={selectTags}/>
                 </Grid>
             </Grid>
         </Container>
