@@ -61,10 +61,12 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
                                     m={1} p={3}
                                     fontWeight={600}
                                     color={currentIndex === i ? '#ffffff' : '#000000'}
-                                    bgcolor={currentIndex === i ? '#F03D5F' : '#F5FFCC'}
-                                    borderRadius={1}
+                                    bgcolor={currentIndex === i ? '#F03D5F' :
+                                        questions[currentIndex].type === 2 ? '#FFEEF2' :
+                                            questions[currentIndex].type === 3 ? '#F5FFCC' : '#EBF4FF'}
+                                    borderRadius={4}
                                     textAlign={"center"}>
-                                    Q : {i + 1}
+                                    Q : {i + 1} : {questions[currentIndex].type}
                                 </Box>
                             </Box>
                         )

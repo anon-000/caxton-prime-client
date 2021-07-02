@@ -110,7 +110,9 @@ const ExamDetails = () => {
         <Box className={classes.root}>
             <Container maxWidth={'xl'}>
                 {
-                    examLoading ? <CircularProgress size={64}/> : <Grid
+                    examLoading ? <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                        <CircularProgress size={64}/>
+                    </Box> : <Grid
                         container
                         spacing={0}
                     >
@@ -217,4 +219,5 @@ const ExamDetails = () => {
     );
 };
 
+ExamDetails.Layout = null;
 export default ExamDetails;

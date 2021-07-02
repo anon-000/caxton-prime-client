@@ -12,13 +12,14 @@ import OptionCard from "./option_card";
  */
 
 
-const QuestionCard = ({question, index}) => {
+const QuestionCard = ({question, index, initQuestionCard}) => {
         const options = ['I dont know', "I think i know", "May be i know", "Yeah boi I know"];
         const [selectedIndex, setCurrent] = useState();
 
 
         useEffect(() => {
-            console.log(" question card rendered ::::::::");
+            console.log(" question card rendered ::::::::")
+            initQuestionCard();
         }, []);
 
         return (
