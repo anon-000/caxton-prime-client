@@ -94,8 +94,19 @@ const AttendExam = () => {
 
         const updateQuestionType = (val) => {
             let _temp = questions;
-            _temp[selectedIndex].type = val;
+            if (_temp[selectedIndex].type === 1 && val === 2) {
+                _temp[selectedIndex].type = 2;
+            } else if (_temp[selectedIndex].type === 2 && val === 3) {
+                _temp[selectedIndex].type = 3;
+            }
             setQuestions(_temp);
+        }
+
+        const answerAQuestion = (answer) => {
+            let _tempNew = questions;
+            _tempNew[selectedIndex].myAnswer = answer;
+            _tempNew[selectedIndex].type = 3;
+            setQuestions([..._tempNew]);
         }
 
         console.log(questions);
@@ -117,7 +128,10 @@ const AttendExam = () => {
                                         <Box display={'flex'}>
                                             <TimerCard/>
                                         </Box>
-                                        <QuestionCard question={questions[selectedIndex]} index={selectedIndex}
+                                        <QuestionCard
+                                            question={questions[selectedIndex]}
+                                            index={selectedIndex}
+                                            selectOption={answerAQuestion}
                                         />
                                         <Box m={4}/>
                                         <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>

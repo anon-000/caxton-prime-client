@@ -67,7 +67,7 @@ const columns = [
     },
 ];
 
-const ExamsTable = ({selectedTags}) => {
+const ExamsTable = ({selectedTags, onRemoveTag}) => {
 
         console.log(selectedTags);
         const [page, setPage] = React.useState(1);
@@ -189,17 +189,18 @@ const ExamsTable = ({selectedTags}) => {
                 {
                     selectedTags.length === 0 ? <Box/> : <Box display={"flex"} flexWrap={'wrap'} mt={3} mb={-1}>
                         {
-                            selectedTags.map((e, i) => <Box
-                                display={'flex'}
-                                className={classes.withHover}
-                                my={0.8} mr={0.8} px={2} borderRadius={16}
-                                borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
-                                color={'#F03D5F'} py={0.6}>
-                                {e.name}
-                                <Box ml={1.5} mt={0.2}>
-                                    <img src={cross} alt={'x'}/>
+                            selectedTags.map((e) => <Box
+                                    display={'flex'}
+                                    className={classes.withHover}
+                                    my={0.8} mr={0.8} px={2} borderRadius={16}
+                                    borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
+                                    color={'#F03D5F'} py={0.6}>
+                                    {e.name}
+                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(e)}>
+                                        <img src={cross} alt={'x'}/>
+                                    </Box>
                                 </Box>
-                            </Box>)
+                            )
                         }
                     </Box>
                 }

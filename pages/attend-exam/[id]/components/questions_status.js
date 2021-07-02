@@ -43,7 +43,7 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
              boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
              bgcolor={'#ffffff'} p={2}>
             <Typography align={'right'} variant="subtitle1">
-                No. of Questions : 50
+                No. of Questions : {questions.length}
             </Typography>
             <Box m={1}/>
             <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
@@ -67,7 +67,7 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
                                             e.type === 3 ? '#F5FFCC' : '#EBF4FF'}
                                     borderRadius={4}
                                     textAlign={"center"}>
-                                    Q : {i + 1} : {e.type}
+                                    Q : {i + 1}
                                 </Box>
                             </Box>
                         )
