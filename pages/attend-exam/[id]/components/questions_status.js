@@ -48,10 +48,11 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
             <Box m={1}/>
             <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
             <Box component={Grid} container p={1}
-                 height={450} overflow="auto"
+                 height={450} overflow="auto" alignItems={'flex-start'}
             >
                 {
                     questions.map((e, i) => {
+
                         return (
                             <Box component={Grid}
                                  display={'flex'} justify={"center"} alignItems={"center"}
@@ -61,10 +62,12 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
                                     m={1} p={3}
                                     fontWeight={600}
                                     color={currentIndex === i ? '#ffffff' : '#000000'}
-                                    bgcolor={currentIndex === i ? '#F03D5F' : '#F5FFCC'}
-                                    borderRadius={1}
+                                    bgcolor={currentIndex === i ? '#F03D5F' :
+                                        e.type === 2 ? '#FFEEF2' :
+                                            e.type === 3 ? '#F5FFCC' : '#EBF4FF'}
+                                    borderRadius={4}
                                     textAlign={"center"}>
-                                    Q : {i + 1}
+                                    Q : {i + 1} : {e.type}
                                 </Box>
                             </Box>
                         )

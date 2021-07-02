@@ -65,7 +65,7 @@ const ExamDetails = () => {
             .then((res) => {
                 console.log(res);
                 setExamData(res);
-                let countDownDate = new Date("July 2, 2021 15:37:25").getTime();
+                let countDownDate = new Date("July 4, 2021 15:37:25").getTime();
 
                 let x = setInterval(function () {
 
@@ -103,13 +103,16 @@ const ExamDetails = () => {
     }, []);
 
     const handleStartExam = () => {
+        Router.push(`/attend-exam/${examData._id}`);
     };
 
     return (
         <Box className={classes.root}>
             <Container maxWidth={'xl'}>
                 {
-                    examLoading ? <CircularProgress size={64}/> : <Grid
+                    examLoading ? <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                        <CircularProgress size={64}/>
+                    </Box> : <Grid
                         container
                         spacing={0}
                     >
@@ -216,4 +219,5 @@ const ExamDetails = () => {
     );
 };
 
+ExamDetails.Layout = null;
 export default ExamDetails;

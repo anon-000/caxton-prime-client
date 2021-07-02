@@ -12,14 +12,8 @@ import OptionCard from "./option_card";
  */
 
 
-const QuestionCard = ({index}) => {
-        const options = ['I dont know', "I think i know", "May be i know", "Yeah boi I know"];
+const QuestionCard = ({question, index}) => {
         const [selectedIndex, setCurrent] = useState();
-
-
-        useEffect(() => {
-            console.log(" question card rendered ::::::::");
-        }, []);
 
         return (
             <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
@@ -27,11 +21,11 @@ const QuestionCard = ({index}) => {
                  bgcolor={'#ffffff'} p={3} mt={5}
                  borderRadius={3}>
                 <Typography variant="h3">
-                    Q{index+1} : Do you know how a rocket engine works ?
+                    Q{index + 1} : {question.question}
                 </Typography>
                 <Box m={1}/>
                 {
-                    options.map((e, i) => {
+                    question.options.map((e, i) => {
                         return (
                             <OptionCard
                                 option={e}

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const TopicFilter = () => {
+const TopicFilter = ({onClicked}) => {
 
     const [loading, setLoading] = useState(true);
     const {enqueueSnackbar} = useSnackbar();
@@ -59,7 +59,7 @@ const TopicFilter = () => {
 
 
     return (
-        <Box mx={8} my={14}>
+        <Box mx={8} mt={28}>
             <Box display={'flex'}>
                 <img src={Tag} alt={'tag'}/>
                 <Box m={0.8}/>
@@ -74,6 +74,7 @@ const TopicFilter = () => {
                 </Box> : <Box display={"flex"} flexWrap={'wrap'}>
                     {
                         tagsData.map((e) => <Box
+                            onClick={() => onClicked(e)}
                             className={classes.withHover}
                             my={0.8} mr={0.6} px={2} borderRadius={16}
                             borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
