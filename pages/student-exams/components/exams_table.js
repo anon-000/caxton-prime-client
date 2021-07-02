@@ -69,6 +69,7 @@ const columns = [
 
 const ExamsTable = ({selectedTags}) => {
 
+        console.log(selectedTags);
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
         const [rowsPerPage] = React.useState(12);
@@ -135,9 +136,19 @@ const ExamsTable = ({selectedTags}) => {
 
 
         useEffect(() => {
+            setExams([]);
+            setRows([]);
+            setData([]);
+            loadData();
+        }, [search, selectedTags]);
+
+
+        const loadData = () => {
+            console.log("use effect");
             setLoading(true);
             getAllExams(0, rowsPerPage, search)
                 .then((res) => {
+                    console.log("api response : ");
                     setTotal(res.total);
                     let _allCleaners = res.data.map(each => {
                         return {
@@ -157,7 +168,7 @@ const ExamsTable = ({selectedTags}) => {
                 .finally(() => {
                     setLoading(false);
                 });
-        }, [search, selectedTags]);
+        }
 
 
         return (

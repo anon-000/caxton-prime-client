@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 
 const AttendExam = () => {
         const [selectedIndex, setCurrent] = useState(0);
-        const [timerText, setTimerText] = useState('0d : 0h : 0m : 0s');
         const classes = useStyles();
         // const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
         const [questionLoading, setQuestionLoading] = useState(true);
@@ -49,46 +48,21 @@ const AttendExam = () => {
         useEffect(() => {
             console.log(" attend exam page :");
             setQuestionLoading(true);
-
             getAllQuestions(id).then((res) => {
                 console.log(res);
-                let _allQuestions = res.map(each => {
+                let _allQuestions = res.map((each, i) => {
                     /// type 1- not visited , 2 - skipped , 3 - answered
                     return {
-                        type: 1,
+                        type: i === 0 ? 2 : 1,
                         myAnswer: '',
                         ...each,
                     };
                 });
-
                 setQuestions(_allQuestions);
-                let countDownDate = new Date("July 4, 2021 15:37:25").getTime();
-
-                let x = setInterval(function () {
-                    // Get today's date and time
-                    let now = new Date().getTime();
-                    // Find the distance between now and the count down date
-                    let distance = countDownDate - now;
-                    // Time calculations for days, hours, minutes and seconds
-                    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    // Display the result in the element with id="demo"
-                    setTimerText(hours + "h : "
-                        + minutes + "m : " + seconds + "s ");
-                    // If the count down is finished, write some text
-                    if (distance < 0) {
-                        clearInterval(x);
-                        setTimerText('00:00:00');
-                    }
-                }, 1000);
-
-            }).catch((error) => {
-                enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
-
-            }).finally(() => {
                 setQuestionLoading(false);
+            }).catch((error) => {
+                setQuestionLoading(false);
+                enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
             });
 
 
@@ -120,17 +94,13 @@ const AttendExam = () => {
 
         const updateQuestionType = (val) => {
             let _temp = questions;
-            questions[selectedIndex].type = val;
-            console.log(_temp[selectedIndex]);
-            // setQuestions(_temp);
+            _temp[selectedIndex].type = val;
+            setQuestions(_temp);
         }
 
-        const questionCardInitialized = () => {
-            updateQuestionType(2);
-        }
-
-
+        console.log(questions);
         return (
+
             <div className={classes.root}>
                 <Container>
                     {
@@ -145,10 +115,10 @@ const AttendExam = () => {
                                      height={'100%'}>
                                     <Grid item xs={12} sm={12} md={7}>
                                         <Box display={'flex'}>
-                                            <TimerCard title={timerText}/>
+                                            <TimerCard/>
                                         </Box>
                                         <QuestionCard question={questions[selectedIndex]} index={selectedIndex}
-                                                      initQuestionCard={questionCardInitialized}/>
+                                        />
                                         <Box m={4}/>
                                         <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
                                     </Grid>

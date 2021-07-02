@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import timer from "../../../../src/asset/timer.svg";
@@ -13,7 +13,33 @@ import timer from "../../../../src/asset/timer.svg";
  */
 
 
-const TimerCard = ({title}) => {
+const TimerCard = () => {
+
+    const [timerText, setTimerText] = useState('0d : 0h : 0m : 0s');
+
+    let countDownDate = new Date("July 4, 2021 15:37:25").getTime();
+
+    let x = setInterval(function () {
+        // Get today's date and time
+        let now = new Date().getTime();
+        // Find the distance between now and the count down date
+        let distance = countDownDate - now;
+        // Time calculations for days, hours, minutes and seconds
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Display the result in the element with id="demo"
+        setTimerText(hours + "h : "
+            + minutes + "m : " + seconds + "s ");
+        // If the count down is finished, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            setTimerText('00:00:00');
+        }
+    }, 1000);
+
+
     useEffect(() => {
         console.log(" attend exam page :");
     }, []);
@@ -26,7 +52,7 @@ const TimerCard = ({title}) => {
             <img src={timer} alt={'timer'} height={40}/>
             <Box m={0.5}/>
             <Typography variant="h6">
-                {title}
+                {timerText}
             </Typography>
         </Box>
     );

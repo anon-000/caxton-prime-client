@@ -18,11 +18,12 @@ const StudentExams = () => {
 
     const [tags, setTags] = useState([]);
 
+    console.log(tags);
+
     const selectTags = (tag) => {
+        console.log(tag);
         if (!tags.includes(tag)) {
-            tags.push(tag);
-            setTags(tags);
-            console.log(tags);
+            setTags([...tags, tag]);
         }
     }
 

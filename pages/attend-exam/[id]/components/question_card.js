@@ -12,15 +12,8 @@ import OptionCard from "./option_card";
  */
 
 
-const QuestionCard = ({question, index, initQuestionCard}) => {
-        const options = ['I dont know', "I think i know", "May be i know", "Yeah boi I know"];
+const QuestionCard = ({question, index}) => {
         const [selectedIndex, setCurrent] = useState();
-
-
-        useEffect(() => {
-            console.log(" question card rendered ::::::::")
-            initQuestionCard();
-        }, []);
 
         return (
             <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
