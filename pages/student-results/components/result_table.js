@@ -8,7 +8,6 @@ import Card from '../../../src/components/cards/Card';
 import {useRouter} from 'next/router';
 import ExamTableComponent from "./exam_table_component";
 import Typography from "@material-ui/core/Typography";
-import cross from "../../../src/asset/cross_icon.svg";
 
 
 /**
@@ -65,9 +64,8 @@ const columns = [
     },
 ];
 
-const ExamsTable = ({selectedTags, onRemoveTag}) => {
+const ResultsTable = () => {
 
-        console.log(selectedTags);
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
         const [rowsPerPage] = React.useState(12);
@@ -90,7 +88,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
-            Router.push(`/exam-details/${data[index]._id}`);
+            // Router.push(`/exam-details/${data[index]._id}`);
         };
 
         const loadCleaners = (skip) => {
@@ -184,25 +182,6 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
                         placeholder={"Type to search"}
                     />
                 </Box>
-                {
-                    selectedTags.length === 0 ? <Box/> : <Box display={"flex"} flexWrap={'wrap'} mt={3} mb={-1}>
-                        {
-                            selectedTags.map((e) => <Box
-                                    display={'flex'}
-                                    className={classes.withHover}
-                                    my={0.8} mr={0.8} px={2} borderRadius={16}
-                                    borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
-                                    color={'#F03D5F'} py={0.6}>
-                                    {e.name}
-                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(e)}>
-                                        <img src={cross} alt={'x'}/>
-                                    </Box>
-                                </Box>
-                            )
-                        }
-                    </Box>
-                }
-
                 <Card table>
                     {/*<CardHeader color="primary">*/}
                     {/*    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>*/}
@@ -248,4 +227,4 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
     }
 ;
 
-export default ExamsTable;
+export default ResultsTable;

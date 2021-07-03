@@ -2,7 +2,7 @@
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
- * @description table_component.js
+ * @description exam_table_component.js
  * @createdOn 29/06/21 3:00 pm
  */
 
@@ -18,7 +18,7 @@ import {
     TableRow,
     Typography
 } from '@material-ui/core';
-import TableSkeleton from './skeleton/Table_skeleton';
+import TableSkeleton from '../../../src/components/skeleton/Table_skeleton';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Box from "@material-ui/core/Box";
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
     }
 });
 
-const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) => {
+const ResultTableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) => {
 
     const classes = useStyles();
 
@@ -150,7 +150,7 @@ const TableComponent = ({columns, rows, notFound, loading, pageLimit, setRow}) =
     );
 };
 
-TableComponent.propTypes = {
+ResultTableComponent.propTypes = {
     columns: PropTypes.array,
     rows: PropTypes.array,
     notFound: PropTypes.string,
@@ -159,4 +159,4 @@ TableComponent.propTypes = {
     setRow: PropTypes.func,
 };
 
-export default TableComponent;
+export default ResultTableComponent;
