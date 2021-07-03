@@ -20,7 +20,7 @@ const StudentResults = () => {
                 Search for Exam Results
             </Typography>
             <Box m={2}/>
-            <Box width={'50%'}>
+            <Box width={'40%'}>
                 <TextField
                     fullWidth
                     value={query}

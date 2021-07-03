@@ -12,6 +12,7 @@ export const getAllExams = ($skip, $limit, $search) => examService.find({
     query: {
         $skip,
         $limit,
+        $sort: { createdAt: -1 },
         // $or: [
         //     {title: {$search}},
         //     {description: {$search}},
