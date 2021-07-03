@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import vector from "../../src/asset/explore_vector.svg";
+import wave from "../../src/asset/wave_vector.svg";
 import {Container} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -29,34 +30,116 @@ const useStyles = makeStyles((theme) => ({
         cursor: "pointer",
         userSelect: "none",
     },
+    box: {
+        border: "1px solid #E7E7E7",
+        borderBlock: "border-box",
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.05)"
+    },
+    quoteBox: {
+        boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.05)",
+        color: "#3F3D56",
+        fontWeight: "700",
+        fontSize: "18px",
+        lineHeight: '26px',
+        marginRight: '10rem',
+        '@media (max-width:1050px)': {
+            marginRight: '1rem',
+
+        },
+        '@media (max-width:900px)': {
+            marginRight: '1rem',
+        },
+    }
 }));
 
 
 const StudentDashboard = () => {
-    const classes = useStyles();
+    const data = [
+        {
+            title: "Students",
+            count: 48,
+        },
+        {
+            title: "Organizations",
+            count: 32,
+        },
+        {
+            title: "Topic",
+            count: 20,
+        },
+        {
+            title: "Exams",
+            count: 90,
+        }
+    ];
+
     useEffect(() => {
         console.log("sstudent dashboard page :");
     }, []);
 
     return (
-        <Container maxWidth={'xl'}>
-            <Grid container justify={"center"}
-                  alignItems={"center"}>
+        <Container>
+            <Grid container justify={"center"} spacing={6}
+                  alignItems={"flex-start"}>
                 <Grid item sm={12} xs={12} md={7}>
-                    <Typography>
-                        f
+                    <Box m={4}/>
+                    <Typography variant="h2">
+                        Explore Us
                     </Typography>
+                    <Box m={1.5}/>
+                    <Box component={Grid} display={'flex'} flexWrap={'wrap'}>
+                        {
+                            data.map((e) => {
+                                return (
+                                    <Grid item md={6} xs={3} sm={3}>
+                                        <InfoBox title={e.title} count={e.count}/>
+                                    </Grid>
+                                )
+                            })
+                        }
+                    </Box>
+                    <Box m={3}/>
+                    <QuoteBox/>
+                    <Box m={6}/>
+                    <img src={wave} alt={'explore'} width={'100%'}/>
                 </Grid>
                 <Grid item sm={12} xs={12} md={5}>
-                    <Box m={3} />
+                    <Box m={3}/>
                     <img src={vector} alt={'explore'} width={'100%'}/>
                 </Grid>
             </Grid>
-            <Box height={500}>
-                demo
-            </Box>
         </Container>
     );
 };
 
 export default StudentDashboard;
+
+
+const InfoBox = ({title, count}) => {
+    const classes = useStyles();
+    return (
+        <Box p={2} m={1}
+             className={classes.box}
+             display={'flex'} justifyContent={'center'}
+             alignItems={'flex-start'} flexDirection={'column'}>
+            <Typography>
+                {title}
+            </Typography>
+            <Typography>
+                {count}
+            </Typography>
+        </Box>
+    );
+}
+
+
+const QuoteBox = () => {
+    const classes = useStyles();
+    return (
+        <Box className={classes.quoteBox} p={4} m={2} bgcolor={'#FFFFFF'}>
+            “Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more
+            time.”
+            <br/> - Thomas Edison
+        </Box>
+    )
+}

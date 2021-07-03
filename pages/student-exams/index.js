@@ -27,15 +27,27 @@ const StudentExams = () => {
         }
     }
 
+    const removeTags = (tag) => {
+        if (tags.includes(tag)) {
+            let _temp = tags;
+            let index = _temp.indexOf(tag);
+            if (index !== -1) {
+                console.log(_temp);
+                _temp.splice(index, 1);
+            }
+            console.log(_temp);
+            selectTags([..._temp]);
+        }
+    }
 
     return (
         <Container>
             <Grid container>
-                <Grid item md={8} xs={12} sm={12}>
+                <Grid item md={9} xs={12} sm={12}>
                     <Box m={6}/>
-                    <ExamsTable selectedTags={tags}/>
+                    <ExamsTable selectedTags={tags} onRemoveTag={removeTags}/>
                 </Grid>
-                <Grid item md={4} xs={12} sm={12}>
+                <Grid item md={3} xs={12} sm={12}>
                     <TopicFilter onClicked={selectTags}/>
                 </Grid>
             </Grid>

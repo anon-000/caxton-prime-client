@@ -1,7 +1,7 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import {Button, Divider, Grid} from "@material-ui/core";
+import {Button, CircularProgress, Divider, Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 
 /**
@@ -33,7 +33,7 @@ const QuestionType = ({color, text}) => {
 }
 
 
-const QuestionStatus = ({currentIndex, onChanged, questions}) => {
+const QuestionStatus = ({currentIndex, onChanged, questions, onSubmit, isLoading}) => {
 
     const classes = useStyles();
 
@@ -43,7 +43,7 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
              boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
              bgcolor={'#ffffff'} p={2}>
             <Typography align={'right'} variant="subtitle1">
-                No. of Questions : 50
+                No. of Questions : {questions.length}
             </Typography>
             <Box m={1}/>
             <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
@@ -67,7 +67,7 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
                                             e.type === 3 ? '#F5FFCC' : '#EBF4FF'}
                                     borderRadius={4}
                                     textAlign={"center"}>
-                                    Q : {i + 1} : {e.type}
+                                    Q : {i + 1}
                                 </Box>
                             </Box>
                         )
@@ -89,13 +89,12 @@ const QuestionStatus = ({currentIndex, onChanged, questions}) => {
             <Box m={0.5}/>
             <Button
                 fullWidth
-                // disabled={loading}
-                onClick={() => {
-                }}
+                disabled={isLoading}
+                onClick={onSubmit}
                 color="primary"
                 variant="contained"
             >
-                Submit
+                {isLoading ? <CircularProgress size={24}/> : "Submit"}
             </Button>
         </Box>
     );

@@ -10,6 +10,7 @@ import {getAllQuestions} from "../../../src/apis/exam_questions";
 import {useSnackbar} from "notistack";
 import {useRouter} from "next/router";
 import EmptyErrorComponent from "../../../src/components/EmptyErrorComponent";
+import {submitExamAnswer} from "../../../src/apis/results";
 
 /**
  *
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AttendExam = () => {
         const [selectedIndex, setCurrent] = useState(0);
+        const [loading, setLoading] = useState(false);
         const classes = useStyles();
         // const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
         const [questionLoading, setQuestionLoading] = useState(true);
@@ -94,8 +96,44 @@ const AttendExam = () => {
 
         const updateQuestionType = (val) => {
             let _temp = questions;
-            _temp[selectedIndex].type = val;
+            if (_temp[selectedIndex].type === 1 && val === 2) {
+                _temp[selectedIndex].type = 2;
+            } else if (_temp[selectedIndex].type === 2 && val === 3) {
+                _temp[selectedIndex].type = 3;
+            }
             setQuestions(_temp);
+        }
+
+        const answerAQuestion = (answer) => {
+            let _tempNew = questions;
+            _tempNew[selectedIndex].myAnswer = answer;
+            _tempNew[selectedIndex].type = 3;
+            setQuestions([..._tempNew]);
+        }
+
+
+        const submitAnswers = () => {
+            let _myAnswers = [];
+            setLoading(true);
+            questions.forEach((e) => {
+                if (e.myAnswer !== '') {
+                    _myAnswers = [..._myAnswers, {
+                        question: e._id,
+                        choice: [e.myAnswer]
+                    }];
+                }
+            });
+            submitExamAnswer({
+                exam: id,
+                studentAnswer: _myAnswers,
+            }).then((res) => {
+                enqueueSnackbar("Answers submitted successfully", {variant: "success"});
+                Router.replace('/submission-success');
+            }).catch((error) => {
+                enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
+            }).finally(() => {
+                setLoading(false);
+            });
         }
 
         console.log(questions);
@@ -117,13 +155,19 @@ const AttendExam = () => {
                                         <Box display={'flex'}>
                                             <TimerCard/>
                                         </Box>
-                                        <QuestionCard question={questions[selectedIndex]} index={selectedIndex}
+                                        <QuestionCard
+                                            question={questions[selectedIndex]}
+                                            index={selectedIndex}
+                                            selectOption={answerAQuestion}
                                         />
                                         <Box m={4}/>
                                         <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={5}>
-                                        <QuestionStatus questions={questions} currentIndex={selectedIndex}
+                                        <QuestionStatus questions={questions}
+                                                        isLoading={loading}
+                                                        currentIndex={selectedIndex}
+                                                        onSubmit={submitAnswers}
                                                         onChanged={jumpToIndex}/>
                                     </Grid>
                                 </Box>

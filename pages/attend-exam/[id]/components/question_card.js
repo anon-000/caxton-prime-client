@@ -12,8 +12,18 @@ import OptionCard from "./option_card";
  */
 
 
-const QuestionCard = ({question, index}) => {
+const QuestionCard = ({question, index, selectOption}) => {
         const [selectedIndex, setCurrent] = useState();
+
+
+        useEffect(() => {
+            setCurrent(question.myAnswer === '' ? -1 : question.options.indexOf(question.myAnswer));
+        }, [index]);
+
+        const onOptionClicked = (e, i) => {
+            setCurrent(i);
+            selectOption(e);
+        }
 
         return (
             <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
@@ -30,7 +40,7 @@ const QuestionCard = ({question, index}) => {
                             <OptionCard
                                 option={e}
                                 isSelected={i === selectedIndex}
-                                onClick={() => setCurrent(i)}
+                                onClick={() => onOptionClicked(e, i)}
                             />
                         )
                     })
