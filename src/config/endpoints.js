@@ -17,6 +17,7 @@ export const examService = app.service('exams');
 export const uploadService = app.service('upload');
 export const tagsService = app.service('exam-tag');
 export const questionsService = app.service('questions');
+export const resultService = app.service('student-results');
 
 
 

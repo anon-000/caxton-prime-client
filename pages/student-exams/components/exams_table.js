@@ -172,7 +172,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         return (
             <Box>
                 <Typography variant="h3">
-                    Search for practice sets
+                    Search for Exams
                 </Typography>
                 <Box m={2}/>
                 <Box width={'50%'}>

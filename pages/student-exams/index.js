@@ -43,11 +43,11 @@ const StudentExams = () => {
     return (
         <Container>
             <Grid container>
-                <Grid item md={8} xs={12} sm={12}>
+                <Grid item md={9} xs={12} sm={12}>
                     <Box m={6}/>
                     <ExamsTable selectedTags={tags} onRemoveTag={removeTags}/>
                 </Grid>
-                <Grid item md={4} xs={12} sm={12}>
+                <Grid item md={3} xs={12} sm={12}>
                     <TopicFilter onClicked={selectTags}/>
                 </Grid>
             </Grid>

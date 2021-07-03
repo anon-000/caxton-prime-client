@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Box, makeStyles, TextField} from '@material-ui/core';
+import {Box, makeStyles} from '@material-ui/core';
 import {Pagination} from '@material-ui/lab';
 import {getAllExams} from '../../../src/apis/exams';
 import {useSnackbar} from 'notistack';
 import CardBody from '../../../src/components/cards/card_body';
 import Card from '../../../src/components/cards/Card';
-import {useRouter} from 'next/router';
-import ExamTableComponent from "./exam_table_component";
-import Typography from "@material-ui/core/Typography";
+import ExamTableComponent from "./result_table_component";
+import {getAllResults} from "../../../src/apis/results";
 
 
 /**
@@ -51,8 +50,8 @@ const columns = [
         align: 'left',
     },
     {
-        id: 'questionCount',
-        label: 'No of Questions',
+        id: 'scheduledAt',
+        label: 'Scheduled At',
         minWidth: 170,
         align: 'center',
     },
@@ -62,6 +61,25 @@ const columns = [
         minWidth: 170,
         align: 'center',
     },
+    // {
+    //     id: 'questionCount',
+    //     label: 'No of Questions',
+    //     minWidth: 170,
+    //     align: 'center',
+    // },
+    {
+        id: 'totalMarks',
+        label: 'Total Marks',
+        minWidth: 170,
+        align: 'center',
+    },
+    {
+        id: 'securedMarks',
+        label: 'Marks secured',
+        minWidth: 170,
+        align: 'center',
+    },
+
 ];
 
 const ResultsTable = () => {
@@ -69,17 +87,16 @@ const ResultsTable = () => {
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
         const [rowsPerPage] = React.useState(12);
-        const [exams, setExams] = React.useState([]);
+        const [results, setResults] = React.useState([]);
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
-        const [query, setQuery] = useState("");
-        const classes = useStyles();
+        // const classes = useStyles();
 
         const [data, setData] = useState([]);
-        const Router = useRouter();
+        // const Router = useRouter();
         const {enqueueSnackbar} = useSnackbar();
 
         // const headerStyles = makeStyles(styles);
@@ -91,20 +108,24 @@ const ResultsTable = () => {
             // Router.push(`/exam-details/${data[index]._id}`);
         };
 
-        const loadCleaners = (skip) => {
+        const loadResults = (skip) => {
             setLoading(true);
             getAllExams(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
-                        let _allExams = res.data.map(each => {
+                        let _allResults = res.data.map(each => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
+                                title: each.exam.title,
+                                scheduledAt: each.createdAt,
+                                questionCount: each.exam.questionCount,
+                                difficulty: each.exam.difficulty,
                                 ...each,
                             };
                         });
-                        setRows(_allExams);
-                        setExams([...exams, _allExams]);
-                        setData([...data, ..._allExams]);
+                        setRows(_allResults);
+                        setResults([...results, _allResults]);
+                        setData([...data, ..._allResults]);
                     }
                 })
                 .catch((e) => {
@@ -117,46 +138,50 @@ const ResultsTable = () => {
 
         const handleChangePage = (event, value) => {
             setPage(value);
-            if (value * rowsPerPage > exams.length) {
+            if (value * rowsPerPage > results.length) {
                 setRows([]);
-                if (exams.length === total) {
-                    setRows(exams.slice((value - 1) * rowsPerPage, total));
+                if (results.length === total) {
+                    setRows(results.slice((value - 1) * rowsPerPage, total));
                 } else {
-                    loadCleaners((value - 1) * rowsPerPage);
+                    loadResults((value - 1) * rowsPerPage);
                 }
             } else {
                 setRows([]);
-                setRows(exams.slice((value - 1) * rowsPerPage, value * rowsPerPage));
+                setRows(results.slice((value - 1) * rowsPerPage, value * rowsPerPage));
             }
         };
 
 
         useEffect(() => {
-            setExams([]);
+            setResults([]);
             setRows([]);
             setData([]);
             loadData();
-        }, [search, selectedTags]);
+        }, [search]);
 
 
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search)
+            getAllResults(0, rowsPerPage, search)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
-                    let _allCleaners = res.data.map(each => {
+                    let _allResults = res.data.map(each => {
                         return {
-                            code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
+                            code: each.exam._id.slice(each.exam._id.length - 6, each.exam._id.length).toUpperCase(),
+                            title: each.exam.title,
+                            scheduledAt: each.createdAt,
+                            difficulty: each.exam.difficulty,
+                            questionCount: each.exam.questionCount,
                             ...each,
                         };
                     });
-                    setExams(_allCleaners);
-                    setRows(_allCleaners);
+                    setResults(_allResults);
+                    setRows(_allResults);
                     setTotalPages(Math.ceil(res.total / rowsPerPage));
                     setPage(1);
-                    setData(_allCleaners);
+                    setData(_allResults);
                 })
                 .catch((e) => {
                     enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
@@ -169,19 +194,6 @@ const ResultsTable = () => {
 
         return (
             <Box>
-                <Typography variant="h3">
-                    Search for practice sets
-                </Typography>
-                <Box m={2}/>
-                <Box width={'50%'}>
-                    <TextField
-                        fullWidth
-                        value={query}
-                        onChange={(event) => setQuery(event.target.value)}
-                        variant="outlined"
-                        placeholder={"Type to search"}
-                    />
-                </Box>
                 <Card table>
                     {/*<CardHeader color="primary">*/}
                     {/*    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>*/}
