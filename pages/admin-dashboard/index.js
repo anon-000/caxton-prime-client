@@ -5,9 +5,8 @@ import {makeStyles} from "@material-ui/core/styles";
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
  * @description index.js
- * @createdOn 04/07/21 5:00 am
+ * @createdOn 04/07/21 12:19 pm
  */
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,15 +20,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const OrganDashboard = () => {
+const AdminDashboard = () => {
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            Organ Dashboard
+            Admin Dashboard
         </div>
     )
 }
 
-OrganDashboard.Layout = null;
-export default  OrganDashboard
+
+export default AdminDashboard

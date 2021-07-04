@@ -50,6 +50,7 @@ export default function MyApp(props) {
                     userStore.set(() => ({token: accessToken, user}), "user");
 
                     if (user["role"] === 1) {
+                        /// user
                         console.log("role 1", user["userName"], user["phone"]);
                         if (!user["userName"] || !user["phone"]) {
                             Router.replace("/student-onboarding").then(() => {
@@ -61,15 +62,26 @@ export default function MyApp(props) {
                             // });
                             setLoading(false);
                         }
-                    } else {
+                    } else if (user["role"] === 2) {
+                        /// organization
                         console.log("role 2", user["userName"], user["phone"]);
                         if (!user["phone"] || !user["address"]) {
                             Router.replace("/organization-onboarding").then(() => {
                                 setLoading(false);
                             });
+                        } else if (user["status"] === 1) {
+                            Router.replace("/organ-request-pending").then(() => {
+                                setLoading(false);
+                            });
                         } else {
                             setLoading(false);
                         }
+                    } else if (user["role"] === 3) {
+                        /// admin
+                        console.log("role 3", user["userName"], user["phone"]);
+                        Router.replace("/organization-onboarding").then(() => {
+                            setLoading(false);
+                        });
                     }
                 })
                 .catch(async () => {

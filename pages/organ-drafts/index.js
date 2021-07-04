@@ -1,4 +1,9 @@
 import {makeStyles} from "@material-ui/core/styles";
+import {Box, Button, Container, TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
+import DraftTable from "./components/draft_table";
+import Grid from "@material-ui/core/Grid";
 
 /**
  *
@@ -23,11 +28,41 @@ const useStyles = makeStyles((theme) => ({
 
 const OrganDrafts = () => {
     const classes = useStyles();
+    let query = '';
 
     return (
-        <div className={classes.root}>
-            Organ Drafts
-        </div>
+        <Container>
+            <Box m={6}/>
+            <Typography variant="h3">
+                Search for Drafts
+            </Typography>
+            <Box m={2}/>
+            <Grid container>
+                <Grid item md={4}>
+                    <TextField
+                        fullWidth
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                        variant="outlined"
+                        placeholder={"Type to search"}
+                    />
+                </Grid>
+                <Grid item md={6}/>
+                <Grid item md={2}>
+                    <Button
+                        fullWidth
+                        // disabled={loading}
+                        onClick={() => {
+                        }}
+                        color="primary"
+                        variant="contained"
+                    >
+                        Create Draft
+                    </Button>
+                </Grid>
+            </Grid>
+            <DraftTable/>
+        </Container>
     )
 }
 
