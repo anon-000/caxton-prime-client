@@ -1,4 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
+import {useRouter} from "next/router";
 
 /**
  *
@@ -23,11 +24,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DraftDetails = () => {
+    const Router = useRouter();
+    const {id} = Router.query;
     const classes = useStyles();
 
     return (
         <div className={classes.root}>
-            Draft Details
+            Draft Details {id}
         </div>
     )
 }

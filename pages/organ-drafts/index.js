@@ -1,9 +1,10 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {Box, Button, Container, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import React, {useState} from "react";
 import DraftTable from "./components/draft_table";
 import Grid from "@material-ui/core/Grid";
+import CreateDraftDialog from "./components/create_draft_dialog";
 
 /**
  *
@@ -28,7 +29,17 @@ const useStyles = makeStyles((theme) => ({
 
 const OrganDrafts = () => {
     const classes = useStyles();
+    const [open, setOpen] = useState();
     let query = '';
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
     return (
         <Container>
@@ -52,13 +63,13 @@ const OrganDrafts = () => {
                     <Button
                         fullWidth
                         // disabled={loading}
-                        onClick={() => {
-                        }}
+                        onClick={handleClickOpen}
                         color="primary"
                         variant="contained"
                     >
                         Create Draft
                     </Button>
+                    <CreateDraftDialog handleClose={handleClose} open={open}/>
                 </Grid>
             </Grid>
             <DraftTable/>
