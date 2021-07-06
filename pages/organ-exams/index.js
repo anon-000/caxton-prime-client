@@ -1,3 +1,11 @@
+import {makeStyles} from "@material-ui/core/styles";
+import {Box, Button, Container, TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import React, {useState} from "react";
+import {useRouter} from "next/router";
+import OrganExamTable from "./components/organ_exam_table";
+
+
 /**
  *
  * @createdBy Aurosmruti Das
@@ -5,18 +13,6 @@
  * @description index.js
  * @createdOn 04/07/21 5:11 am
  */
-
-
-import {makeStyles} from "@material-ui/core/styles";
-
-/**
- *
- * @createdBy Aurosmruti Das
- * @email aurosmruti.das@gmail.com
- * @description index.js
- * @createdOn 04/07/21 5:09 am
- */
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,11 +28,40 @@ const useStyles = makeStyles((theme) => ({
 
 const OrganExams = () => {
     const classes = useStyles();
+    const [editId, setEditId] = useState('');
+    let query = '';
+    const Router = useRouter();
+
+
+    const moreTableOptionCallBack = (i, id) => {
+        console.log(id);
+        setEditId(id);
+        // if (i === 1)
+        //     Router.push(`/draft-details/${id}`);
+        // else if (i === 3)
+        //     handleClickOpen(2);
+        // else if (i === 4)
+        //     handleClickOpen(3);
+        // else if (i === 2)
+        //     handleClickOpen(4);
+    }
 
     return (
-        <div className={classes.root}>
-            Organ Exams
-        </div>
+        <Container>
+            <Box m={6}/>
+            <Typography variant="h3">
+                Search for Scheduled Exams
+            </Typography>
+            <Box m={2}/>
+            <TextField
+                fullWidth
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                variant="outlined"
+                placeholder={"Type to search"}
+            />
+            <OrganExamTable moreCallBack={moreTableOptionCallBack}/>
+        </Container>
     )
 }
 

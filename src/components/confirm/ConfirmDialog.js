@@ -14,7 +14,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '../DialogTitle';
+import DialogTitle from '../dialogs/DialogTitle';
 import PropTypes from 'prop-types';
 import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../../theme';
@@ -44,11 +44,12 @@ const ConfirmDialog = ({
                     <Typography>{content && <DialogContentText>{content}</DialogContentText>}</Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="secondary" onClick={cancel} style={{fontWeight: '600', textTransform: 'none'}}>
+                    <Button color="primary" onClick={dismiss}
+                            style={{fontWeight: '600', textTransform: 'none', width: '130px', height: '50px'}}>
                         {cancelLabel}
                     </Button>
-                    <Button color="secondary" onClick={proceed} variant={'contained'}
-                            style={{fontWeight: '600', textTransform: 'none'}}>
+                    <Button color="primary" onClick={proceed} variant={'contained'}
+                            style={{fontWeight: '600', textTransform: 'none', width: '130px', height: '50px'}}>
                         {okLabel}
                     </Button>
                 </DialogActions>
