@@ -232,5 +232,5 @@ const AddQuestionCard = ({examId}) => {
 }
 
 
-export default AddQuestionCard
+export default AddQuestionCard;
 

@@ -78,4 +78,4 @@ const DraftDetails = () => {
 }
 
 
-export default DraftDetails
+export default DraftDetails;

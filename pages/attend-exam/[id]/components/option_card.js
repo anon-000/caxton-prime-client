@@ -47,4 +47,3 @@ const OptionCard = ({option, isSelected, onClick}) => {
     );
 };
 
-export default OptionCard;
