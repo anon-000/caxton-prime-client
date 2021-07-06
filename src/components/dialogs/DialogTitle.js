@@ -14,7 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import React from 'react';
 
-const DialogTitle = withStyles((theme) => ({
+const DialogCustomTitle = withStyles((theme) => ({
     closeButton: {
         position: 'absolute',
         right: theme.spacing(1),
@@ -43,4 +43,4 @@ const DialogTitle = withStyles((theme) => ({
     );
 });
 
-export default DialogTitle;
+export default DialogCustomTitle;

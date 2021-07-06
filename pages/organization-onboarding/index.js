@@ -102,7 +102,7 @@ const OrganizationOnBoarding = () => {
         })
             .then((response) => {
                 userStore.set(() => ({response}), 'user');
-                Router.replace('/');
+                Router.replace('/organ-request-pending');
             })
             .catch(error => {
                 enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
@@ -189,4 +189,5 @@ const OrganizationOnBoarding = () => {
     )
 }
 
+OrganizationOnBoarding.Layout = null;
 export default OrganizationOnBoarding

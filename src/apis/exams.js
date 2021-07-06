@@ -5,14 +5,14 @@
  * @description exams.js
  * @createdOn 29/06/21 6:42 pm
  */
-import {examService} from "../config/endpoints";
+import {examService, resultService} from "../config/endpoints";
 
 
 export const getAllExams = ($skip, $limit, $search) => examService.find({
     query: {
         $skip,
         $limit,
-        $sort: { createdAt: -1 },
+        $sort: {createdAt: -1},
         // $or: [
         //     {title: {$search}},
         //     {description: {$search}},
@@ -28,3 +28,6 @@ export const getExamDetails = (id) => examService.get(id, {
         $populate: 'examTags'
     }
 });
+
+
+export const createDraft = (data) => examService.create(data);
