@@ -1,6 +1,5 @@
 import {Box, makeStyles, TextField} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {useSnackbar} from "notistack";
 import {getAllExams} from "../../../src/apis/exams";
 import Card from "../../../src/components/cards/Card";
@@ -50,8 +49,8 @@ const columns = [
         align: 'left',
     },
     {
-        id: 'scheduledAt',
-        label: 'Scheduled At',
+        id: 'difficulty',
+        label: 'Difficulty',
         minWidth: 170,
         align: 'center',
     },
@@ -76,7 +75,7 @@ const columns = [
     },
 ];
 
-const OrganExamTable = ({moreCallBack}) => {
+const OrganPracticeTable = ({moreCallBack}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -104,7 +103,7 @@ const OrganExamTable = ({moreCallBack}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllExams(skip, rowsPerPage, search, 3)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -153,7 +152,7 @@ const OrganExamTable = ({moreCallBack}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllExams(0, rowsPerPage, search, 3)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
@@ -211,4 +210,4 @@ const OrganExamTable = ({moreCallBack}) => {
     }
 ;
 
-export default OrganExamTable;
+export default OrganPracticeTable;
