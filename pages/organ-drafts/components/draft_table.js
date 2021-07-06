@@ -50,6 +50,12 @@ const columns = [
         align: 'left',
     },
     {
+        id: 'duration',
+        label: 'Duration',
+        minWidth: 170,
+        align: 'center',
+    },
+    {
         id: 'questionCount',
         label: 'No of Questions',
         minWidth: 170,
