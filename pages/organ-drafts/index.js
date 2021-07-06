@@ -7,6 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import CreateDraftDialog from "./components/create_draft_dialog";
 import ScheduledExamDialog from "./components/schedule_exam_dialog";
 import {useRouter} from "next/router";
+import PracticeSetDialog from "./components/create_practice_dialog";
 
 /**
  *
@@ -34,6 +35,7 @@ const OrganDrafts = () => {
     const [draftOpen, setDraftOpen] = useState();
     const [scheduleOpen, setScheduleOpen] = useState();
     const [practiceOpen, setPracticeOpen] = useState();
+    const [editId, setEditId] = useState('');
     let query = '';
     const Router = useRouter();
 
@@ -59,10 +61,13 @@ const OrganDrafts = () => {
 
     const moreTableOptionCallBack = (i, id) => {
         console.log(id);
+        setEditId(id);
         if (i === 1)
             Router.push(`/draft-details/${id}`);
         else if (i === 3)
             handleClickOpen(2);
+        else if (i === 4)
+            handleClickOpen(3);
     }
 
 
@@ -95,7 +100,8 @@ const OrganDrafts = () => {
                         Create Draft
                     </Button>
                     <CreateDraftDialog handleClose={handleClose} open={draftOpen}/>
-                    <ScheduledExamDialog handleClose={handleClose} open={scheduleOpen}/>
+                    <ScheduledExamDialog examId={editId} handleClose={handleClose} open={scheduleOpen}/>
+                    <PracticeSetDialog examId={editId} handleClose={handleClose} open={practiceOpen}/>
                 </Grid>
             </Grid>
             <DraftTable moreCallBack={moreTableOptionCallBack}/>

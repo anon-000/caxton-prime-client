@@ -31,3 +31,9 @@ export const getExamDetails = (id) => examService.get(id, {
 
 
 export const createDraft = (data) => examService.create(data);
+
+
+export const examPatch = (id, body) => {
+    console.log("id" , id);
+    return  examService.patch(id, body)
+};

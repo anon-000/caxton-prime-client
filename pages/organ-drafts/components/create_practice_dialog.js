@@ -9,7 +9,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import ExamTagsAutoComplete from "../../../src/components/TagsAutoComplete";
 import cross from "../../../src/asset/cross_icon.svg";
-import {examPatch} from "../../../src/apis/exams";
+import {createDraft, examPatch} from "../../../src/apis/exams";
 
 /**
  *
@@ -73,11 +73,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduledExamDialog({open, handleClose, examId}) {
+export default function PracticeSetDialog({open, handleClose, examId}) {
 
     const classes = useStyles();
-    const [date, setDate] = useState(new Date(new Date('2014-08-1821:11')));
-    const [time, setTime] = useState(new Date('2021-08-18T21:11:54'));
     const [tags, setTags] = useState([]);
     const [difficulty, setDifficulty] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -95,10 +93,6 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
         setAnchorEl(null);
     };
 
-    const handleDateChange = (date, x) => {
-        console.log(x);
-    };
-
     const addMoreTags = (tag) => {
         if (tag && tag !== '') {
             setTags([...tags, tag]);
@@ -113,28 +107,27 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
 
     useEffect(() => {
         setTags([]);
-        setDate(null);
         setDifficulty(0);
     }, [open]);
 
     const handleDraftCreation = () => {
         if (difficulty === 0) {
-            enqueueSnackbar("Name is required", {variant: "warning"});
+            enqueueSnackbar("Difficulty level is required", {variant: "warning"});
             return;
         } else if (tags.length === 0) {
-            enqueueSnackbar("Guidelines are required", {variant: "warning"});
+            enqueueSnackbar("Tags are required", {variant: "warning"});
             return;
         }
         setLoading(true);
         examPatch(examId, {
-            type: 2,
+            type: 3,
             difficulty: difficulty,
             examTags: tags.map((e) => e._id),
         }).then((res) => {
             console.log(res);
             const {_id: id} = res;
             console.log(id);
-            enqueueSnackbar("Scheduled exam created successfully", {variant: "success"});
+            enqueueSnackbar("Practice set created successfully", {variant: "success"});
             handleClose(3);
         }).catch((error) => {
             enqueueSnackbar(
@@ -149,11 +142,11 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
     }
 
     return (
-        <Dialog open={open} onClose={() => handleClose(2)} aria-labelledby="form-dialog-title" fullWidth>
-            <DialogCustomTitle children={'Schedule exam'} onClose={() => handleClose(2)}/>
+        <Dialog open={open} onClose={() => handleClose(3)} aria-labelledby="form-dialog-title" fullWidth>
+            <DialogCustomTitle children={'Practice Set'} onClose={() => handleClose(3)}/>
             <DialogContent>
                 <Typography className={classes.label}>
-                    Select exam tags
+                    Tags
                 </Typography>
                 <ExamTagsAutoComplete className={classes.autoComplete} onSelect={addMoreTags}
                                       placeholder={'Search for tags'}/>
@@ -194,22 +187,6 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                     <MenuItem className={classes.paddingX} onClick={() => handleMenuClose(2)}>Medium</MenuItem>
                     <MenuItem className={classes.paddingX} onClick={() => handleMenuClose(3)}>Hard</MenuItem>
                 </Menu>
-                <Typography className={classes.label}>
-                    Exam Date & Time
-                </Typography>
-                <TextField
-                    id="datetime-local"
-                    type="datetime-local"
-                    format="MM/dd/yyyy"
-                    //value={date}
-                    defaultValue={date}
-                    onChange={handleDateChange}
-                    className={classes.textField}
-                    variant="outlined"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                />
 
                 <Box my={5}/>
                 <Button
@@ -219,7 +196,7 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                     color="primary"
                     variant="contained"
                 >
-                    {loading ? <CircularProgress size={24}/> : "Create Draft"}
+                    {loading ? <CircularProgress size={24}/> : "Create Practice Set"}
                 </Button>
                 <Box m={2}/>
             </DialogContent>
