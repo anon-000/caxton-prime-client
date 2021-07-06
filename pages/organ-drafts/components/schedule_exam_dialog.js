@@ -53,11 +53,12 @@ const useStyles = makeStyles((theme) => ({
         userSelect: "none",
     },
     autoComplete: {
-        marginLeft: theme.spacing(-1),
-        marginTop: theme.spacing(-1),
+        //marginLeft: theme.spacing(-1),
+        //marginTop: theme.spacing(-1),
         //width: 260,
         cursor: "pointer",
         userSelect: "none",
+        paddingRight: "40px"
     },
     withHover: {
         cursor: 'pointer',
@@ -76,8 +77,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ScheduledExamDialog({open, handleClose, examId}) {
 
     const classes = useStyles();
-    const [date, setDate] = useState(new Date(new Date('2014-08-1821:11')));
-    const [time, setTime] = useState(new Date('2021-08-18T21:11:54'));
+    const [date, setDate] = useState("2021-07-29T00:13");
     const [tags, setTags] = useState([]);
     const [difficulty, setDifficulty] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -95,8 +95,10 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
         setAnchorEl(null);
     };
 
-    const handleDateChange = (date, x) => {
-        console.log(x);
+    const handleDateChange = (date) => {
+        console.log(date.target.value);
+        setDate(new Date(date.target.value));
+        console.log(new Date(date.target.value));
     };
 
     const addMoreTags = (tag) => {
@@ -153,7 +155,7 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
             <DialogCustomTitle children={'Schedule exam'} onClose={() => handleClose(2)}/>
             <DialogContent>
                 <Typography className={classes.label}>
-                    Select exam tags
+                    Tags
                 </Typography>
                 <ExamTagsAutoComplete className={classes.autoComplete} onSelect={addMoreTags}
                                       placeholder={'Search for tags'}/>
@@ -163,7 +165,7 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                             tags.map((e, i) => <Box
                                     display={'flex'}
                                     className={classes.withHover}
-                                    mb={0.8} mr={0.8} px={2} borderRadius={16}
+                                    mb={0.2} mr={0.8} px={2} mt={0.6}  borderRadius={16}
                                     borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
                                     color={'#F03D5F'} py={0.6}>
                                     {e ? e.name : ''}
@@ -175,6 +177,7 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                         }
                     </Box>
                 }
+                <Box m={0.8} />
                 <Typography className={classes.label}>
                     Difficulty Level
                 </Typography>
@@ -200,9 +203,9 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                 <TextField
                     id="datetime-local"
                     type="datetime-local"
-                    format="MM/dd/yyyy"
+                    //format="MM/dd/yyyy"
                     //value={date}
-                    defaultValue={date}
+                    defaultValue={'2021-07-29T00:13'}
                     onChange={handleDateChange}
                     className={classes.textField}
                     variant="outlined"

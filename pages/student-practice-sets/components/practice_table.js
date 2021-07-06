@@ -1,20 +1,23 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {useSnackbar} from "notistack";
-import {getAllExams} from "../../../src/apis/exams";
-import Card from "../../../src/components/cards/Card";
-import CardBody from "../../../src/components/cards/card_body";
-import {Pagination} from "@material-ui/lab";
-import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
+import React, {useEffect, useState} from 'react';
+import {Box, makeStyles, TextField} from '@material-ui/core';
+import {Pagination} from '@material-ui/lab';
+import {getAllExams} from '../../../src/apis/exams';
+import {useSnackbar} from 'notistack';
+import CardBody from '../../../src/components/cards/card_body';
+import Card from '../../../src/components/cards/Card';
+import {useRouter} from 'next/router';
+import Typography from "@material-ui/core/Typography";
+import cross from "../../../src/asset/cross_icon.svg";
 import moment from "moment/moment";
+import ExamTableComponent from "../../student-exams/components/exam_table_component";
+
 
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
- * @description draft_table.js
- * @createdOn 04/07/21 4:53 pm
+ * @description practice_table.js
+ * @createdOn 07/07/21 1:26 am
  */
 
 
@@ -41,7 +44,7 @@ const columns = [
     {
         id: 'code',
         label: 'Exam Id',
-        minWidth: 170,
+        minWidth: 100,
         align: 'center',
     },
     {
@@ -49,12 +52,6 @@ const columns = [
         label: 'Name',
         minWidth: 170,
         align: 'left',
-    },
-    {
-        id: 'formattedDate',
-        label: 'Scheduled At',
-        minWidth: 170,
-        align: 'center',
     },
     {
         id: 'duration',
@@ -68,17 +65,17 @@ const columns = [
         minWidth: 170,
         align: 'center',
     },
-
     {
-        id: 'more',
-        label: 'More',
+        id: 'difficulty',
+        label: 'Difficulty',
         minWidth: 170,
         align: 'center',
     },
 ];
 
-const OrganExamTable = ({moreCallBack}) => {
+const PracticeTable = ({selectedTags, onRemoveTag}) => {
 
+        console.log(selectedTags);
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
         const [rowsPerPage] = React.useState(12);
@@ -92,6 +89,7 @@ const OrganExamTable = ({moreCallBack}) => {
         const classes = useStyles();
 
         const [data, setData] = useState([]);
+        const Router = useRouter();
         const {enqueueSnackbar} = useSnackbar();
 
         // const headerStyles = makeStyles(styles);
@@ -100,12 +98,12 @@ const OrganExamTable = ({moreCallBack}) => {
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
-            //Router.push(`/draft-details/${data[index]._id}`);
+            Router.push(`/exam-details/${data[index]._id}`);
         };
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllExams(skip, rowsPerPage, search, 3)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -149,13 +147,13 @@ const OrganExamTable = ({moreCallBack}) => {
             setRows([]);
             setData([]);
             loadData();
-        }, [search]);
+        }, [search, selectedTags]);
 
 
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllExams(0, rowsPerPage, search, 3)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
@@ -181,22 +179,68 @@ const OrganExamTable = ({moreCallBack}) => {
         }
 
 
-        const moreTapCallBack = (choice, x) => {
-            moreCallBack(choice, x);
-        }
-
         return (
             <Box>
+                <Typography variant="h3">
+                    Search for Practice Sets
+                </Typography>
+                <Box m={2}/>
+                <Box width={'50%'}>
+                    <TextField
+                        fullWidth
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                        variant="outlined"
+                        placeholder={"Type to search"}
+                    />
+                </Box>
+                {
+                    selectedTags.length === 0 ? <Box/> : <Box display={"flex"} flexWrap={'wrap'} mt={3} mb={-1}>
+                        {
+                            selectedTags.map((e) => <Box
+                                    display={'flex'}
+                                    className={classes.withHover}
+                                    my={0.8} mr={0.8} px={2} borderRadius={16}
+                                    borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
+                                    color={'#F03D5F'} py={0.6}>
+                                    {e.name}
+                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(e)}>
+                                        <img src={cross} alt={'x'}/>
+                                    </Box>
+                                </Box>
+                            )
+                        }
+                    </Box>
+                }
+
                 <Card table>
+                    {/*<CardHeader color="primary">*/}
+                    {/*    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>*/}
+                    {/*        <Box display={'flex'} flexDirection={'column'}>*/}
+                    {/*            <h4 className={headerClasses.cardTitleWhite}>List of Cleaners</h4>*/}
+                    {/*            <p className={headerClasses.cardCategoryWhite}>*/}
+                    {/*                Of your zone*/}
+                    {/*            </p>*/}
+                    {/*        </Box>*/}
+                    {/*        <Box flex={1}/>*/}
+                    {/*        <GreenSearchField*/}
+                    {/*            placeholder={'Search'}*/}
+                    {/*            searchValue={search}*/}
+                    {/*            onChange={(val) => {*/}
+                    {/*                setRows([]);*/}
+                    {/*                setSearch(val);*/}
+                    {/*            }}*/}
+                    {/*        />*/}
+                    {/*    </Box>*/}
+                    {/*</CardHeader>*/}
                     <CardBody>
-                        <DraftTableComponent
+                        <ExamTableComponent
                             columns={columns}
                             rows={rows}
                             loading={loading}
                             notFound={'No Exams Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
-                            moreTap={moreTapCallBack}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
@@ -214,4 +258,4 @@ const OrganExamTable = ({moreCallBack}) => {
     }
 ;
 
-export default OrganExamTable;
+export default PracticeTable;

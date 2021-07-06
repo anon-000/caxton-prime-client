@@ -14,6 +14,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import useDebounce from '../hooks/useDebounce';
 import {getAllTags} from "../apis/tags";
+import Box from "@material-ui/core/Box";
 
 function ExamTagsAutoComplete({
                                  autoFocus,
@@ -83,7 +84,7 @@ function ExamTagsAutoComplete({
             renderInput={(params) => (
                 <TextField
                     autoFocus
-                    className={className ? className : null}
+                    //className={className ? className : null}
                     error={error}
                     fullWidth
                     //helperText={helperText}
@@ -95,11 +96,12 @@ function ExamTagsAutoComplete({
                     {...params}
                     InputProps={{
                         ...params.InputProps,
+                        className: className,
                         endAdornment: (
-                            <React.Fragment>
+                            <Box>
                                 {loading ? <CircularProgress color="inherit" size={20}/> : null}
                                 {params.InputProps.endAdornment}
-                            </React.Fragment>
+                            </Box>
                         ),
                     }}
                     onChange={(event) => {

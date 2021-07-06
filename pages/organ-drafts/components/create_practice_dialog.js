@@ -53,11 +53,9 @@ const useStyles = makeStyles((theme) => ({
         userSelect: "none",
     },
     autoComplete: {
-        marginLeft: theme.spacing(-1),
-        marginTop: theme.spacing(-1),
-        //width: 260,
         cursor: "pointer",
         userSelect: "none",
+        paddingRight: "40px"
     },
     withHover: {
         cursor: 'pointer',
@@ -156,7 +154,7 @@ export default function PracticeSetDialog({open, handleClose, examId}) {
                             tags.map((e, i) => <Box
                                     display={'flex'}
                                     className={classes.withHover}
-                                    mb={0.8} mr={0.8} px={2} borderRadius={16}
+                                    mb={0.8} mr={0.8} px={2} mt={0.6} borderRadius={16}
                                     borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
                                     color={'#F03D5F'} py={0.6}>
                                     {e ? e.name : ''}

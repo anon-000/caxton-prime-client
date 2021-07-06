@@ -24,6 +24,7 @@
     "laco": "^1.2.1",
     "laco-react": "^1.1.0",
     "material-ui-pickers": "^2.2.4",
+    "moment": "^2.29.1",
     "next": "10.2.0",
     "next-compose-plugins": "^2.2.1",
     "next-optimized-images": "^2.6.2",
