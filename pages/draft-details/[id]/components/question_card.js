@@ -7,4 +7,14 @@
  */
 
 
+import Box from "@material-ui/core/Box";
 
+const OrganQuestionCard = () => {
+
+
+    return (
+        <Box>
+
+        </Box>
+    )
+}

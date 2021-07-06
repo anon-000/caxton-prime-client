@@ -108,6 +108,9 @@ const AddQuestionCard = ({examId}) => {
         } else if (answer === '') {
             enqueueSnackbar("Answer is required", {variant: "warning"});
             return;
+        } else if (options.length < 4) {
+            enqueueSnackbar("Add more options", {variant: "warning"});
+            return;
         }
         setLoading(true);
         createQuestion({

@@ -11,7 +11,7 @@ import {
 import Box from "@material-ui/core/Box";
 import TableSkeleton from "../../../src/components/skeleton/Table_skeleton";
 import PropTypes from "prop-types";
-import React from "react";
+import React, {useState} from "react";
 import more from '../../../src/asset/Menu.svg';
 import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
@@ -62,11 +62,14 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
 
     const classes = useStyles();
 
+    const [currentId, setCurrentId] = useState();
+
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event) => {
+    const handleClick = (event, id) => {
         setAnchorEl(event.currentTarget);
+        setCurrentId(id);
     };
 
     const handleClose = () => {
@@ -108,6 +111,7 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                     <TableBody>
                         {rows.length > 0 ? (
                             rows.map((row, rIndex) => {
+                                const tempId = row["_id"];
                                 return (
                                     <TableRow
                                         hover
@@ -139,7 +143,7 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                 </Box> : column.id === 'more' ?
                                                     <Box>
                                                         <Box className={classes.clickable}
-                                                             onClick={handleClick}
+                                                             onClick={(e)=>handleClick(e, tempId)}
                                                              py={3} display={'flex'}
                                                              flexDirection={'column'} justifyContent={'center'}
                                                              alignItems={'center'}>
@@ -168,7 +172,7 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                             >
                                                                 {
                                                                     [1, 2, 3, 4].map((e) => <Button
-                                                                        onClick={() => moreTap(e, row["_id"] )}
+                                                                        onClick={() => moreTap(e, currentId)}
                                                                         color={"primary"}
                                                                     >
                                                                         {e === 1 ? "Edit" : e === 2 ? "Delete" : e === 3 ? "Schedule" : "Practice set"}
