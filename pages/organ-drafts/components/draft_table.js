@@ -63,7 +63,7 @@ const columns = [
     },
 ];
 
-const DraftTable = () => {
+const DraftTable = ({moreCallBack}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -78,7 +78,6 @@ const DraftTable = () => {
         const classes = useStyles();
 
         const [data, setData] = useState([]);
-        const Router = useRouter();
         const {enqueueSnackbar} = useSnackbar();
 
         // const headerStyles = makeStyles(styles);
@@ -87,7 +86,7 @@ const DraftTable = () => {
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
-            // Router.push(`/exam-details/${data[index]._id}`);
+            //Router.push(`/draft-details/${data[index]._id}`);
         };
 
         const loadCleaners = (skip) => {
@@ -166,7 +165,8 @@ const DraftTable = () => {
         }
 
 
-        const moreTapCallBack = (choice) => {
+        const moreTapCallBack = (choice,x) => {
+            moreCallBack(choice, x);
         }
 
         return (

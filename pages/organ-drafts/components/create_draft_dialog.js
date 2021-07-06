@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function CreateDraftDialog({open, handleClose}) {
+export default function CreateDraftDialog({open,handleClose }) {
 
     const classes = useStyles();
     const [name, setName] = useState('');
@@ -102,8 +102,8 @@ export default function CreateDraftDialog({open, handleClose}) {
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
-            <DialogCustomTitle children={'Create Draft'} onClose={handleClose}/>
+        <Dialog open={open} onClose={() => handleClose(1)} aria-labelledby="form-dialog-title" fullWidth>
+            <DialogCustomTitle children={'Create Draft'} onClose={() => handleClose(1) }/>
             <DialogContent>
                 <Typography className={classes.label}>
                     Name

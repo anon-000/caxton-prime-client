@@ -168,7 +168,7 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                             >
                                                                 {
                                                                     [1, 2, 3, 4].map((e) => <Button
-                                                                        onClick={moreTap(e)}
+                                                                        onClick={() => moreTap(e, row["_id"] )}
                                                                         color={"primary"}
                                                                     >
                                                                         {e === 1 ? "Edit" : e === 2 ? "Delete" : e === 3 ? "Schedule" : "Practice set"}

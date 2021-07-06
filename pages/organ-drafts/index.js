@@ -5,6 +5,8 @@ import React, {useState} from "react";
 import DraftTable from "./components/draft_table";
 import Grid from "@material-ui/core/Grid";
 import CreateDraftDialog from "./components/create_draft_dialog";
+import ScheduledExamDialog from "./components/schedule_exam_dialog";
+import {useRouter} from "next/router";
 
 /**
  *
@@ -29,16 +31,39 @@ const useStyles = makeStyles((theme) => ({
 
 const OrganDrafts = () => {
     const classes = useStyles();
-    const [open, setOpen] = useState();
+    const [draftOpen, setDraftOpen] = useState();
+    const [scheduleOpen, setScheduleOpen] = useState();
+    const [practiceOpen, setPracticeOpen] = useState();
     let query = '';
+    const Router = useRouter();
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickOpen = (i) => {
+        console.log(i);
+        if (i === 1)
+            setDraftOpen(true);
+        else if (i === 2)
+            setScheduleOpen(true);
+        else if (i === 3)
+            setPracticeOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleClose = (i) => {
+        if (i === 1)
+            setDraftOpen(false);
+        else if (i === 2)
+            setScheduleOpen(false);
+        else if (i === 3)
+            setPracticeOpen(false);
+
     };
+
+    const moreTableOptionCallBack = (i, id) => {
+        console.log(id);
+        if (i === 1)
+            Router.push(`/draft-details/${id}`);
+        else if (i === 3)
+            handleClickOpen(2);
+    }
 
 
     return (
@@ -63,16 +88,17 @@ const OrganDrafts = () => {
                     <Button
                         fullWidth
                         // disabled={loading}
-                        onClick={handleClickOpen}
+                        onClick={() => handleClickOpen(1)}
                         color="primary"
                         variant="contained"
                     >
                         Create Draft
                     </Button>
-                    <CreateDraftDialog handleClose={handleClose} open={open}/>
+                    <CreateDraftDialog handleClose={handleClose} open={draftOpen}/>
+                    <ScheduledExamDialog handleClose={handleClose} open={scheduleOpen}/>
                 </Grid>
             </Grid>
-            <DraftTable/>
+            <DraftTable moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }
