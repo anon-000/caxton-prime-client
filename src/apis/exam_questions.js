@@ -6,7 +6,7 @@
  * @createdOn 02/07/21 12:38 am
  */
 
-import {questionsService} from "../config/endpoints";
+import { questionsService} from "../config/endpoints";
 
 
 export const getAllQuestions = (id) => questionsService.find({
@@ -20,3 +20,6 @@ export const getAllQuestions = (id) => questionsService.find({
         // $search
     }
 });
+
+
+export const createQuestion = (data) => questionsService.create(data);

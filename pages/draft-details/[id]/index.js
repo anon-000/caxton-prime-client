@@ -70,7 +70,7 @@ const DraftDetails = () => {
                     </Grid>
                 }
                 <Grid item xs={12} sm={12} md={5}>
-                    <AddQuestionCard/>
+                    <AddQuestionCard examId={id}/>
                 </Grid>
             </Grid>
         </Container>

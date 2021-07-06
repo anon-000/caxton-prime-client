@@ -8,13 +8,14 @@
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {CircularProgress, Menu, MenuItem, TextField} from "@material-ui/core";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import {useSnackbar} from "notistack";
+import {createQuestion} from "../../../../src/apis/exam_questions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const AddQuestionCard = () => {
+const AddQuestionCard = ({examId}) => {
     const [question, setQuestion] = useState('');
     const [option, setOption] = useState('');
     const [answer, setAnswer] = useState('');
@@ -64,6 +65,9 @@ const AddQuestionCard = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const {enqueueSnackbar} = useSnackbar();
 
+    useEffect(() => {
+        clearFormData();
+    }, []);
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -95,13 +99,42 @@ const AddQuestionCard = () => {
 
 
     const handleQuestionCreation = () => {
-        if(question === '' && !question){
+        if (question === '' && !question) {
             enqueueSnackbar("Question is required", {variant: "warning"});
             return;
-        }else if(options.length === 0){
+        } else if (options.length === 0) {
             enqueueSnackbar("Options is required", {variant: "warning"});
             return;
+        } else if (answer === '') {
+            enqueueSnackbar("Answer is required", {variant: "warning"});
+            return;
         }
+        setLoading(true);
+        createQuestion({
+            question: question,
+            options: options,
+            answer: answer,
+            exam: examId,
+        }).then((res) => {
+            clearFormData();
+            enqueueSnackbar("Question created successfully", {variant: "success"});
+        }).catch((error) => {
+            enqueueSnackbar(
+                error.message && error.message
+                    ? error.message
+                    : "Something went wrong!",
+                {variant: "warning"}
+            );
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+
+    const clearFormData = () => {
+        setQuestion('');
+        setAnswer('');
+        setOption('');
+        setOptions([]);
     }
 
     return (
