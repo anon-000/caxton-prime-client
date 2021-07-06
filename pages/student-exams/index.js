@@ -5,10 +5,9 @@
  * @description index.js
  * @createdOn 28/06/21 4:07 am
  */
-import {Container, TextField} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import React, {useState} from "react";
-import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import ExamsTable from "./components/exams_table";
 import TopicFilter from "./components/topic_filter";

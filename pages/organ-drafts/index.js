@@ -7,6 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import CreateDraftDialog from "./components/create_draft_dialog";
 import ScheduledExamDialog from "./components/schedule_exam_dialog";
 import {useRouter} from "next/router";
+import PracticeSetDialog from "./components/create_practice_dialog";
+import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
 
 /**
  *
@@ -34,6 +36,8 @@ const OrganDrafts = () => {
     const [draftOpen, setDraftOpen] = useState();
     const [scheduleOpen, setScheduleOpen] = useState();
     const [practiceOpen, setPracticeOpen] = useState();
+    const [deleteOpen, setDeleteOpen] = useState();
+    const [editId, setEditId] = useState('');
     let query = '';
     const Router = useRouter();
 
@@ -45,6 +49,8 @@ const OrganDrafts = () => {
             setScheduleOpen(true);
         else if (i === 3)
             setPracticeOpen(true);
+        else if (i === 4)
+            setDeleteOpen(true);
     };
 
     const handleClose = (i) => {
@@ -54,15 +60,22 @@ const OrganDrafts = () => {
             setScheduleOpen(false);
         else if (i === 3)
             setPracticeOpen(false);
+        else if (i === 4)
+            setDeleteOpen(false);
 
     };
 
     const moreTableOptionCallBack = (i, id) => {
         console.log(id);
+        setEditId(id);
         if (i === 1)
             Router.push(`/draft-details/${id}`);
         else if (i === 3)
             handleClickOpen(2);
+        else if (i === 4)
+            handleClickOpen(3);
+        else if (i === 2)
+            handleClickOpen(4);
     }
 
 
@@ -95,7 +108,10 @@ const OrganDrafts = () => {
                         Create Draft
                     </Button>
                     <CreateDraftDialog handleClose={handleClose} open={draftOpen}/>
-                    <ScheduledExamDialog handleClose={handleClose} open={scheduleOpen}/>
+                    <ScheduledExamDialog examId={editId} handleClose={handleClose} open={scheduleOpen}/>
+                    <PracticeSetDialog examId={editId} handleClose={handleClose} open={practiceOpen}/>
+                    <ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}
+                                   confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>
                 </Grid>
             </Grid>
             <DraftTable moreCallBack={moreTableOptionCallBack}/>

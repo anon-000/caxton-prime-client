@@ -3,7 +3,7 @@ import {Box, Button, Container, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useState} from "react";
 import {useRouter} from "next/router";
-import OrganExamTable from "./components/organ_exam_table";
+import OrganPracticeTable from "./components/organ-practice-table";
 
 
 /**
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const OrganExams = () => {
+const OrganPracticeSets = () => {
     const classes = useStyles();
     const [editId, setEditId] = useState('');
     let query = '';
@@ -50,7 +50,7 @@ const OrganExams = () => {
         <Container>
             <Box m={6}/>
             <Typography variant="h3">
-                Search for Scheduled Exams
+                Search for Practice Sets
             </Typography>
             <Box m={2}/>
             <TextField
@@ -60,10 +60,10 @@ const OrganExams = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganExamTable moreCallBack={moreTableOptionCallBack}/>
+            <OrganPracticeTable moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }
 
 
-export default OrganExams
+export default OrganPracticeSets
