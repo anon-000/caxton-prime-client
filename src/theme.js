@@ -74,12 +74,12 @@ let theme = createMuiTheme({
             },
             '@media (max-width:900px)': {
                 fontSize: 17,
-                lineHeight: '16px',
+                lineHeight: '22px',
                 letterSpacing: '0.5px',
             },
             '@media (max-width:500px)': {
                 fontSize: 17,
-                lineHeight: '12px',
+                lineHeight: '24px',
             },
         },
         h4: {

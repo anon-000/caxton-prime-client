@@ -166,6 +166,7 @@ export default function PracticeSetDialog({open, handleClose, examId}) {
                         }
                     </Box>
                 }
+                <Box my={0.4}/>
                 <Typography className={classes.label}>
                     Difficulty Level
                 </Typography>

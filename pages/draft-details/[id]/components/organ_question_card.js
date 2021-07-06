@@ -1,20 +1,48 @@
+import React, {useEffect, useState} from "react";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import OptionCard from "../../../attend-exam/[id]/components/option_card";
+
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
  * @description organ_question_card.js
- * @createdOn 06/07/21 2:14 pm
+ * @createdOn 24/06/21 9:42 am
  */
 
 
-import Box from "@material-ui/core/Box";
-
-const OrganQuestionCard = () => {
+const OrganQuestionCard = ({question, index}) => {
 
 
-    return (
-        <Box>
+        useEffect(() => {
+        }, [index]);
 
-        </Box>
-    )
-}
+
+        return (
+            <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
+                 boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
+                 bgcolor={'#ffffff'} p={3} mt={5}
+                 borderRadius={3}>
+                <Typography variant="h3">
+                    Q{index + 1} : {question.question}
+                </Typography>
+                <Box m={1}/>
+                {
+                    question.options.map((e, i) => {
+                        return (
+                            <OptionCard
+                                option={e}
+                                isSelected={question.length === 0 ? false : question.answer[0] === e}
+                                onClick={() => {
+                                }}
+                            />
+                        )
+                    })
+                }
+            </Box>
+        );
+    }
+;
+
+export default OrganQuestionCard;

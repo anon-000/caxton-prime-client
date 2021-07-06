@@ -12,6 +12,7 @@ import { questionsService} from "../config/endpoints";
 export const getAllQuestions = (id) => questionsService.find({
     query: {
         "exam": id,
+        $sort: {createdAt: -1},
         // $or: [
         //     {title: {$search}},
         //     {description: {$search}},

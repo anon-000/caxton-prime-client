@@ -51,11 +51,25 @@ const useStyles = makeStyles((theme) => ({
     },
     shadow: {
         boxShadow: "2px 2px 6px rgba(18, 73, 84, 0.15)",
+        //position: 'fixed',
+        margin: '100px 30px',
+        '@media (max-width:1050px)': {
+            margin: '50px 30px',
+        },
+        '@media (max-width:900px)': {
+            margin: '50px 0px',
+        },
+        '@media (max-width:500px)': {
+            margin: '50px 0px',
+        },
+    },
+    fullWidth: {
+        width: '100%'
     }
 }));
 
 
-const AddQuestionCard = ({examId}) => {
+const AddQuestionCard = ({examId, onNewQuestion}) => {
     const [question, setQuestion] = useState('');
     const [option, setOption] = useState('');
     const [answer, setAnswer] = useState('');
@@ -120,6 +134,7 @@ const AddQuestionCard = ({examId}) => {
             exam: examId,
         }).then((res) => {
             clearFormData();
+            onNewQuestion(res);
             enqueueSnackbar("Question created successfully", {variant: "success"});
         }).catch((error) => {
             enqueueSnackbar(
