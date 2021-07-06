@@ -1,14 +1,15 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
 import {useRouter} from "next/router";
 import {CircularProgress, Dialog, DialogContent, Menu, MenuItem, TextField} from "@material-ui/core";
 import DialogCustomTitle from "../../../src/components/dialogs/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
+import ExamTagsAutoComplete from "../../../src/components/TagsAutoComplete";
+import cross from "../../../src/asset/cross_icon.svg";
+
 /**
  *
  * @createdBy Aurosmruti Das
@@ -44,11 +45,29 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(6),
     },
     textField: {
-       // marginLeft: theme.spacing(1),
+        // marginLeft: theme.spacing(1),
         //marginRight: theme.spacing(1),
         width: 260,
         cursor: "pointer",
         userSelect: "none",
+    },
+    autoComplete: {
+        marginLeft: theme.spacing(-1),
+        marginTop: theme.spacing(-1),
+        //width: 260,
+        cursor: "pointer",
+        userSelect: "none",
+    },
+    withHover: {
+        cursor: 'pointer',
+        userSelect: 'none',
+        border: '1px solid',
+        '&:hover': {
+            backgroundColor: "#F03D5F",
+            color: '#ffffff',
+            border: '1px solid', borderColor: '#F03D5F',
+            fontWeight: '600'
+        }
     },
 }));
 
@@ -58,7 +77,6 @@ export default function ScheduledExamDialog({open, handleClose}) {
     const classes = useStyles();
     const [date, setDate] = useState(new Date(new Date('2014-08-1821:11')));
     const [time, setTime] = useState(new Date('2021-08-18T21:11:54'));
-    const [tag, setTag] = useState('');
     const [tags, setTags] = useState([]);
     const [difficulty, setDifficulty] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -76,14 +94,13 @@ export default function ScheduledExamDialog({open, handleClose}) {
         setAnchorEl(null);
     };
 
-    const handleDateChange = (date) => {
-        console.log(date);
+    const handleDateChange = (date, x) => {
+        console.log(x);
     };
 
-    const addMoreTags = () => {
-        if (tag !== '') {
+    const addMoreTags = (tag) => {
+        if (tag && tag !== '') {
             setTags([...tags, tag]);
-            setTag('');
         }
     }
 
@@ -92,6 +109,12 @@ export default function ScheduledExamDialog({open, handleClose}) {
         _list.splice(index, 1);
         setTags([..._list]);
     }
+
+    useEffect(() => {
+        setTags([]);
+        setDate(null);
+        setDifficulty(0);
+    }, [open]);
 
     const handleDraftCreation = () => {
         if (difficulty === 0) {
@@ -130,32 +153,32 @@ export default function ScheduledExamDialog({open, handleClose}) {
             <DialogCustomTitle children={'Schedule exam'} onClose={() => handleClose(2)}/>
             <DialogContent>
                 <Typography className={classes.label}>
-                    Name
+                    Select exam tags
                 </Typography>
-                <TextField
-                    fullWidth
-                    value={tag}
-                    onChange={(event) => setTag(event.target.value)}
-                    variant="outlined"
-                    placeholder={"Enter name of the exam"}
-                />
+                <ExamTagsAutoComplete className={classes.autoComplete} onSelect={addMoreTags}
+                                      placeholder={'Search for tags'}/>
                 {
-                    tags.map((e, i) => <Box borderRadius={5} mb={1.2} pl={2} py={0.4} bgcolor={'#EEF0F5'}
-                                            display={'flex'}
-                                            justifyContent={'space-between'} alignItems={'center'}>
-                        {e}
-                        <IconButton onClick={() => {
-                            removeAtIndex(i);
-                        }}>
-                            <CloseIcon fontSize="default"/>
-                        </IconButton>
-                    </Box>)
+                    tags.length === 0 ? <Box/> : <Box display={"flex"} mt={1} flexWrap={'wrap'}>
+                        {
+                            tags.map((e, i) => <Box
+                                    display={'flex'}
+                                    className={classes.withHover}
+                                    mb={0.8} mr={0.8} px={2} borderRadius={16}
+                                    borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
+                                    color={'#F03D5F'} py={0.6}>
+                                    {e ? e.name : ''}
+                                    <Box ml={1.5} mt={0.2} onClick={() => removeAtIndex(i)}>
+                                        <img src={cross} alt={'x'}/>
+                                    </Box>
+                                </Box>
+                            )
+                        }
+                    </Box>
                 }
-                <Box my={1}/>
                 <Typography className={classes.label}>
                     Difficulty Level
                 </Typography>
-                <Box borderRadius={5} mb={1.2} p={2} bgcolor={'#EEF0F5'} width={165}
+                <Box borderRadius={5} mb={1} p={2} bgcolor={'#EEF0F5'} width={165}
                      display={'flex'} onClick={handleMenuClick} className={classes.clickable}
                      justifyContent={'space-between'} alignItems={'center'}>
                     {difficulty === 0 ? "Select difficulty" : difficulty === 1 ? "Easy" : difficulty === 2 ? "Medium" : "Hard"}

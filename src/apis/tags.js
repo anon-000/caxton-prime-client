@@ -9,4 +9,9 @@ import {examService, tagsService} from "../config/endpoints";
  */
 
 
-export const getAllTags = () => tagsService.find();
+export const getAllTags = () => tagsService.find({
+    query: {
+        $skip: 0,
+        $limit: 30,
+    }
+});
