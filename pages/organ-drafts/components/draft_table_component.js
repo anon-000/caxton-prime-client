@@ -15,6 +15,8 @@ import React, {useState} from "react";
 import more from '../../../src/asset/Menu.svg';
 import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import IconButton from "@material-ui/core/IconButton";
 
 /**
  *
@@ -55,7 +57,12 @@ const useStyles = makeStyles({
         //     backgroundColor: '#124954'
         // }
         // backgroundColor: '#124954'
-    }
+    },
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 });
 
 const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRow, moreTap}) => {
@@ -104,10 +111,6 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                             ))}
                         </TableRow>
                     </TableHead>
-                    {/*<Divider*/}
-                    {/*    className={classes.divider}*/}
-                    {/*    style={{border: '1px solid #124954', width: `500%`}}*/}
-                    {/*/>*/}
                     <TableBody>
                         {rows.length > 0 ? (
                             rows.map((row, rIndex) => {
@@ -143,7 +146,7 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                 </Box> : column.id === 'more' ?
                                                     <Box>
                                                         <Box className={classes.clickable}
-                                                             onClick={(e)=>handleClick(e, tempId)}
+                                                             onClick={(e) => handleClick(e, tempId)}
                                                              py={3} display={'flex'}
                                                              flexDirection={'column'} justifyContent={'center'}
                                                              alignItems={'center'}>
@@ -180,18 +183,24 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                                 }
                                                             </Box>
                                                         </Popover>
-                                                    </Box> :
-                                                    <TableCell
-                                                        key={column.id}
-                                                        align={column.align}
-                                                        className={classes.tableCell}
-                                                    >
-                                                        {
-                                                            column.format && typeof value === 'number'
-                                                                ? column.format(value)
-                                                                : value
-                                                        }
-                                                    </TableCell>
+                                                    </Box> : column.id === 'delete' ?
+                                                        <Box className={classes.root} width={'100%'}>
+                                                            <IconButton
+                                                                onClick={() => moreTap(1, tempId)}>
+                                                                <DeleteOutlineIcon fontSize="default"/>
+                                                            </IconButton>
+                                                        </Box> :
+                                                        <TableCell
+                                                            key={column.id}
+                                                            align={column.align}
+                                                            className={classes.tableCell}
+                                                        >
+                                                            {
+                                                                column.format && typeof value === 'number'
+                                                                    ? column.format(value)
+                                                                    : value
+                                                            }
+                                                        </TableCell>
                                             );
                                         })}
                                     </TableRow>

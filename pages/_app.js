@@ -79,9 +79,7 @@ export default function MyApp(props) {
                     } else if (user["role"] === 3) {
                         /// admin
                         console.log("role 3", user["userName"], user["phone"]);
-                        Router.replace("/organization-onboarding").then(() => {
-                            setLoading(false);
-                        });
+                        setLoading(false);
                     }
                 })
                 .catch(async () => {
