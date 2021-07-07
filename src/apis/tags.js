@@ -16,3 +16,23 @@ export const getAllTags = () => tagsService.find({
         $sort: {createdAt: -1},
     }
 });
+
+
+export const createTag = (data) => tagsService.create(data);
+
+export const deleteTag = (id) => tagsService.remove(id);
+
+
+export const getTags = ($skip, $limit, $search) => tagsService.find({
+    query: {
+        $skip,
+        $limit,
+        $sort: {createdAt: -1},
+        // $or: [
+        //     {title: {$search}},
+        //     {description: {$search}},
+        //     {'examTags': {$search}}
+        // ]
+        // $search
+    }
+});
