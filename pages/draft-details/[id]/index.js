@@ -88,6 +88,12 @@ const DraftDetails = () => {
         setQuestions([datum, ...questions]);
     }
 
+    const onQuestionDelete = (i) => {
+        let _list = questions;
+        _list.splice(i, 1);
+        setQuestions([..._list]);
+    }
+
 
     return (
         <Container maxWidth={'xl'}>
@@ -137,9 +143,14 @@ const DraftDetails = () => {
                                 {questionLoading ?
                                     <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'300px'}>
                                         <CircularProgress size={64}/>
-                                    </Box> : questions.map((e, i) => (
-                                        <OrganQuestionCard question={e} index={i}/>
-                                    ))}
+                                    </Box> : questions.length === 0 ?
+                                        <Box width={'100%'} height={'300px'} className={classes.root}>
+                                            <Typography>
+                                                No Questions available
+                                            </Typography>
+                                        </Box> : questions.map((e, i) => (
+                                            <OrganQuestionCard question={e} index={i} onDelete={onQuestionDelete}/>
+                                        ))}
                                 <Box m={6}/>
                             </Box>
                     }

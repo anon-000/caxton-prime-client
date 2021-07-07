@@ -7,6 +7,7 @@ import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "./draft_table_component";
+import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
 
 /**
  *
@@ -171,9 +172,10 @@ const DraftTable = ({moreCallBack}) => {
         }
 
 
-        const moreTapCallBack = (choice,x) => {
+        const moreTapCallBack = (choice, x) => {
             moreCallBack(choice, x);
         }
+
 
         return (
             <Box>
@@ -188,6 +190,8 @@ const DraftTable = ({moreCallBack}) => {
                             setRow={setRow}
                             moreTap={moreTapCallBack}
                         />
+                        {/*<ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}*/}
+                        {/*               confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>*/}
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
                                 color="primary"
