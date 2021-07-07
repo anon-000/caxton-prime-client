@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import OptionCard from "./option_card";
+import OptionCard from "../../../attend-exam/[id]/components/option_card";
 
 /**
  *
@@ -12,18 +12,12 @@ import OptionCard from "./option_card";
  */
 
 
-const QuestionCard = ({question, index, selectOption}) => {
-        const [selectedIndex, setCurrent] = useState();
+const OrganQuestionCard = ({question, index}) => {
 
 
         useEffect(() => {
-            setCurrent(question.myAnswer === '' ? -1 : question.options.indexOf(question.myAnswer));
         }, [index]);
 
-        const onOptionClicked = (e, i) => {
-            setCurrent(i);
-            selectOption(e);
-        }
 
         return (
             <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
@@ -39,8 +33,9 @@ const QuestionCard = ({question, index, selectOption}) => {
                         return (
                             <OptionCard
                                 option={e}
-                                isSelected={i === selectedIndex}
-                                onClick={() => onOptionClicked(e, i)}
+                                isSelected={question.length === 0 ? false : question.answer[0] === e}
+                                onClick={() => {
+                                }}
                             />
                         )
                     })
@@ -50,4 +45,4 @@ const QuestionCard = ({question, index, selectOption}) => {
     }
 ;
 
-export default QuestionCard;
+export default OrganQuestionCard;

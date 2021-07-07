@@ -7,6 +7,7 @@ import CardBody from '../../../src/components/cards/card_body';
 import Card from '../../../src/components/cards/Card';
 import ExamTableComponent from "./result_table_component";
 import {getAllResults} from "../../../src/apis/results";
+import moment from "moment/moment";
 
 
 /**
@@ -50,7 +51,7 @@ const columns = [
         align: 'left',
     },
     {
-        id: 'scheduledAt',
+        id: 'formattedDate',
         label: 'Scheduled At',
         minWidth: 170,
         align: 'center',
@@ -117,7 +118,7 @@ const ResultsTable = () => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                                 title: each.exam.title,
-                                scheduledAt: each.createdAt,
+                                formattedDate: moment(each.exam.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                                 questionCount: each.exam.questionCount,
                                 difficulty: each.exam.difficulty,
                                 ...each,
@@ -171,7 +172,7 @@ const ResultsTable = () => {
                         return {
                             code: each.exam._id.slice(each.exam._id.length - 6, each.exam._id.length).toUpperCase(),
                             title: each.exam.title,
-                            scheduledAt: each.createdAt,
+                            formattedDate: moment(each.exam.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                             difficulty: each.exam.difficulty,
                             questionCount: each.exam.questionCount,
                             ...each,

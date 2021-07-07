@@ -78,8 +78,10 @@ function Header(props) {
     useEffect(() => {
         if (Router.route === '/student-exams') {
             setCurrent(1);
-        } else if (Router.route === '/student-results') {
+        } else if (Router.route === '/student-practice-sets') {
             setCurrent(2);
+        } else if (Router.route === '/student-results') {
+            setCurrent(3);
         } else {
             setCurrent(0);
         }
@@ -112,6 +114,8 @@ function Header(props) {
         if (i === 1) {
             Router.push('/student-exams');
         } else if (i === 2) {
+            Router.push('/student-practice-sets');
+        } else if (i === 3) {
             Router.push('/student-results');
         } else {
             Router.push('/student-dashboard');
@@ -165,7 +169,7 @@ function Header(props) {
                                 borderColor={current === 0 ? "#ffffff" : "#F03D5F"}
                                 px={1}
                                 onClick={() => handleIndexChange(0)}
-                                width={97}
+                                width={110}
                                 height={36}
                                 display={'flex'}
                                 justifyContent={'center'}
@@ -183,7 +187,7 @@ function Header(props) {
                                 borderColor={current === 1 ? "#ffffff" : "#F03D5F"}
                                 px={1}
                                 onClick={() => handleIndexChange(1)}
-                                width={97}
+                                width={110}
                                 height={36}
                                 display={'flex'}
                                 justifyContent={'center'}
@@ -201,7 +205,25 @@ function Header(props) {
                                 borderColor={current === 2 ? "#ffffff" : "#F03D5F"}
                                 px={1}
                                 onClick={() => handleIndexChange(2)}
-                                width={97}
+                                width={150}
+                                height={36}
+                                display={'flex'}
+                                justifyContent={'center'}
+                                alignItems={'center'}
+                            >
+                                Practice Sets
+                            </Box>
+                        </Hidden>
+                        <Hidden smDown>
+                            <Box
+                                component={Typography}
+                                fvariant="h6"
+                                className={classes.title}
+                                borderBottom={current === 3 ? 3 : 0}
+                                borderColor={current === 3 ? "#ffffff" : "#F03D5F"}
+                                px={1}
+                                onClick={() => handleIndexChange(3)}
+                                width={110}
                                 height={36}
                                 display={'flex'}
                                 justifyContent={'center'}

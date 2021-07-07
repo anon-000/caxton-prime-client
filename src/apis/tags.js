@@ -13,5 +13,6 @@ export const getAllTags = () => tagsService.find({
     query: {
         $skip: 0,
         $limit: 30,
+        $sort: {createdAt: -1},
     }
 });

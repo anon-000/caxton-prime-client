@@ -9,6 +9,7 @@ import {useRouter} from 'next/router';
 import ExamTableComponent from "./exam_table_component";
 import Typography from "@material-ui/core/Typography";
 import cross from "../../../src/asset/cross_icon.svg";
+import moment from "moment/moment";
 
 
 /**
@@ -42,7 +43,7 @@ const columns = [
     {
         id: 'code',
         label: 'Exam Id',
-        minWidth: 170,
+        minWidth: 100,
         align: 'center',
     },
     {
@@ -50,6 +51,12 @@ const columns = [
         label: 'Name',
         minWidth: 170,
         align: 'left',
+    },
+    {
+        id: 'formattedDate',
+        label: 'Scheduled At',
+        minWidth: 170,
+        align: 'center',
     },
     {
         id: 'questionCount',
@@ -95,12 +102,13 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search)
+            getAllExams(skip, rowsPerPage, search, 2)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
+                                formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                                 ...each,
                             };
                         });
@@ -144,13 +152,14 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search)
+            getAllExams(0, rowsPerPage, search, 2)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
                     let _allCleaners = res.data.map(each => {
                         return {
                             code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
+                            formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                             ...each,
                         };
                     });
