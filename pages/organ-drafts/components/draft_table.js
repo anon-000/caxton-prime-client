@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const columns = [
     {
         id: 'code',
-        label: 'Exam Id',
+        label: 'Draft Id',
         minWidth: 170,
         align: 'center',
     },

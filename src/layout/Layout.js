@@ -4,6 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Header from './Header';
 import { useRouter } from 'next/router';
+import Navigator from "./Navigator";
+import Hidden from "@material-ui/core/Hidden";
 
 /**
  *
@@ -79,19 +81,19 @@ function Layout({ children, title }) {
     return (
         <div className={classes.root}>
             <CssBaseline />
-            {/*<nav className={classes.drawer}>*/}
-            {/*    <Hidden smUp implementation="js">*/}
-            {/*        <Navigator*/}
-            {/*            PaperProps={{ style: { width: drawerWidth } }}*/}
-            {/*            variant="temporary"*/}
-            {/*            open={mobileOpen}*/}
-            {/*            onClose={handleDrawerToggle}*/}
-            {/*        />*/}
-            {/*    </Hidden>*/}
-            {/*    <Hidden xsDown implementation="css">*/}
-            {/*        <Navigator PaperProps={{ style: { width: drawerWidth } }} />*/}
-            {/*    </Hidden>*/}
-            {/*</nav>*/}
+            <nav className={classes.drawer}>
+                <Hidden smUp implementation="js">
+                    <Navigator
+                        PaperProps={{ style: { width: drawerWidth } }}
+                        variant="temporary"
+                        open={mobileOpen}
+                        onClose={handleDrawerToggle}
+                    />
+                </Hidden>
+                <Hidden xsDown implementation="css">
+                    <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+                </Hidden>
+            </nav>
             <div className={classes.app}>
                 <Header onDrawerToggle={handleDrawerToggle} title={title} />
                 <main className={classes.main}>
