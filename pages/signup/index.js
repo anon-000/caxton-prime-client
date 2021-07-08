@@ -102,8 +102,8 @@ const SignUp = () => {
             .then((response) => {
                 const {accessToken, user} = response;
                 console.log(accessToken, user);
-                localStorage.setItem('feathers-jwt', accessToken);
-                userStore.set(() => ({token: accessToken, user}), 'user');
+                localStorage.setItem("feathers-jwt", accessToken);
+                userStore.set(() => ({token: accessToken, user}), "user");
                 enqueueSnackbar('Account created successfully', {variant: 'success'});
                 if (user.role === 1) {
                     Router.replace('/student-onboarding');

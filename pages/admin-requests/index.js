@@ -1,4 +1,8 @@
 import {makeStyles} from "@material-ui/core/styles";
+import {Box, Container, TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import React, {useState} from "react";
+import AdminRequestsTable from "./components/admin_requests_table";
 
 /**
  *
@@ -23,11 +27,26 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminRequest = () => {
     const classes = useStyles();
+    const [query, setQuery] = useState();
 
     return (
-        <div className={classes.root}>
-            Admin requests
-        </div>
+        <Container>
+            <Box m={6}/>
+            <Typography variant="h3">
+                Search for Organization Requests
+            </Typography>
+            <Box m={2}/>
+            <Box width={'40%'}>
+                <TextField
+                    fullWidth
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    variant="outlined"
+                    placeholder={"Type to search"}
+                />
+            </Box>
+            <AdminRequestsTable/>
+        </Container>
     )
 }
 
