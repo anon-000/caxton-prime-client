@@ -85,6 +85,11 @@ const SignUp = () => {
         console.log("sign up page");
     }, []);
 
+    const validateEmail = (email) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     const handleLogin = () => {
 
         if (name === '') {
@@ -92,6 +97,9 @@ const SignUp = () => {
             return;
         } else if (email === '') {
             enqueueSnackbar('Email is required', {variant: 'warning'});
+            return;
+        } else if (!validateEmail(email)) {
+            enqueueSnackbar('Email is invalid', {variant: 'warning'});
             return;
         } else if (password === '') {
             enqueueSnackbar('Password is required', {variant: 'warning'});
