@@ -70,7 +70,7 @@ const columns = [
     },
 ];
 
-const DraftTable = ({moreCallBack}) => {
+const DraftTable = ({moreCallBack, refresh}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -81,7 +81,6 @@ const DraftTable = ({moreCallBack}) => {
         const [loading, setLoading] = React.useState(false);
         const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
-        const [query, setQuery] = useState("");
         const classes = useStyles();
 
         const [data, setData] = useState([]);
@@ -141,7 +140,7 @@ const DraftTable = ({moreCallBack}) => {
             setRows([]);
             setData([]);
             loadData();
-        }, [search]);
+        }, [search, refresh]);
 
 
         const loadData = () => {

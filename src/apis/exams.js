@@ -8,7 +8,7 @@
 import {examService, resultService} from "../config/endpoints";
 
 
-export const getAllExams = ($skip, $limit,  $search, type = 1) => examService.find({
+export const getAllExams = ($skip, $limit, $search, type = 1) => examService.find({
     query: {
         $skip,
         $limit,
@@ -32,6 +32,8 @@ export const getExamDetails = (id) => examService.get(id, {
 
 
 export const createDraft = (data) => examService.create(data);
+
+export const removeDraft = (id) => examService.remove(id);
 
 
 export const examPatch = (id, body) => {
