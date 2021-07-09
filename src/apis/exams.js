@@ -8,12 +8,12 @@
 import {examService, resultService} from "../config/endpoints";
 
 
-export const getAllExams = ($skip, $limit,  $search, type = 1) => examService.find({
+export const getAllExams = ($skip, $limit, $search, type = 1) => examService.find({
     query: {
         $skip,
         $limit,
         type,
-        $sort: {createdAt: -1},
+        $sort: {createdAt: -1, scheduledAt : -1},
         // $or: [
         //     {title: {$search}},
         //     {description: {$search}},
@@ -32,6 +32,8 @@ export const getExamDetails = (id) => examService.get(id, {
 
 
 export const createDraft = (data) => examService.create(data);
+
+export const removeDraft = (id) => examService.remove(id);
 
 
 export const examPatch = (id, body) => {

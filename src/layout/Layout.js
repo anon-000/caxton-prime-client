@@ -1,9 +1,15 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Header from './Header';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
+import Navigator from "./Navigator";
+import Hidden from "@material-ui/core/Hidden";
+import {useStore} from "laco-react";
+import userStore from "../store/userStore";
+import AdOrgHeader from "./AdOrgHeader";
+import Box from "@material-ui/core/Box";
 
 /**
  *
@@ -37,7 +43,7 @@ const useStyle = makeStyles(theme => ({
         // padding: theme.spacing(1, 4),
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         background: '#ffffff',
         // backgroundImage: `url(${BackImg})`,
         // backgroundPosition: 'bottom center',
@@ -55,11 +61,15 @@ const useStyle = makeStyles(theme => ({
         padding: theme.spacing(2),
         background: '#eaeff1',
     },
+    drawerBg: {
+        backgroundColor: '#F03D5F'
+    }
 }));
 
-function Layout({ children, title }) {
+function Layout({children, title}) {
     const classes = useStyle();
     const Router = useRouter();
+    const {user} = useStore(userStore);
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -78,22 +88,28 @@ function Layout({ children, title }) {
 
     return (
         <div className={classes.root}>
-            <CssBaseline />
-            {/*<nav className={classes.drawer}>*/}
-            {/*    <Hidden smUp implementation="js">*/}
-            {/*        <Navigator*/}
-            {/*            PaperProps={{ style: { width: drawerWidth } }}*/}
-            {/*            variant="temporary"*/}
-            {/*            open={mobileOpen}*/}
-            {/*            onClose={handleDrawerToggle}*/}
-            {/*        />*/}
-            {/*    </Hidden>*/}
-            {/*    <Hidden xsDown implementation="css">*/}
-            {/*        <Navigator PaperProps={{ style: { width: drawerWidth } }} />*/}
-            {/*    </Hidden>*/}
-            {/*</nav>*/}
+            <CssBaseline/>
+            {
+                user["role"] === 1 ? <Box/> : <nav className={classes.drawer}>
+                    <Hidden smUp implementation="js">
+                        <Navigator
+                            PaperProps={{style: {width: drawerWidth}}}
+                            variant="temporary"
+                            open={mobileOpen}
+                            onClose={handleDrawerToggle}
+                        />
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                        <Navigator PaperProps={{style: {width: drawerWidth, backgroundColor: '#F03D5F'}}}/>
+                    </Hidden>
+                </nav>
+            }
             <div className={classes.app}>
-                <Header onDrawerToggle={handleDrawerToggle} title={title} />
+                {
+                    user["role"] === 1 ? <Header onDrawerToggle={handleDrawerToggle} title={title}/> :
+                        <AdOrgHeader onDrawerToggle={handleDrawerToggle} title={title}/>
+                }
+                {/*<Header onDrawerToggle={handleDrawerToggle} title={title} />*/}
                 <main className={classes.main}>
                     {children}
                 </main>

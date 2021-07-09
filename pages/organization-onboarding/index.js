@@ -16,7 +16,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import CoverImage from "../../src/asset/background.png"
 import Vector from "../../src/asset/organization_onboarding_vector.svg"
 import Typography from "@material-ui/core/Typography";
-import {userPatch} from "../../src/apis/users";
+import {editUser, userPatch} from "../../src/apis/users";
 
 /**
  *
@@ -71,11 +71,15 @@ const OrganizationOnBoarding = () => {
 
     useEffect(() => {
         console.log("organization on-boarding page");
+        console.log(localStorage.getItem("feathers-jwt"));
     }, []);
 
     const handleOrganizationRequest = () => {
         if (phone === '') {
             enqueueSnackbar('Phone number is required', {variant: 'warning'});
+            return;
+        } else if (phone.length !== 10) {
+            enqueueSnackbar('Enter a valid phone number', {variant: 'warning'});
             return;
         } else if (lane === '') {
             enqueueSnackbar('Lane is required', {variant: 'warning'});
@@ -90,17 +94,21 @@ const OrganizationOnBoarding = () => {
             enqueueSnackbar('Pin is required', {variant: 'warning'});
             return;
         }
-
+        let myId = user['_id'];
+        console.log(`id --------------- ${myId}`);
+        console.log(localStorage.getItem("feathers-jwt"));
         setLoading(true);
-        userPatch(user['_id'], {
-            phone, "address": {
+        editUser(myId, {
+            phone,
+            address: {
                 lane,
                 city,
                 state,
-                "pinCode": pin,
+                pinCode: pin,
             }
         })
             .then((response) => {
+                console.log(response);
                 userStore.set(() => ({response}), 'user');
                 Router.replace('/organ-request-pending');
             })
@@ -136,6 +144,11 @@ const OrganizationOnBoarding = () => {
                                 onChange={event => setPhone(event.target.value)}
                                 variant="outlined"
                                 placeholder={'Phone number'}
+                                type={'number'}
+                                onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                }}
+                                min={0}
                             />
                             <Box m={1}/>
                             <Box component={Typography} variant={'caption'} color={'#757575'}>
@@ -172,6 +185,11 @@ const OrganizationOnBoarding = () => {
                                 onChange={event => setPin(event.target.value)}
                                 variant="outlined"
                                 placeholder={'Pin'}
+                                type={'number'}
+                                onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
+                                }}
+                                min={0}
                             />
                             <Box m={1}/>
                             <Button fullWidth disabled={loading} onClick={handleOrganizationRequest} color="primary"

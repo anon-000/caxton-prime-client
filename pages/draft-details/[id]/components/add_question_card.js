@@ -19,11 +19,7 @@ import {createQuestion} from "../../../../src/apis/exam_questions";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
+
     paper: {
         width: '80%',
         maxHeight: 435,
@@ -49,18 +45,22 @@ const useStyles = makeStyles((theme) => ({
     marginX: {
         padding: `${theme.spacing(3)}`,
     },
-    shadow: {
+    root: {
+        width: '30vw',
         boxShadow: "2px 2px 6px rgba(18, 73, 84, 0.15)",
         //position: 'fixed',
         margin: '100px 30px',
         '@media (max-width:1050px)': {
             margin: '50px 30px',
+            width: '30vw',
         },
         '@media (max-width:900px)': {
             margin: '50px 0px',
+            width: '100vw',
         },
         '@media (max-width:500px)': {
             margin: '50px 0px',
+            width: '100%',
         },
     },
     fullWidth: {
@@ -89,7 +89,9 @@ const AddQuestionCard = ({examId, onNewQuestion}) => {
 
     const handleMenuClose = (i) => {
         console.log(i);
-        setAnswer(i);
+        if (i) {
+            setAnswer(i);
+        }
         setAnchorEl(null);
     };
 
@@ -156,7 +158,7 @@ const AddQuestionCard = ({examId, onNewQuestion}) => {
     }
 
     return (
-        <Box borderRadius={10} className={classes.shadow}>
+        <Box borderRadius={10} className={classes.root}>
             <Box bgcolor={'#F03D5F'} color={'#ffffff'}
                  py={3} display={'flex'} justifyContent={'center'}
                  borderRadius={'20px 0px'}
@@ -203,7 +205,7 @@ const AddQuestionCard = ({examId, onNewQuestion}) => {
             <Box my={1}/>
             {
                 options.length < 4 ? <Button className={classes.paddingX} color="primary" onClick={addMoreOption}>
-                    + Add more guideline
+                    + Add more option
                 </Button> : <Box/>
             }
             <Box my={2}/>
@@ -224,7 +226,7 @@ const AddQuestionCard = ({examId, onNewQuestion}) => {
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
-                        onClose={handleMenuClose}
+                        onClose={() => handleMenuClose(null)}
                     >
                         {
                             options.map((e) => <MenuItem className={classes.menu}

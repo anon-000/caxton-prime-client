@@ -9,6 +9,8 @@ import ScheduledExamDialog from "./components/schedule_exam_dialog";
 import {useRouter} from "next/router";
 import PracticeSetDialog from "./components/create_practice_dialog";
 import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
+import {removeDraft} from "../../src/apis/exams";
+import {useSnackbar} from "notistack";
 
 /**
  *
@@ -38,8 +40,10 @@ const OrganDrafts = () => {
     const [practiceOpen, setPracticeOpen] = useState();
     const [deleteOpen, setDeleteOpen] = useState();
     const [editId, setEditId] = useState('');
-    let query = '';
+    const [query, setQuery] = useState('');
+    const [refresh, setRefresh] = useState(false);
     const Router = useRouter();
+    const {enqueueSnackbar} = useSnackbar();
 
     const handleClickOpen = (i) => {
         console.log(i);
@@ -78,7 +82,14 @@ const OrganDrafts = () => {
             handleClickOpen(4);
     }
 
-
+    const deleteDraft = () => {
+        setDeleteOpen(false);
+        removeDraft(editId).then((res) => {
+            setRefresh(!refresh);
+        }).catch((e) => {
+            enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
+        });
+    }
 
 
     return (
@@ -110,13 +121,15 @@ const OrganDrafts = () => {
                         Create Draft
                     </Button>
                     <CreateDraftDialog handleClose={handleClose} open={draftOpen}/>
-                    <ScheduledExamDialog examId={editId} handleClose={handleClose} open={scheduleOpen}/>
+                    <ScheduledExamDialog onChanged={() => setRefresh(!refresh)} examId={editId}
+                                         handleClose={handleClose} open={scheduleOpen}/>
                     <PracticeSetDialog examId={editId} handleClose={handleClose} open={practiceOpen}/>
                     <ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}
+                                   proceed={deleteDraft}
                                    confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>
                 </Grid>
             </Grid>
-            <DraftTable moreCallBack={moreTableOptionCallBack}/>
+            <DraftTable refresh={refresh} moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }

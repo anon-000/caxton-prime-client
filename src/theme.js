@@ -102,7 +102,7 @@ let theme = createMuiTheme({
         },
         subtitle1: {
             fontSize: 18,
-            fontWeight: 400,
+            fontWeight: 600,
             letterSpacing: '0.75px',
             lineHeight: '22px',
             '@media (max-width:1050px)': {

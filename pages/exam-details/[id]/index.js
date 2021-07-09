@@ -7,6 +7,7 @@ import {Button} from "@material-ui/core";
 import {useSnackbar} from "notistack";
 import {useRouter} from "next/router";
 import {getExamDetails} from "../../../src/apis/exams";
+import moment from "moment/moment";
 
 /**
  *
@@ -65,7 +66,7 @@ const ExamDetails = () => {
             .then((res) => {
                 console.log(res);
                 setExamData(res);
-                let countDownDate = new Date("July 4, 2021 15:37:25").getTime();
+                let countDownDate = new Date(res["scheduledAt"]).getTime();
 
                 let x = setInterval(function () {
 

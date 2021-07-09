@@ -17,6 +17,7 @@ import Button from "@material-ui/core/Button";
 import Popover from "@material-ui/core/Popover";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import IconButton from "@material-ui/core/IconButton";
+import RequestActions from "../../admin-requests/components/request_actions";
 
 /**
  *
@@ -175,7 +176,11 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                             >
                                                                 {
                                                                     [1, 2, 3, 4].map((e) => <Button
-                                                                        onClick={() => moreTap(e, currentId)}
+                                                                        onClick={() => {
+                                                                            handleClose();
+                                                                            moreTap(e, currentId);
+
+                                                                        }}
                                                                         color={"primary"}
                                                                     >
                                                                         {e === 1 ? "Edit" : e === 2 ? "Delete" : e === 3 ? "Schedule" : "Practice set"}
@@ -189,18 +194,20 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                                 onClick={() => moreTap(1, tempId)}>
                                                                 <DeleteOutlineIcon fontSize="default"/>
                                                             </IconButton>
-                                                        </Box> :
-                                                        <TableCell
-                                                            key={column.id}
-                                                            align={column.align}
-                                                            className={classes.tableCell}
-                                                        >
-                                                            {
-                                                                column.format && typeof value === 'number'
-                                                                    ? column.format(value)
-                                                                    : value
-                                                            }
-                                                        </TableCell>
+                                                        </Box> : column.id === 'request' ?
+                                                            <RequestActions onAccept={() => moreTap(1, tempId)}
+                                                                            onReject={() => moreTap(2, tempId)}/> :
+                                                            <TableCell
+                                                                key={column.id}
+                                                                align={column.align}
+                                                                className={classes.tableCell}
+                                                            >
+                                                                {
+                                                                    column.format && typeof value === 'number'
+                                                                        ? column.format(value)
+                                                                        : value
+                                                                }
+                                                            </TableCell>
                                             );
                                         })}
                                     </TableRow>

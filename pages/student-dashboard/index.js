@@ -6,6 +6,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
+import {useStore} from "laco-react";
+import userStore from "../../src/store/userStore";
 
 
 /**
@@ -54,6 +56,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 const StudentDashboard = () => {
+    const {user} = useStore(userStore);
+
     const data = [
         {
             title: "Students",
@@ -84,9 +88,13 @@ const StudentDashboard = () => {
                 <Grid item sm={12} xs={12} md={7}>
                     <Box m={4}/>
                     <Typography variant="h2">
-                        Explore Us
+                        Hey {user["name"]},
                     </Typography>
-                    <Box m={1.5}/>
+                    <Box m={1}/>
+                    <Typography variant="h2">
+                        Welcome to Caxton Prime 🤙
+                    </Typography>
+                    <Box m={3.5}/>
                     <Box component={Grid} display={'flex'} flexWrap={'wrap'}>
                         {
                             data.map((e) => {
@@ -98,8 +106,8 @@ const StudentDashboard = () => {
                             })
                         }
                     </Box>
-                    <Box m={3}/>
-                    <QuoteBox/>
+                    {/*<Box m={3}/>*/}
+                    {/*<QuoteBox/>*/}
                     <Box m={6}/>
                     <img src={wave} alt={'explore'} width={'100%'}/>
                 </Grid>
@@ -132,14 +140,14 @@ const InfoBox = ({title, count}) => {
     );
 }
 
-
-const QuoteBox = () => {
-    const classes = useStyles();
-    return (
-        <Box className={classes.quoteBox} p={4} m={2} bgcolor={'#FFFFFF'}>
-            “Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more
-            time.”
-            <br/> - Thomas Edison
-        </Box>
-    )
-}
+//
+// const QuoteBox = () => {
+//     const classes = useStyles();
+//     return (
+//         <Box className={classes.quoteBox} p={4} m={2} bgcolor={'#FFFFFF'}>
+//             “Our greatest weakness lies in giving up. The most certain way to succeed is always to try just one more
+//             time.”
+//             <br/> - Thomas Edison
+//         </Box>
+//     )
+// }

@@ -8,11 +8,11 @@
 import {Box, Container, TextField} from "@material-ui/core";
 import ResultsTable from "./components/result_table";
 import Typography from "@material-ui/core/Typography";
-import React from "react";
+import React, {useState} from "react";
 
 
 const StudentResults = () => {
-    let query;
+    const [query, setQuery] = useState();
     return (
         <Container>
             <Box m={6}/>

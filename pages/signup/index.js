@@ -24,6 +24,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import RoleSelection from "./components/role_selection";
 import {signUp} from "../../src/apis/users";
 import AttendExam from "../attend-exam/[id]";
+import {cookieStorage} from "../../src/apis";
 
 /**
  *
@@ -85,6 +86,11 @@ const SignUp = () => {
         console.log("sign up page");
     }, []);
 
+    const validateEmail = (email) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     const handleLogin = () => {
 
         if (name === '') {
@@ -92,6 +98,9 @@ const SignUp = () => {
             return;
         } else if (email === '') {
             enqueueSnackbar('Email is required', {variant: 'warning'});
+            return;
+        } else if (!validateEmail(email)) {
+            enqueueSnackbar('Email is invalid', {variant: 'warning'});
             return;
         } else if (password === '') {
             enqueueSnackbar('Password is required', {variant: 'warning'});
@@ -102,13 +111,15 @@ const SignUp = () => {
             .then((response) => {
                 const {accessToken, user} = response;
                 console.log(accessToken, user);
-                localStorage.setItem('feathers-jwt', accessToken);
-                userStore.set(() => ({token: accessToken, user}), 'user');
+                localStorage.setItem("feathers-jwt", accessToken);
+                cookieStorage.setItem("feathers-jwt", accessToken);
+                userStore.set(() => ({token: accessToken, user}), "user");
                 enqueueSnackbar('Account created successfully', {variant: 'success'});
+                // window.location.reload();
                 if (user.role === 1) {
-                    Router.replace('/student-onboarding');
+                    Router.push('/student-onboarding');
                 } else {
-                    Router.replace('/organization-onboarding');
+                    Router.push('/organization-onboarding');
                 }
             })
             .catch(error => {

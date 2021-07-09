@@ -1,7 +1,6 @@
 import {Box} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
-import {getAllExams} from "../../../src/apis/exams";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
@@ -59,7 +58,7 @@ const TagsTable = ({moreCallBack, refresh}) => {
 
         const loadTags = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search)
+            getTags(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
                         let _allTags = res.data.map(each => {

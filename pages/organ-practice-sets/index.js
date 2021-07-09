@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'flex-start'
     },
     clickable: {
         cursor: "pointer",
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const OrganPracticeSets = () => {
     const classes = useStyles();
     const [editId, setEditId] = useState('');
-    let query = '';
+    const [query, setQuery] = useState('');
     const Router = useRouter();
 
 

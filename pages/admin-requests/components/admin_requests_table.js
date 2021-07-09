@@ -1,12 +1,19 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
+/**
+ *
+ * @createdBy Aurosmruti Das
+ * @email aurosmruti.das@gmail.com
+ * @description admin_requests_table.js
+ * @createdOn 08/07/21 4:21 pm
+ */
+
+import {Box} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {useSnackbar} from "notistack";
-import {getAllExams} from "../../../src/apis/exams";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
-import DraftTableComponent from "./draft_table_component";
+import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
+import {deleteUser, getAllPendingOrgans, userPatch} from "../../../src/apis/users";
 import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
 
 /**
@@ -17,98 +24,77 @@ import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
  * @createdOn 04/07/21 4:53 pm
  */
 
-
-
-const useStyles = makeStyles((theme) => ({
-    withHover: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        border: '1px solid',
-        '&:hover': {
-            backgroundColor: "#F03D5F",
-            color: '#ffffff',
-            border: '1px solid', borderColor: '#F03D5F',
-            fontWeight: '600'
-        }
-    },
-    skeleton: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        backgroundColor: '#FAF7F7'
-    }
-}));
 const columns = [
     {
         id: 'code',
-        label: 'Draft Id',
-        minWidth: 170,
+        label: 'Id',
+        minWidth: 130,
         align: 'center',
     },
     {
-        id: 'title',
+        id: 'name',
         label: 'Name',
         minWidth: 170,
         align: 'left',
     },
     {
-        id: 'duration',
-        label: 'Duration',
-        minWidth: 170,
+        id: 'email',
+        label: 'Email',
+        minWidth: 160,
+        align: 'left',
+    },
+    {
+        id: 'phone',
+        label: 'Phone',
+        minWidth: 150,
+        maxWidth: 150,
         align: 'center',
     },
     {
-        id: 'questionCount',
-        label: 'No of Questions',
-        minWidth: 170,
-        align: 'center',
-    },
-    {
-        id: 'more',
-        label: 'More',
-        minWidth: 170,
+        id: 'request',
+        label: 'Actions',
+        minWidth: 210,
         align: 'center',
     },
 ];
 
-const DraftTable = ({moreCallBack, refresh}) => {
+const AdminRequestsTable = ({moreCallBack, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
         const [rowsPerPage] = React.useState(12);
-        const [exams, setExams] = React.useState([]);
+        const [requests, setRequests] = React.useState([]);
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
-        const [search, setSearch] = React.useState('');
+        const [confirmOpen, setConfirmOpen] = React.useState(false);
+        const [refresh, setRefresh] = React.useState(false);
+        const [type, setType] = React.useState(1);
+        const [id, setId] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
-        const classes = useStyles();
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
-
-        // const headerStyles = makeStyles(styles);
-        // const headerClasses = headerStyles();
-
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
             //Router.push(`/draft-details/${data[index]._id}`);
         };
 
-        const loadCleaners = (skip) => {
+        const loadRequests = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search)
+            getAllPendingOrgans(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
-                        let _allExams = res.data.map(each => {
+                        let _allReq = res.data.map(each => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                                 ...each,
                             };
                         });
-                        setRows(_allExams);
-                        setExams([...exams, _allExams]);
-                        setData([...data, ..._allExams]);
+                        setRows(_allReq);
+                        setRequests([...requests, _allReq]);
+                        setData([...requests, ..._allReq]);
                     }
                 })
                 .catch((e) => {
@@ -121,22 +107,22 @@ const DraftTable = ({moreCallBack, refresh}) => {
 
         const handleChangePage = (event, value) => {
             setPage(value);
-            if (value * rowsPerPage > exams.length) {
+            if (value * rowsPerPage > requests.length) {
                 setRows([]);
-                if (exams.length === total) {
-                    setRows(exams.slice((value - 1) * rowsPerPage, total));
+                if (requests.length === total) {
+                    setRows(requests.slice((value - 1) * rowsPerPage, total));
                 } else {
-                    loadCleaners((value - 1) * rowsPerPage);
+                    loadRequests((value - 1) * rowsPerPage);
                 }
             } else {
                 setRows([]);
-                setRows(exams.slice((value - 1) * rowsPerPage, value * rowsPerPage));
+                setRows(requests.slice((value - 1) * rowsPerPage, value * rowsPerPage));
             }
         };
 
 
         useEffect(() => {
-            setExams([]);
+            setRequests([]);
             setRows([]);
             setData([]);
             loadData();
@@ -146,21 +132,21 @@ const DraftTable = ({moreCallBack, refresh}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search)
+            getAllPendingOrgans(0, rowsPerPage, search)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
-                    let _allCleaners = res.data.map(each => {
+                    let _allRequests = res.data.map(each => {
                         return {
                             code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                             ...each,
                         };
                     });
-                    setExams(_allCleaners);
-                    setRows(_allCleaners);
+                    setRequests(_allRequests);
+                    setRows(_allRequests);
                     setTotalPages(Math.ceil(res.total / rowsPerPage));
                     setPage(1);
-                    setData(_allCleaners);
+                    setData(_allRequests);
                 })
                 .catch((e) => {
                     enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
@@ -172,7 +158,31 @@ const DraftTable = ({moreCallBack, refresh}) => {
 
 
         const moreTapCallBack = (choice, x) => {
-            moreCallBack(choice, x);
+            setId(x);
+            setType(choice);
+            setConfirmOpen(true);
+            /// 1 - accept. 2 - reject, x - id
+        }
+
+        const handleDialog = () => {
+            setConfirmOpen(false);
+            if (type === 1) {
+                /// accept - patch status 2
+                userPatch(id, {"status": 2}).then((res) => {
+                    setRefresh(!refresh);
+                }).catch((e) => {
+                    enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
+                }).finally(() => {
+                });
+            } else if (type === 2) {
+                /// reject - delete user
+                deleteUser(id).then((res) => {
+                    setRefresh(!refresh);
+                }).catch((e) => {
+                    enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
+                }).finally(() => {
+                });
+            }
         }
 
 
@@ -184,13 +194,15 @@ const DraftTable = ({moreCallBack, refresh}) => {
                             columns={columns}
                             rows={rows}
                             loading={loading}
-                            notFound={'No Exams Found'}
+                            notFound={'No Requests Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
                         />
-                        {/*<ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}*/}
-                        {/*               confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>*/}
+                        <ConfirmDialog show={confirmOpen} dismiss={() => setConfirmOpen(false)} title={'Confirm'}
+                                       proceed={() => handleDialog()}
+                                       confirmation={`Are you sure to you want to ${type === 1 ? "accept" : "reject"} this organization request?`}
+                                       okLabel={'yes'}/>
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
                                 color="primary"
@@ -207,4 +219,4 @@ const DraftTable = ({moreCallBack, refresh}) => {
     }
 ;
 
-export default DraftTable;
+export default AdminRequestsTable;
