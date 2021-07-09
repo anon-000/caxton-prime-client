@@ -84,6 +84,7 @@ export default function CreateDraftDialog({open,handleClose }) {
             duration: duration,
             guidelines: guideLines,
         }).then((res) => {
+            handleClose(1);
             console.log(res);
             const {_id: id} = res;
             console.log(id);

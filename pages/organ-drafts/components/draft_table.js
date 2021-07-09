@@ -70,7 +70,7 @@ const columns = [
     },
 ];
 
-const DraftTable = ({moreCallBack, refresh}) => {
+const DraftTable = ({moreCallBack, refresh, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -79,7 +79,6 @@ const DraftTable = ({moreCallBack, refresh}) => {
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
-        const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
         const classes = useStyles();
 

@@ -43,11 +43,12 @@ export const getAllPendingOrgans = ($skip, $limit, $search) => UserService.find(
         role: 2,
         status: 1,
         $sort: {createdAt: -1},
-        // $or: [
-        //     {title: {$search}},
-        //     {description: {$search}},
-        //     {'examTags': {$search}}
-        // ]
+        $or: [
+            {name: {$search}},
+            {phone: {$search}},
+            {email: {$search}},
+            {username: {$search}},
+        ]
         // $search
     }
 });

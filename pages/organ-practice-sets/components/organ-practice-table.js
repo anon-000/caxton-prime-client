@@ -75,7 +75,7 @@ const columns = [
     },
 ];
 
-const OrganPracticeTable = ({moreCallBack}) => {
+const OrganPracticeTable = ({moreCallBack, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -84,9 +84,7 @@ const OrganPracticeTable = ({moreCallBack}) => {
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
-        const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
-        const [query, setQuery] = useState("");
         const classes = useStyles();
 
         const [data, setData] = useState([]);

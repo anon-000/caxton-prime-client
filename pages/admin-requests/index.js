@@ -45,7 +45,7 @@ const AdminRequest = () => {
                     placeholder={"Type to search"}
                 />
             </Box>
-            <AdminRequestsTable/>
+            <AdminRequestsTable search={query}/>
         </Container>
     )
 }

@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const OrganisationDashboard = () => {
-
+    const classes = useStyles();
     const {user} = useStore(userStore);
 
     const data = [
@@ -106,10 +106,9 @@ const OrganisationDashboard = () => {
                     <Box m={8}/>
                     <img src={wave} alt={'explore'} width={'100%'}/>
                 </Grid>
-                <Grid item sm={12} xs={12} md={5}>
-                    <Box m={3}/>
+                <Box component={Grid} className={classes.root} item sm={12} xs={12} md={5}>
                     <img src={vector} alt={'explore'} width={'100%'}/>
-                </Grid>
+                </Box>
             </Grid>
         </Container>
     );

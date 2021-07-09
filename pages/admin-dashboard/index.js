@@ -105,7 +105,7 @@ const AdminDashboard = () => {
                     <Box m={11}/>
                     <img src={wave} alt={'explore'} width={'100%'}/>
                 </Grid>
-                <Box component={Grid} className={classes.root} item sm={12} xs={12} md={5}>
+                <Box component={Grid} className={classes.root} item sm={12} xs={12} md={5} ml={2}>
                     <img src={vector} alt={'explore'} width={'100%'}/>
                 </Box>
             </Grid>

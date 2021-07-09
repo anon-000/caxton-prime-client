@@ -36,7 +36,7 @@ const columns = [
     },
 ];
 
-const TagsTable = ({moreCallBack, refresh}) => {
+const TagsTable = ({moreCallBack, refresh, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -45,7 +45,6 @@ const TagsTable = ({moreCallBack, refresh}) => {
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
-        const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
 
         const [data, setData] = useState([]);
