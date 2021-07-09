@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ScheduledExamDialog({open, handleClose, examId}) {
+export default function ScheduledExamDialog({open, handleClose, examId, onChanged}) {
 
     const classes = useStyles();
     const [date, setDate] = useState("2021-07-29T00:13");
@@ -132,12 +132,14 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
             type: 2,
             difficulty: difficulty,
             examTags: tags.map((e) => e._id),
+            scheduledAt: date,
         }).then((res) => {
             console.log(res);
             const {_id: id} = res;
             console.log(id);
-            enqueueSnackbar("Scheduled exam created successfully", {variant: "success"});
-            handleClose(3);
+            enqueueSnackbar("Exam scheduled successfully", {variant: "success"});
+            handleClose(2);
+            onChanged();
         }).catch((error) => {
             enqueueSnackbar(
                 error.message && error.message
@@ -165,7 +167,7 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                             tags.map((e, i) => <Box
                                     display={'flex'}
                                     className={classes.withHover}
-                                    mb={0.2} mr={0.8} px={2} mt={0.6}  borderRadius={16}
+                                    mb={0.2} mr={0.8} px={2} mt={0.6} borderRadius={16}
                                     borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
                                     color={'#F03D5F'} py={0.6}>
                                     {e ? e.name : ''}
@@ -177,7 +179,7 @@ export default function ScheduledExamDialog({open, handleClose, examId}) {
                         }
                     </Box>
                 }
-                <Box m={0.8} />
+                <Box m={0.8}/>
                 <Typography className={classes.label}>
                     Difficulty Level
                 </Typography>

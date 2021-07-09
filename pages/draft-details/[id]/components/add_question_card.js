@@ -205,7 +205,7 @@ const AddQuestionCard = ({examId, onNewQuestion}) => {
             <Box my={1}/>
             {
                 options.length < 4 ? <Button className={classes.paddingX} color="primary" onClick={addMoreOption}>
-                    + Add more guideline
+                    + Add more option
                 </Button> : <Box/>
             }
             <Box my={2}/>

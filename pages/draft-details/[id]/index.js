@@ -157,7 +157,7 @@ const DraftDetails = () => {
                 </Grid>
                 <Box component={Grid} width={'100%'} height={'100%'} citem xs={12} sm={12} md={5}>
                     <Hidden smDown>
-                        <Box position={'fixed'} bottom={15} right={15}>
+                        <Box position={'fixed'} top={10} right={15}  overflow="auto">
                             <AddQuestionCard onNewQuestion={onNewQuestionAdd} examId={id}/>
                         </Box>
                     </Hidden>

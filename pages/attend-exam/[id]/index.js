@@ -11,6 +11,7 @@ import {useSnackbar} from "notistack";
 import {useRouter} from "next/router";
 import EmptyErrorComponent from "../../../src/components/EmptyErrorComponent";
 import {submitExamAnswer} from "../../../src/apis/results";
+import {getExamDetails} from "../../../src/apis/exams";
 
 /**
  *
@@ -43,15 +44,20 @@ const AttendExam = () => {
         // const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
         const [questionLoading, setQuestionLoading] = useState(true);
         const [questions, setQuestions] = useState(null);
+        const [exam, setExam] = useState(null);
         const {enqueueSnackbar} = useSnackbar();
         const Router = useRouter();
         const {id} = Router.query;
 
-        useEffect(() => {
+        useEffect(async () => {
             console.log(" attend exam page :");
             setQuestionLoading(true);
-            getAllQuestions(id).then((res) => {
-                console.log(res);
+
+
+            try {
+                const exRes = await getExamDetails(id);
+                const res = await getAllQuestions(id);
+
                 let _allQuestions = res.map((each, i) => {
                     /// type 1- not visited , 2 - skipped , 3 - answered
                     return {
@@ -61,13 +67,18 @@ const AttendExam = () => {
                     };
                 });
                 setQuestions(_allQuestions);
+
+                let _exam = {
+                    ...exRes,
+                    timer: new Date(exRes.scheduledAt).setTime(new Date(exRes.scheduledAt).getTime() + 1000 * 60 * exRes.duration)
+                };
+                console.log(_exam);
+                setExam(_exam);
                 setQuestionLoading(false);
-            }).catch((error) => {
+            } catch (error) {
                 setQuestionLoading(false);
                 enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
-            });
-
-
+            }
         }, []);
 
 
@@ -137,6 +148,8 @@ const AttendExam = () => {
         }
 
         console.log(questions);
+
+
         return (
 
             <div className={classes.root}>
@@ -153,7 +166,7 @@ const AttendExam = () => {
                                      height={'100%'}>
                                     <Grid item xs={12} sm={12} md={7}>
                                         <Box display={'flex'}>
-                                            <TimerCard/>
+                                            <TimerCard date={exam.timer}/>
                                         </Box>
                                         <QuestionCard
                                             question={questions[selectedIndex]}

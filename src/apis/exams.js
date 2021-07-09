@@ -13,7 +13,7 @@ export const getAllExams = ($skip, $limit, $search, type = 1) => examService.fin
         $skip,
         $limit,
         type,
-        $sort: {createdAt: -1},
+        $sort: {createdAt: -1, scheduledAt : -1},
         // $or: [
         //     {title: {$search}},
         //     {description: {$search}},

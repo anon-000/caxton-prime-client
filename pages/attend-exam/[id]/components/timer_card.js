@@ -13,11 +13,11 @@ import timer from "../../../../src/asset/timer.svg";
  */
 
 
-const TimerCard = () => {
+const TimerCard = ({date}) => {
 
     const [timerText, setTimerText] = useState('0d : 0h : 0m : 0s');
 
-    let countDownDate = new Date("July 4, 2021 15:37:25").getTime();
+    let countDownDate = new Date(date).getTime();
 
     let x = setInterval(function () {
         // Get today's date and time
