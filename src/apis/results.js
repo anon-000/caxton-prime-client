@@ -18,11 +18,7 @@ export const getAllResults = ($skip, $limit, $search) => resultService.find({
         $limit,
         $populate: ["studentAnswer.question", "exam"],
         $sort: {createdAt: -1},
-        // $or: [
-        //     {title: {$search}},
-        //     {description: {$search}},
-        //     {'examTags': {$search}}
-        // ]
+        'examTitle': {$search}
         // $search
     }
 });

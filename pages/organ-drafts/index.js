@@ -129,7 +129,7 @@ const OrganDrafts = () => {
                                    confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>
                 </Grid>
             </Grid>
-            <DraftTable refresh={refresh} moreCallBack={moreTableOptionCallBack}/>
+            <DraftTable search={query} refresh={refresh} moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }

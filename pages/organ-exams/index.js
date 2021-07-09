@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const OrganExams = () => {
     const classes = useStyles();
     const [editId, setEditId] = useState('');
-    let query = '';
+    const [query, setQuery] = useState('');
     const Router = useRouter();
 
 
@@ -60,7 +60,7 @@ const OrganExams = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganExamTable moreCallBack={moreTableOptionCallBack}/>
+            <OrganExamTable search={query} moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }

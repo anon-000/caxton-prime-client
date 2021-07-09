@@ -85,7 +85,7 @@ const AdminTags = () => {
                         placeholder={"Type to search"}
                     />
                     <Box m={2}/>
-                    <TagsTable refresh={refresh} moreCallBack={moreCallBack}/>
+                    <TagsTable search={query} refresh={refresh} moreCallBack={moreCallBack}/>
                     <ConfirmDialog show={deleteOpen} dismiss={() => setDeleteOpen(false)} title={'Delete draft'}
                                    proceed={handleDeleteTag}
                                    confirmation={'Are you sure to delete this tag?'} okLabel={'yes'}/>

@@ -136,6 +136,7 @@ const AttendExam = () => {
             });
             submitExamAnswer({
                 exam: id,
+                examTitle: exam.title,
                 studentAnswer: _myAnswers,
             }).then((res) => {
                 enqueueSnackbar("Answers submitted successfully", {variant: "success"});

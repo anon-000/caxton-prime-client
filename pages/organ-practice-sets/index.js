@@ -60,7 +60,7 @@ const OrganPracticeSets = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganPracticeTable moreCallBack={moreTableOptionCallBack}/>
+            <OrganPracticeTable search={query} moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }

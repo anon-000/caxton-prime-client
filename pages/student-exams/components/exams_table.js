@@ -84,7 +84,6 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         const [loading, setLoading] = React.useState(false);
         const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
-        const [query, setQuery] = useState("");
         const classes = useStyles();
 
         const [data, setData] = useState([]);
@@ -102,7 +101,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllExams(skip, rowsPerPage, search, 2, selectedTags.map((e) => e._id))
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -152,7 +151,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllExams(0, rowsPerPage, search, 2, selectedTags.map((e) => e._id))
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
@@ -187,8 +186,8 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
                 <Box width={'50%'}>
                     <TextField
                         fullWidth
-                        value={query}
-                        onChange={(event) => setQuery(event.target.value)}
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
                         variant="outlined"
                         placeholder={"Type to search"}
                     />
@@ -196,14 +195,14 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
                 {
                     selectedTags.length === 0 ? <Box/> : <Box display={"flex"} flexWrap={'wrap'} mt={3} mb={-1}>
                         {
-                            selectedTags.map((e) => <Box
+                            selectedTags.map((e, i) => <Box
                                     display={'flex'}
                                     className={classes.withHover}
                                     my={0.8} mr={0.8} px={2} borderRadius={16}
                                     borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
                                     color={'#F03D5F'} py={0.6}>
                                     {e.name}
-                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(e)}>
+                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(i)}>
                                         <img src={cross} alt={'x'}/>
                                     </Box>
                                 </Box>
@@ -213,25 +212,6 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
                 }
 
                 <Card table>
-                    {/*<CardHeader color="primary">*/}
-                    {/*    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>*/}
-                    {/*        <Box display={'flex'} flexDirection={'column'}>*/}
-                    {/*            <h4 className={headerClasses.cardTitleWhite}>List of Cleaners</h4>*/}
-                    {/*            <p className={headerClasses.cardCategoryWhite}>*/}
-                    {/*                Of your zone*/}
-                    {/*            </p>*/}
-                    {/*        </Box>*/}
-                    {/*        <Box flex={1}/>*/}
-                    {/*        <GreenSearchField*/}
-                    {/*            placeholder={'Search'}*/}
-                    {/*            searchValue={search}*/}
-                    {/*            onChange={(val) => {*/}
-                    {/*                setRows([]);*/}
-                    {/*                setSearch(val);*/}
-                    {/*            }}*/}
-                    {/*        />*/}
-                    {/*    </Box>*/}
-                    {/*</CardHeader>*/}
                     <CardBody>
                         <ExamTableComponent
                             columns={columns}

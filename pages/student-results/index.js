@@ -29,7 +29,7 @@ const StudentResults = () => {
                     placeholder={"Type to search"}
                 />
             </Box>
-            <ResultsTable/>
+            <ResultsTable search={query}/>
         </Container>
     );
 }

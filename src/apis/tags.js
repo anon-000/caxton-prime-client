@@ -28,11 +28,9 @@ export const getTags = ($skip, $limit, $search) => tagsService.find({
         $skip,
         $limit,
         $sort: {createdAt: -1},
-        // $or: [
-        //     {title: {$search}},
-        //     {description: {$search}},
-        //     {'examTags': {$search}}
-        // ]
+        $or: [
+            {name: {$search}},
+        ]
         // $search
     }
 });

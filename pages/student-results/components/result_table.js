@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Box, makeStyles} from '@material-ui/core';
 import {Pagination} from '@material-ui/lab';
-import {getAllExams} from '../../../src/apis/exams';
 import {useSnackbar} from 'notistack';
 import CardBody from '../../../src/components/cards/card_body';
 import Card from '../../../src/components/cards/Card';
@@ -62,12 +61,6 @@ const columns = [
         minWidth: 170,
         align: 'center',
     },
-    // {
-    //     id: 'questionCount',
-    //     label: 'No of Questions',
-    //     minWidth: 170,
-    //     align: 'center',
-    // },
     {
         id: 'totalMarks',
         label: 'Total Marks',
@@ -83,7 +76,7 @@ const columns = [
 
 ];
 
-const ResultsTable = () => {
+const ResultsTable = ({search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -92,7 +85,6 @@ const ResultsTable = () => {
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
-        const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
         // const classes = useStyles();
 
@@ -111,7 +103,7 @@ const ResultsTable = () => {
 
         const loadResults = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search)
+            getAllResults(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
                         let _allResults = res.data.map(each => {
@@ -196,25 +188,6 @@ const ResultsTable = () => {
         return (
             <Box>
                 <Card table>
-                    {/*<CardHeader color="primary">*/}
-                    {/*    <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>*/}
-                    {/*        <Box display={'flex'} flexDirection={'column'}>*/}
-                    {/*            <h4 className={headerClasses.cardTitleWhite}>List of Cleaners</h4>*/}
-                    {/*            <p className={headerClasses.cardCategoryWhite}>*/}
-                    {/*                Of your zone*/}
-                    {/*            </p>*/}
-                    {/*        </Box>*/}
-                    {/*        <Box flex={1}/>*/}
-                    {/*        <GreenSearchField*/}
-                    {/*            placeholder={'Search'}*/}
-                    {/*            searchValue={search}*/}
-                    {/*            onChange={(val) => {*/}
-                    {/*                setRows([]);*/}
-                    {/*                setSearch(val);*/}
-                    {/*            }}*/}
-                    {/*        />*/}
-                    {/*    </Box>*/}
-                    {/*</CardHeader>*/}
                     <CardBody>
                         <ExamTableComponent
                             columns={columns}
