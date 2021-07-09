@@ -11,8 +11,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import DnsRoundedIcon from "@material-ui/icons/DnsRounded";
 import Link from "../../src/Link";
 import {useRouter} from "next/router";
-import Logo from '../../public/vercel.svg'
+import Logo from '../../src/asset/drawerLogo.svg'
 import {Box} from "@material-ui/core";
+import {useStore} from "laco-react";
+import userStore from "../store/userStore";
 
 /**
  *
@@ -33,8 +35,9 @@ const styles = (theme) => ({
         color: theme.palette.common.black,
     },
     item: {
-        paddingTop: 1,
-        paddingBottom: 1,
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+
         color: theme.palette.text.primary,
     },
     itemCategory: {
@@ -48,79 +51,104 @@ const styles = (theme) => ({
         color: theme.palette.common.white,
     },
     itemActiveItem: {
-        color: theme.palette.primary.main,
+        backgroundColor: '#00000025',
+        '&:hover': {
+            backgroundColor: "#00000035",
+        }
     },
     itemPrimary: {
         fontSize: "inherit",
-        textAlign: 'center',
+        textAlign: 'left',
+        marginLeft: theme.spacing(2),
+        color: '#ffffff'
     },
     itemIcon: {
         minWidth: "auto",
         marginRight: theme.spacing(2),
+        color: '#ffffff'
     },
     divider: {
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2),
+        color: '#ffffff'
+        // marginTop: theme.spacing(2),
+        // marginBottom: theme.spacing(2),
     },
+    logoBg: {
+        // opacity: 0.25,
+        cursor: 'pointer',
+        userSelect: 'none',
+    }
 });
 
 function Navigator(props) {
     const {classes, ...other} = props;
 
     const Router = useRouter();
+    const {user} = useStore(userStore);
 
-    const options = [
+    const organOptions = [
         {
-            id: "Account Details",
-            icon: <DnsRoundedIcon/>,
-            active: Router.pathname === "/accountDetails",
-            href: "/accountDetails",
+            id: "Dashboard",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/organ-dashboard",
+            href: "/organ-dashboard",
         },
         {
-            id: "Balance Enquiry",
-            icon: <DnsRoundedIcon/>,
-            active: Router.pathname === "/balanceEnquiry",
-            href: "/balanceEnquiry",
+            id: "Drafts",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/organ-drafts",
+            href: "/organ-drafts",
         },
         {
-            id: "Funds Transfer",
-            icon: <DnsRoundedIcon/>,
-            active: Router.pathname === "/funds-transfer",
-            href: "/funds-transfer",
+            id: "Exams",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/organ-exams",
+            href: "/organ-exams",
         },
         {
-            id: "Update Profile",
-            icon: <DnsRoundedIcon/>,
-            active: Router.pathname === "/update-profile",
-            href: "/update-profile",
+            id: "Practice Sets",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/organ-practice-sets",
+            href: "/organ-practice-sets",
+        },
+    ]
+    const adminOptions = [
+        {
+            id: "Dashboard",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-dashboard",
+            href: "/admin-dashboard",
         },
         {
-            id: "Request Checkbook",
-            icon: <DnsRoundedIcon/>,
-            active: Router.pathname === "/request-checkbook",
-            href: "/request-checkbook",
+            id: "Pending Requests",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-requests",
+            href: "/admin-requests",
         },
         {
-            id: "Mini Statement",
-            icon: <DnsRoundedIcon/>,
-            active: Router.pathname === "/mini-statement",
-            href: "/mini-statement",
+            id: "Exam Tags",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-tags",
+            href: "/admin-tags",
         },
     ]
 
+    const options = user["role"] === 2 ? organOptions : adminOptions;
+
     return (
-        <Drawer variant="permanent" {...other}>
+
+        <Drawer variant="permanent" {...other} >
             <List disablePadding>
                 <Box
                     width={'100%'}
-                    bgcolor={'#ffffff'}
+                    bgcolor={'#FBCBD785'}
                     display={'flex'}
                     justifyContent={'center'}
                     alignItems={'center'}
-                    py={5}
+                    py={3}
+                    className={classes.logoBg}
                 >
                     <img width={'80%'} src={Logo}
-                         onClick={() => Router.push("/accountDetails")}/>
+                         onClick={() => Router.push(user["role"] === 2 ? "/organ-dashboard" : "admin-dashboard")}/>
                 </Box>
                 <React.Fragment>
                     {options.map(({id: childId, icon, active, href}) => (
@@ -146,13 +174,14 @@ function Navigator(props) {
                                     {childId}
                                 </ListItemText>
                             </ListItem>
-                            <Divider className={classes.divider}/>
+                            <Divider color={'#ffffff'} className={classes.divider}/>
                         </React.Fragment>
                     ))}
                 </React.Fragment>
             </List>
         </Drawer>
-    );
+    )
+        ;
 }
 
 Navigator.propTypes = {

@@ -33,8 +33,7 @@ export const userPatch = (id, body) => {
 };
 
 export const deleteUser = (id) => UserService.remove(id);
-export const editUser = (id, body) => UserService.patch(id, body);
-
+export const editUser = (id, body) => UserService.patch(id, body, {headers: {'Authorization': `Bearer ${localStorage.getItem('feathers-jwt')}`}});
 
 
 export const getAllPendingOrgans = ($skip, $limit, $search) => UserService.find({

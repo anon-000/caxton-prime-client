@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const columns = [
     {
         id: 'code',
-        label: 'Exam Id',
+        label: 'Result Id',
         minWidth: 170,
         align: 'center',
     },
@@ -162,11 +162,11 @@ const ResultsTable = () => {
 
 
         const loadData = () => {
-            console.log("use effect");
+            console.log("use effect result table");
             setLoading(true);
             getAllResults(0, rowsPerPage, search)
                 .then((res) => {
-                    console.log("api response : ");
+                    console.log("api response : ",res);
                     setTotal(res.total);
                     let _allResults = res.data.map(each => {
                         return {
@@ -220,7 +220,7 @@ const ResultsTable = () => {
                             columns={columns}
                             rows={rows}
                             loading={loading}
-                            notFound={'No Exams Found'}
+                            notFound={'No Results Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                         />

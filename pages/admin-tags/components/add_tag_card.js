@@ -47,17 +47,21 @@ const useStyles = makeStyles((theme) => ({
         padding: `${theme.spacing(3)}`,
     },
     shadow: {
+        width: '29vw',
         boxShadow: "2px 2px 6px rgba(18, 73, 84, 0.15)",
         //position: 'fixed',
         margin: '100px 30px',
         '@media (max-width:1050px)': {
             margin: '50px 30px',
+            width: '29vw',
         },
         '@media (max-width:900px)': {
             margin: '50px 0px',
+            width: '100vw',
         },
         '@media (max-width:500px)': {
             margin: '50px 0px',
+            width: '100%',
         },
     },
     fullWidth: {

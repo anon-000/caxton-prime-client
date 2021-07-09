@@ -95,17 +95,20 @@ const OrganizationOnBoarding = () => {
             return;
         }
         let myId = user['_id'];
+        console.log(`id --------------- ${myId}`);
         console.log(localStorage.getItem("feathers-jwt"));
         setLoading(true);
         editUser(myId, {
-            phone, "address": {
+            phone,
+            address: {
                 lane,
                 city,
                 state,
-                "pinCode": pin,
+                pinCode: pin,
             }
         })
             .then((response) => {
+                console.log(response);
                 userStore.set(() => ({response}), 'user');
                 Router.replace('/organ-request-pending');
             })

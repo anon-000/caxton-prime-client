@@ -8,6 +8,7 @@ import React, {useState} from "react";
 import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
 import {deleteTag} from "../../src/apis/tags";
 import {useSnackbar} from "notistack";
+import Hidden from "@material-ui/core/Hidden";
 
 /**
  *
@@ -90,7 +91,11 @@ const AdminTags = () => {
                                    confirmation={'Are you sure to delete this tag?'} okLabel={'yes'}/>
                 </Grid>
                 <Grid item md={5} xs={12} sm={12}>
-                    <AddTagCard onNewTag={onNewTagAdded}/>
+                    <Hidden smDown>
+                        <Box position={'fixed'} top={34} right={6}>
+                            <AddTagCard onNewTag={onNewTagAdded}/>
+                        </Box>
+                    </Hidden>
                 </Grid>
             </Grid>
         </Container>

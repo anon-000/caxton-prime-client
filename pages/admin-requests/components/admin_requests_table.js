@@ -27,8 +27,8 @@ import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
 const columns = [
     {
         id: 'code',
-        label: 'Organization Id',
-        minWidth: 170,
+        label: 'Id',
+        minWidth: 130,
         align: 'center',
     },
     {
@@ -40,19 +40,20 @@ const columns = [
     {
         id: 'email',
         label: 'Email',
-        minWidth: 170,
+        minWidth: 160,
         align: 'left',
     },
     {
         id: 'phone',
         label: 'Phone',
-        minWidth: 170,
-        align: 'left',
+        minWidth: 150,
+        maxWidth: 150,
+        align: 'center',
     },
     {
         id: 'request',
         label: 'Actions',
-        minWidth: 170,
+        minWidth: 210,
         align: 'center',
     },
 ];

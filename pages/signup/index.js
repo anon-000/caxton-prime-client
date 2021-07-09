@@ -24,6 +24,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import RoleSelection from "./components/role_selection";
 import {signUp} from "../../src/apis/users";
 import AttendExam from "../attend-exam/[id]";
+import {cookieStorage} from "../../src/apis";
 
 /**
  *
@@ -111,12 +112,14 @@ const SignUp = () => {
                 const {accessToken, user} = response;
                 console.log(accessToken, user);
                 localStorage.setItem("feathers-jwt", accessToken);
+                cookieStorage.setItem("feathers-jwt", accessToken);
                 userStore.set(() => ({token: accessToken, user}), "user");
                 enqueueSnackbar('Account created successfully', {variant: 'success'});
+                // window.location.reload();
                 if (user.role === 1) {
-                    Router.replace('/student-onboarding');
+                    Router.push('/student-onboarding');
                 } else {
-                    Router.replace('/organization-onboarding');
+                    Router.push('/organization-onboarding');
                 }
             })
             .catch(error => {

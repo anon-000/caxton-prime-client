@@ -49,11 +49,18 @@ const useStyles = makeStyles((theme) => ({
         '@media (max-width:900px)': {
             marginRight: '1rem',
         },
+    },
+    center: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     }
 }));
 
 
 const AdminDashboard = () => {
+    const classes = useStyles();
+
     const data = [
         {
             title: "Students",
@@ -78,7 +85,7 @@ const AdminDashboard = () => {
             <Grid container justify={"center"} spacing={6}
                   alignItems={"flex-start"}>
                 <Grid item sm={12} xs={12} md={7}>
-                    <Box m={4}/>
+                    <Box m={8}/>
                     <Typography variant="h2">
                         Hey Admin, Welcome back 🤙
                     </Typography>
@@ -98,10 +105,9 @@ const AdminDashboard = () => {
                     <Box m={11}/>
                     <img src={wave} alt={'explore'} width={'100%'}/>
                 </Grid>
-                <Grid item sm={12} xs={12} md={5}>
-                    <Box m={3}/>
+                <Box component={Grid} className={classes.root} item sm={12} xs={12} md={5}>
                     <img src={vector} alt={'explore'} width={'100%'}/>
-                </Grid>
+                </Box>
             </Grid>
         </Container>
     );
