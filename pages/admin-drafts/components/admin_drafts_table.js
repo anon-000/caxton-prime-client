@@ -6,7 +6,6 @@ import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
-import moment from "moment/moment";
 
 /**
  *
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const columns = [
     {
         id: 'code',
-        label: 'Exam Id',
+        label: 'Draft Id',
         minWidth: 170,
         align: 'center',
     },
@@ -48,12 +47,6 @@ const columns = [
         label: 'Name',
         minWidth: 170,
         align: 'left',
-    },
-    {
-        id: 'formattedDate',
-        label: 'Scheduled At',
-        minWidth: 170,
-        align: 'center',
     },
     {
         id: 'duration',
@@ -67,7 +60,6 @@ const columns = [
         minWidth: 170,
         align: 'center',
     },
-
     {
         id: 'more',
         label: 'More',
@@ -76,7 +68,7 @@ const columns = [
     },
 ];
 
-const OrganExamTable = ({moreCallBack, search}) => {
+const AdminDraftTable = ({moreCallBack, refresh, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -102,13 +94,12 @@ const OrganExamTable = ({moreCallBack, search}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllExams(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
-                                formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                                 ...each,
                             };
                         });
@@ -146,20 +137,19 @@ const OrganExamTable = ({moreCallBack, search}) => {
             setRows([]);
             setData([]);
             loadData();
-        }, [search]);
+        }, [search, refresh]);
 
 
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllExams(0, rowsPerPage, search)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
                     let _allCleaners = res.data.map(each => {
                         return {
                             code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
-                            formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                             ...each,
                         };
                     });
@@ -182,6 +172,7 @@ const OrganExamTable = ({moreCallBack, search}) => {
             moreCallBack(choice, x);
         }
 
+
         return (
             <Box>
                 <Card table>
@@ -195,6 +186,8 @@ const OrganExamTable = ({moreCallBack, search}) => {
                             setRow={setRow}
                             moreTap={moreTapCallBack}
                         />
+                        {/*<ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}*/}
+                        {/*               confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>*/}
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
                                 color="primary"
@@ -211,4 +204,4 @@ const OrganExamTable = ({moreCallBack, search}) => {
     }
 ;
 
-export default OrganExamTable;
+export default AdminDraftTable;

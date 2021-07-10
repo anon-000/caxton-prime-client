@@ -1,21 +1,20 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
+import {Box, makeStyles} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
 import {getAllExams} from "../../../src/apis/exams";
+import moment from "moment/moment";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
-import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
-import moment from "moment/moment";
+import {Pagination} from "@material-ui/lab";
 
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
- * @description draft_table.js
- * @createdOn 04/07/21 4:53 pm
+ * @description admin_exam_table.js
+ * @createdOn 11/07/21 1:33 am
  */
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +75,7 @@ const columns = [
     },
 ];
 
-const OrganExamTable = ({moreCallBack, search}) => {
+const AdminExamTable = ({moreCallBack, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -211,4 +210,7 @@ const OrganExamTable = ({moreCallBack, search}) => {
     }
 ;
 
-export default OrganExamTable;
+export default AdminExamTable;
+
+
+
