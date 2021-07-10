@@ -76,7 +76,7 @@ function AdOrgHeader(props) {
 
 
     useEffect(() => {
-        if (Router.route === '/organ-dashboard') {
+        if (Router.route === '/organ-dashboard' || Router.route === '/admin-dashboard') {
             setCurrent('Dashboard');
         } else if (Router.route === '/organ-practice-sets') {
             setCurrent('Practice Sets');
@@ -84,6 +84,12 @@ function AdOrgHeader(props) {
             setCurrent('Exams');
         } else if (Router.route === '/organ-drafts') {
             setCurrent('Drafts');
+        }else if (Router.route === '/admin-requests') {
+            setCurrent('Pending Requests');
+        }else if (Router.route === '/admin-tags') {
+            setCurrent('Exam Tags');
+        }else if (Router.route === '/admin-users') {
+            setCurrent('All Users');
         } else {
             setCurrent('');
         }
@@ -159,7 +165,7 @@ function AdOrgHeader(props) {
                                 </IconButton>
                             </Grid>
                         </Hidden>
-                        <Box m={1} >
+                        <Box m={1}>
                             <Typography variant="h5">
                                 {current}
                             </Typography>

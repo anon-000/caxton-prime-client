@@ -1,11 +1,3 @@
-/**
- *
- * @createdBy Aurosmruti Das
- * @email aurosmruti.das@gmail.com
- * @description admin_requests_table.js
- * @createdOn 08/07/21 4:21 pm
- */
-
 import {Box} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
@@ -15,14 +7,16 @@ import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
 import {deleteUser, getAllPendingOrgans, userPatch} from "../../../src/apis/users";
 import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
+import UserDialog from "./user_dialog";
 
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
- * @description draft_table.js
- * @createdOn 04/07/21 4:53 pm
+ * @description user_table.js
+ * @createdOn 10/07/21 7:36 pm
  */
+
 
 const columns = [
     {
@@ -40,18 +34,18 @@ const columns = [
     {
         id: 'email',
         label: 'Email',
-        minWidth: 160,
+        minWidth: 170,
         align: 'left',
     },
     {
-        id: 'request',
+        id: 'more',
         label: 'Actions',
-        minWidth: 210,
+        minWidth: 170,
         align: 'center',
     },
 ];
 
-const AdminRequestsTable = ({moreCallBack, search}) => {
+const AdminUsersTable = ({moreCallBack, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -61,9 +55,10 @@ const AdminRequestsTable = ({moreCallBack, search}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [confirmOpen, setConfirmOpen] = React.useState(false);
+        const [userOpen, setUserOpen] = React.useState(false);
         const [refresh, setRefresh] = React.useState(false);
         const [type, setType] = React.useState(1);
-        const [id, setId] = React.useState('');
+        const [selectedId, setSelectedId] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
 
         const [data, setData] = useState([]);
@@ -71,6 +66,7 @@ const AdminRequestsTable = ({moreCallBack, search}) => {
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
+            // setId(data[index]._id);
             //Router.push(`/draft-details/${data[index]._id}`);
         };
 
@@ -151,25 +147,26 @@ const AdminRequestsTable = ({moreCallBack, search}) => {
 
 
         const moreTapCallBack = (choice, x) => {
-            setId(x);
+            setSelectedId(x);
             setType(choice);
-            setConfirmOpen(true);
+            console.log("choicee id", x);
+            if (choice === 1) {
+                setUserOpen(true);
+            } else if (choice === 2) {
+                setConfirmOpen(true);
+            }
+
             /// 1 - accept. 2 - reject, x - id
         }
 
         const handleDialog = () => {
             setConfirmOpen(false);
+            console.log(selectedId);
             if (type === 1) {
-                /// accept - patch status 2
-                userPatch(id, {"status": 2}).then((res) => {
-                    setRefresh(!refresh);
-                }).catch((e) => {
-                    enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
-                }).finally(() => {
-                });
+
             } else if (type === 2) {
-                /// reject - delete user
-                deleteUser(id).then((res) => {
+                deleteUser(selectedId).then((res) => {
+                    console.log(res);
                     setRefresh(!refresh);
                 }).catch((e) => {
                     enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
@@ -187,15 +184,18 @@ const AdminRequestsTable = ({moreCallBack, search}) => {
                             columns={columns}
                             rows={rows}
                             loading={loading}
-                            notFound={'No Requests Found'}
+                            notFound={'No Users Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
+                            moreArray={[1, 2]}
                         />
                         <ConfirmDialog show={confirmOpen} dismiss={() => setConfirmOpen(false)} title={'Confirm'}
                                        proceed={() => handleDialog()}
-                                       confirmation={`Are you sure to you want to ${type === 1 ? "accept" : "reject"} this organization request?`}
+                                       confirmation={`Are you sure to you want to delete this user?`}
                                        okLabel={'yes'}/>
+                        <UserDialog refresh={() => setRefresh(!refresh)} open={userOpen} userId={selectedId}
+                                    handleClose={() => setUserOpen(false)}/>
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
                                 color="primary"
@@ -212,4 +212,4 @@ const AdminRequestsTable = ({moreCallBack, search}) => {
     }
 ;
 
-export default AdminRequestsTable;
+export default AdminUsersTable;

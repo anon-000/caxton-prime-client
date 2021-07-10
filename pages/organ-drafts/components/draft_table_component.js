@@ -66,7 +66,16 @@ const useStyles = makeStyles({
     },
 });
 
-const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRow, moreTap}) => {
+const DraftTableComponent = ({
+                                 columns,
+                                 rows,
+                                 notFound,
+                                 loading,
+                                 pageLimit,
+                                 setRow,
+                                 moreTap,
+                                 moreArray = [1, 2, 3, 4]
+                             }) => {
 
     const classes = useStyles();
 
@@ -76,8 +85,8 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event, id) => {
-        setAnchorEl(event.currentTarget);
         setCurrentId(id);
+        setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
@@ -175,9 +184,10 @@ const DraftTableComponent = ({columns, rows, notFound, loading, pageLimit, setRo
                                                                 flexDirection={'column'}
                                                             >
                                                                 {
-                                                                    [1, 2, 3, 4].map((e) => <Button
+                                                                    moreArray.map((e) => <Button
                                                                         onClick={() => {
                                                                             handleClose();
+
                                                                             moreTap(e, currentId);
 
                                                                         }}

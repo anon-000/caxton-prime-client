@@ -53,6 +53,10 @@ export const getAllPendingOrgans = ($skip, $limit, $search) => UserService.find(
     }
 });
 
+export const getUserDetails = (id) => UserService.get(id, {
+    query: {}
+});
+
 
 /**
  * 1. Student

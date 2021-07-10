@@ -9,7 +9,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import ExamTagsAutoComplete from "../../../src/components/TagsAutoComplete";
 import cross from "../../../src/asset/cross_icon.svg";
-import {createDraft, examPatch} from "../../../src/apis/exams";
+import {examPatch} from "../../../src/apis/exams";
 
 /**
  *

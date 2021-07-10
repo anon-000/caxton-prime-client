@@ -130,6 +130,30 @@ function Navigator(props) {
             active: Router.pathname === "/admin-tags",
             href: "/admin-tags",
         },
+        {
+            id: "All Users",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-users",
+            href: "/admin-users",
+        },
+        {
+            id: "Drafts",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-drafts",
+            href: "/admin-drafts",
+        },
+        {
+            id: "Scheduled Exams",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-exams",
+            href: "/admin-exams",
+        },
+        {
+            id: "Practice Sets",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-sets",
+            href: "/admin-sets",
+        },
     ]
 
     const options = user["role"] === 2 ? organOptions : adminOptions;
@@ -147,7 +171,7 @@ function Navigator(props) {
                     py={3}
                     className={classes.logoBg}
                 >
-                    <img width={'80%'} src={Logo}
+                    <img width={'80%'} src={Logo} alt={''}
                          onClick={() => Router.push(user["role"] === 2 ? "/organ-dashboard" : "admin-dashboard")}/>
                 </Box>
                 <React.Fragment>
