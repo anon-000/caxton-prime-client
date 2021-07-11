@@ -17,7 +17,7 @@ import CoverImage from "../../src/asset/background.png"
 import Vector from "../../src/asset/student_onboarding_vector.svg"
 import Typography from "@material-ui/core/Typography";
 import SelectAvatar from "./components/select_avatar";
-import {userPatch} from "../../src/apis/users";
+import {editUser, userPatch} from "../../src/apis/users";
 import ImageUploadDialog from "../../src/components/dialogs/ImageUploadDialog";
 
 /**
@@ -87,7 +87,7 @@ const StudentOnBoarding = () => {
             return;
         }
         setLoading(true);
-        userPatch(user['_id'], {"userName": username, phone, avatar})
+        editUser(user['_id'], {"userName": username, phone, avatar})
             .then((response) => {
                 userStore.set(() => ({response}), 'user');
                 Router.replace('/');

@@ -13,7 +13,7 @@ import timer from "../../../../src/asset/timer.svg";
  */
 
 
-const TimerCard = ({date}) => {
+const TimerCard = ({date, onExamEnd}) => {
 
     const [timerText, setTimerText] = useState('0d : 0h : 0m : 0s');
 
@@ -36,6 +36,7 @@ const TimerCard = ({date}) => {
         if (distance < 0) {
             clearInterval(x);
             setTimerText('00:00:00');
+            onExamEnd();
         }
     }, 1000);
 

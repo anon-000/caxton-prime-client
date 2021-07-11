@@ -19,27 +19,11 @@ import moment from "moment/moment";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        // backgroundImage: `url(${CoverImage})`,
-        // backgroundPosition: "center",
-        // backgroundSize: "cover",
-        // backgroundRepeat: "no-repeat",
         height: 'calc(100vh - 48px)',
         // width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        // [theme.breakpoints.down("lg")]: {
-        //   padding: "0px 120px",
-        // },
-        // [theme.breakpoints.down("md")]: {
-        //   padding: "0px 80px",
-        // },
-        // [theme.breakpoints.down("sm")]: {
-        //   padding: "0px 60px",
-        // },
-        // [theme.breakpoints.down("xs")]: {
-        //   padding: "0px 8px",
-        // },
     },
     create: {
         cursor: "pointer",
@@ -51,6 +35,7 @@ const ExamDetails = () => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const [canAttend, setCanAttend] = useState(false);
+    const [isExam, setIsExam] = useState(false);
     const [examLoading, setExamLoading] = useState(true);
     const [examData, setExamData] = useState(null);
     const [timerText, setTimerText] = useState('00h : 00m : 00s');
@@ -66,33 +51,38 @@ const ExamDetails = () => {
             .then((res) => {
                 console.log(res);
                 setExamData(res);
-                let countDownDate = new Date(res["scheduledAt"]).getTime();
+                setIsExam(res.type === 2);
 
-                let x = setInterval(function () {
+                if (res.type === 2) {
+                    let countDownDate = new Date(res["scheduledAt"]).getTime();
 
-                    // Get today's date and time
-                    let now = new Date().getTime();
+                    let x = setInterval(function () {
 
-                    // Find the distance between now and the count down date
-                    let distance = countDownDate - now;
+                        // Get today's date and time
+                        let now = new Date().getTime();
 
-                    // Time calculations for days, hours, minutes and seconds
-                    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        // Find the distance between now and the count down date
+                        let distance = countDownDate - now;
 
-                    // Display the result in the element with id="demo"
-                    setTimerText(hours + "h : "
-                        + minutes + "m : " + seconds + "s ");
+                        // Time calculations for days, hours, minutes and seconds
+                        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // If the count down is finished, write some text
-                    if (distance < 0) {
-                        clearInterval(x);
-                        setTimerText('00:00:00');
-                        setCanAttend(true);
-                    }
-                }, 1000);
+                        // Display the result in the element with id="demo"
+                        setTimerText(hours + "h : "
+                            + minutes + "m : " + seconds + "s ");
+
+                        // If the count down is finished, write some text
+                        if (distance < 0) {
+                            clearInterval(x);
+                            setTimerText('00:00:00');
+                            setCanAttend(true);
+                        }
+                    }, 1000);
+                }
+
             })
             .catch((error) => {
                 enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
@@ -104,8 +94,19 @@ const ExamDetails = () => {
     }, []);
 
     const handleStartExam = () => {
+        if (canAttend && examData.status !== 3) {
+            Router.push(`/attend-exam/${examData._id}`);
+        } else {
+            if (examData.status === 3) {
+                enqueueSnackbar("This exam has been ended", {variant: 'error'});
+            }
+        }
+    };
+
+    const handlePractice = () => {
         Router.push(`/attend-exam/${examData._id}`);
     };
+
 
     return (
         <Box className={classes.root}>
@@ -125,8 +126,8 @@ const ExamDetails = () => {
                             component={Grid}
                             //height={'100vh'}
                             display={"flex"}
-                            justify={"center"}
-                            alignItems={"center"}
+                            //justify={"center"}
+                            alignItems={"flex-start"}
                         >
                             <Box px={3}>
                                 <Typography variant="h1">{examData.title}</Typography>
@@ -202,15 +203,25 @@ const ExamDetails = () => {
                                     <Box m={1.4}/>
                                 </Hidden>
 
-                                <Button
-                                    fullWidth
-                                    disabled={loading}
-                                    onClick={() => handleStartExam()}
-                                    color="primary"
-                                    variant="contained"
-                                >
-                                    {loading ? <CircularProgress size={24}/> : canAttend ? "Start Exam" : timerText}
-                                </Button>
+                                {
+                                    isExam ? <Button
+                                        fullWidth
+                                        disabled={loading}
+                                        onClick={() => handleStartExam()}
+                                        color="primary"
+                                        variant="contained"
+                                    >
+                                        {loading ? <CircularProgress size={24}/> : canAttend ? "Start Exam" : timerText}
+                                    </Button> : <Button
+                                        fullWidth
+                                        disabled={loading}
+                                        onClick={() => handlePractice()}
+                                        color="primary"
+                                        variant="contained"
+                                    >
+                                        {loading ? <CircularProgress size={24}/> : "Start Practicing"}
+                                    </Button>
+                                }
                             </Box>
                         </Box>
                     </Grid>

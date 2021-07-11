@@ -262,7 +262,7 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                             color="primary"
                             variant="contained"
                         >
-                            {loading ? <CircularProgress size={24}/> : "Save"}
+                            {loading ? <CircularProgress size={24}/> : "Update"}
                         </Button>
                         <Box m={2}/>
                         <ImageUploadDialog

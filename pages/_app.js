@@ -6,11 +6,12 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import theme from "../src/theme";
 import {useRouter} from "next/router";
 import Loader from "../src/components/Loader";
-import app, {cookieStorage} from "../src/apis/index";
+import app from "../src/apis/index";
 import {SnackbarProvider} from "notistack";
 import userStore from "../src/store/userStore";
 import DefaultLayout from "../src/layout/Layout";
 import 'cropperjs/dist/cropper.css';
+
 
 
 const Noop = ({children}) => children;

@@ -12,6 +12,9 @@ import {useRouter} from "next/router";
 import EmptyErrorComponent from "../../../src/components/EmptyErrorComponent";
 import {submitExamAnswer} from "../../../src/apis/results";
 import {getExamDetails} from "../../../src/apis/exams";
+import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
+import PracticeSetDialog from "../../organ-drafts/components/create_practice_dialog";
+import PracticeResultDialog from "../../../src/components/dialogs/PracticeResultDialog";
 
 /**
  *
@@ -38,159 +41,177 @@ const useStyles = makeStyles((theme) => ({
 
 
 const AttendExam = () => {
-        const [selectedIndex, setCurrent] = useState(0);
-        const [loading, setLoading] = useState(false);
-        const classes = useStyles();
-        // const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
-        const [questionLoading, setQuestionLoading] = useState(true);
-        const [questions, setQuestions] = useState(null);
-        const [exam, setExam] = useState(null);
-        const {enqueueSnackbar} = useSnackbar();
-        const Router = useRouter();
-        const {id} = Router.query;
+    const [selectedIndex, setCurrent] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const classes = useStyles();
+    // const questions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30];
+    const [questionLoading, setQuestionLoading] = useState(true);
+    const [questions, setQuestions] = useState(null);
+    const [exam, setExam] = useState(null);
+    const [confirm, setConfirm] = useState(false);
+    const [resultOpen, setResultOpen] = useState(false);
+    const {enqueueSnackbar} = useSnackbar();
+    const Router = useRouter();
+    const {id} = Router.query;
 
-        useEffect(async () => {
-            console.log(" attend exam page :");
-            setQuestionLoading(true);
+    useEffect(async () => {
+        console.log(" attend exam page :");
+        setQuestionLoading(true);
 
 
-            try {
-                const exRes = await getExamDetails(id);
-                const res = await getAllQuestions(id);
+        try {
+            const exRes = await getExamDetails(id);
+            const res = await getAllQuestions(id);
 
-                let _allQuestions = res.map((each, i) => {
-                    /// type 1- not visited , 2 - skipped , 3 - answered
-                    return {
-                        type: i === 0 ? 2 : 1,
-                        myAnswer: '',
-                        ...each,
-                    };
-                });
-                setQuestions(_allQuestions);
-
-                let _exam = {
-                    ...exRes,
-                    timer: new Date(exRes.scheduledAt).setTime(new Date(exRes.scheduledAt).getTime() + 1000 * 60 * exRes.duration)
+            let _allQuestions = res.map((each, i) => {
+                /// type 1- not visited , 2 - skipped , 3 - answered
+                return {
+                    type: i === 0 ? 2 : 1,
+                    myAnswer: '',
+                    ...each,
                 };
-                console.log(_exam);
-                setExam(_exam);
-                setQuestionLoading(false);
-            } catch (error) {
-                setQuestionLoading(false);
-                enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
-            }
-        }, []);
+            });
+            setQuestions(_allQuestions);
 
-
-        const handlePreviousClick = () => {
-            if (selectedIndex > 0) {
-                setCurrent(selectedIndex - 1);
-                updateQuestionType(2);
-            }
+            let _exam = {
+                ...exRes,
+                timer: exRes.type === 2 ? new Date(exRes.scheduledAt).setTime(new Date(exRes.scheduledAt).getTime() + 1000 * 60 * exRes.duration) : new Date(new Date()).setTime(new Date(new Date()).getTime() + 1000 * 60 * exRes.duration),
+            };
+            console.log(_exam);
+            setExam(_exam);
+            setQuestionLoading(false);
+        } catch (error) {
+            setQuestionLoading(false);
+            enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
         }
+    }, []);
 
-        const handleNextClick = () => {
-            if (selectedIndex < questions.length - 1) {
-                setCurrent(selectedIndex + 1);
-                updateQuestionType(2);
-            }
-        }
 
-        const jumpToIndex = (i) => {
-            setCurrent(i);
+    const handlePreviousClick = () => {
+        if (selectedIndex > 0) {
+            setCurrent(selectedIndex - 1);
             updateQuestionType(2);
         }
-
-        const onErrorClick = () => {
-            Router.replace('/student-exams');
-        }
-
-        const updateQuestionType = (val) => {
-            let _temp = questions;
-            if (_temp[selectedIndex].type === 1 && val === 2) {
-                _temp[selectedIndex].type = 2;
-            } else if (_temp[selectedIndex].type === 2 && val === 3) {
-                _temp[selectedIndex].type = 3;
-            }
-            setQuestions(_temp);
-        }
-
-        const answerAQuestion = (answer) => {
-            let _tempNew = questions;
-            _tempNew[selectedIndex].myAnswer = answer;
-            _tempNew[selectedIndex].type = 3;
-            setQuestions([..._tempNew]);
-        }
-
-
-        const submitAnswers = () => {
-            let _myAnswers = [];
-            setLoading(true);
-            questions.forEach((e) => {
-                if (e.myAnswer !== '') {
-                    _myAnswers = [..._myAnswers, {
-                        question: e._id,
-                        choice: [e.myAnswer]
-                    }];
-                }
-            });
-            submitExamAnswer({
-                exam: id,
-                examTitle: exam.title,
-                studentAnswer: _myAnswers,
-            }).then((res) => {
-                enqueueSnackbar("Answers submitted successfully", {variant: "success"});
-                Router.replace('/submission-success');
-            }).catch((error) => {
-                enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
-            }).finally(() => {
-                setLoading(false);
-            });
-        }
-
-        console.log(questions);
-
-
-        return (
-
-            <div className={classes.root}>
-                <Container>
-                    {
-                        questionLoading ? <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                                <CircularProgress size={64}/>
-                            </Box> :
-                            questions.length === 0 || !questions ?
-                                <EmptyErrorComponent txt={!questions ? 'Some error occurred' : 'No Questions Found'}
-                                                     btnText={'Back to All Exams Page'}
-                                                     onClick={onErrorClick}/> :
-                                <Box component={Grid} spacing={3} container justify={"center"} alignItems={"center"}
-                                     height={'100%'}>
-                                    <Grid item xs={12} sm={12} md={7}>
-                                        <Box display={'flex'}>
-                                            <TimerCard date={exam.timer}/>
-                                        </Box>
-                                        <QuestionCard
-                                            question={questions[selectedIndex]}
-                                            index={selectedIndex}
-                                            selectOption={answerAQuestion}
-                                        />
-                                        <Box m={4}/>
-                                        <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={5}>
-                                        <QuestionStatus questions={questions}
-                                                        isLoading={loading}
-                                                        currentIndex={selectedIndex}
-                                                        onSubmit={submitAnswers}
-                                                        onChanged={jumpToIndex}/>
-                                    </Grid>
-                                </Box>
-                    }
-                </Container>
-            </div>
-        );
     }
-;
+
+    const handleNextClick = () => {
+        if (selectedIndex < questions.length - 1) {
+            setCurrent(selectedIndex + 1);
+            updateQuestionType(2);
+        }
+    }
+
+    const jumpToIndex = (i) => {
+        setCurrent(i);
+        updateQuestionType(2);
+    }
+
+    const onErrorClick = () => {
+        Router.replace('/student-exams');
+    }
+
+    const updateQuestionType = (val) => {
+        let _temp = questions;
+        if (_temp[selectedIndex].type === 1 && val === 2) {
+            _temp[selectedIndex].type = 2;
+        } else if (_temp[selectedIndex].type === 2 && val === 3) {
+            _temp[selectedIndex].type = 3;
+        }
+        setQuestions(_temp);
+    }
+
+    const answerAQuestion = (answer) => {
+        let _tempNew = questions;
+        _tempNew[selectedIndex].myAnswer = answer;
+        _tempNew[selectedIndex].type = 3;
+        setQuestions([..._tempNew]);
+    }
+
+
+    const submitAnswers = () => {
+        let _myAnswers = [];
+        setLoading(true);
+        questions.forEach((e) => {
+            if (e.myAnswer !== '') {
+                _myAnswers = [..._myAnswers, {
+                    question: e._id,
+                    choice: [e.myAnswer]
+                }];
+            }
+        });
+        submitExamAnswer({
+            exam: id,
+            examTitle: exam.title,
+            studentAnswer: _myAnswers,
+        }).then((res) => {
+            enqueueSnackbar("Answers submitted successfully", {variant: "success"});
+            Router.replace('/submission-success');
+        }).catch((error) => {
+            enqueueSnackbar(error.message ? error.message : 'Something went wrong!', {variant: 'error'});
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+
+
+    const handleSubmission = () => {
+        setConfirm(false);
+        if (exam.type === 2) {
+            submitAnswers();
+        } else {
+            setResultOpen(true);
+        }
+    }
+
+    console.log(questions);
+
+
+
+    return (
+
+        <div className={classes.root}>
+            <Container>
+                {
+                    questionLoading ? <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+                            <CircularProgress size={64}/>
+                        </Box> :
+                        questions.length === 0 || !questions ?
+                            <EmptyErrorComponent txt={!questions ? 'Some error occurred' : 'No Questions Found'}
+                                                 btnText={'Back to All Exams Page'}
+                                                 onClick={onErrorClick}/> :
+                            <Box component={Grid} spacing={3} container justify={"center"} alignItems={"center"}
+                                 height={'100%'}>
+                                <Grid item xs={12} sm={12} md={7}>
+                                    <Box display={'flex'}>
+                                        <TimerCard onExamEnd={handleSubmission} date={exam.timer}/>
+                                    </Box>
+                                    <QuestionCard
+                                        question={questions[selectedIndex]}
+                                        index={selectedIndex}
+                                        selectOption={answerAQuestion}
+                                    />
+                                    <Box m={4}/>
+                                    <ExamActions previousClick={handlePreviousClick} nextClick={handleNextClick}/>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={5}>
+                                    <QuestionStatus questions={questions}
+                                                    isLoading={loading}
+                                                    currentIndex={selectedIndex}
+                                                    onSubmit={() => setConfirm(true)}
+                                                    onChanged={jumpToIndex}/>
+                                </Grid>
+                                <ConfirmDialog show={confirm} dismiss={() => setConfirm(false)} title={'Submit Answers'}
+                                               proceed={handleSubmission}
+                                               confirmation={'Do you really want to submit?'} okLabel={'yes'}/>
+                                <PracticeResultDialog open={resultOpen} handleClose={() => {
+                                }} questions={questions}/>
+                            </Box>
+                }
+            </Container>
+        </div>
+    );
+}
+
 
 AttendExam.Layout = null;
 export default AttendExam;
