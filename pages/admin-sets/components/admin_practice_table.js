@@ -1,40 +1,21 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
 import {getAllExams} from "../../../src/apis/exams";
+import {Box} from "@material-ui/core";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
-import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
+import {Pagination} from "@material-ui/lab";
 
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
- * @description draft_table.js
- * @createdOn 04/07/21 4:53 pm
+ * @description admin_practice_table.js
+ * @createdOn 11/07/21 7:15 am
  */
 
 
-
-const useStyles = makeStyles((theme) => ({
-    withHover: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        border: '1px solid',
-        '&:hover': {
-            backgroundColor: "#F03D5F",
-            color: '#ffffff',
-            border: '1px solid', borderColor: '#F03D5F',
-            fontWeight: '600'
-        }
-    },
-    skeleton: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        backgroundColor: '#FAF7F7'
-    }
-}));
 const columns = [
     {
         id: 'code',
@@ -75,7 +56,7 @@ const columns = [
     },
 ];
 
-const OrganPracticeTable = ({moreCallBack, search}) => {
+const AdminPracticeTable = ({moreCallBack, search, refresh}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -85,13 +66,9 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
-        const classes = useStyles();
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
-
-        // const headerStyles = makeStyles(styles);
-        // const headerClasses = headerStyles();
 
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
@@ -144,7 +121,7 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
             setRows([]);
             setData([]);
             loadData();
-        }, [search]);
+        }, [search, refresh]);
 
 
         const loadData = () => {
@@ -191,6 +168,7 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
+                            moreArray={[1, 2]}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
@@ -208,4 +186,4 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
     }
 ;
 
-export default OrganPracticeTable;
+export default AdminPracticeTable;
