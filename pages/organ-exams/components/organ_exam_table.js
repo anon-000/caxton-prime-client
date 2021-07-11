@@ -1,12 +1,15 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
+import {Box, makeStyles, Tab, Tabs, TextField} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
-import {getAllExams} from "../../../src/apis/exams";
+import { getAllMyExams} from "../../../src/apis/exams";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
 import moment from "moment/moment";
+import withStyles from "@material-ui/core/styles/withStyles";
+import {useStore} from "laco-react";
+import userStore from "../../../src/store/userStore";
 
 /**
  *
@@ -17,6 +20,32 @@ import moment from "moment/moment";
  */
 
 
+
+const AntTabs = withStyles((theme) => ({
+    indicator: {
+        backgroundColor: '#F03D5F',
+        color: '#fff'
+    },
+}))(Tabs);
+
+const AntTab = withStyles((theme) => ({
+    root: {
+        background: '#ff6583',
+        borderRadius: '5px 5px 0px 0px',
+        color: '#FFFFFF',
+        fontStyle: 'normal',
+        fontWeight: 600,
+        fontSize: '16px',
+        lineHeight: '140.1%',
+        letterSpacing: '0.06em',
+        textTransform: 'none',
+        height: '60px'
+    },
+    selected: {
+        color: '#fff',
+        background: '#F03D5F',
+    },
+}))((props) => <Tab disableRipple {...props} />);
 
 const columns = [
     {
@@ -68,7 +97,10 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
+        const [dialogValue, setDialogValue] = useState(0);
+        const [status, setStatus] = useState({'\$in': [1]});
 
+        const {user} = useStore(userStore);
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
 
@@ -80,7 +112,7 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllMyExams(skip, rowsPerPage, search, 2, [], status, user._id)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -123,16 +155,16 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
             setExams([]);
             setRows([]);
             setData([]);
+            setStatus({'\$in': [1]});
             loadData();
-        }, [search, refresh]);
+        }, [search, refresh, dialogValue]);
 
 
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllMyExams(0, rowsPerPage, search, 2, [], status, user._id)
                 .then((res) => {
-                    console.log("api response : ");
                     setTotal(res.total);
                     let _allCleaners = res.data.map(each => {
                         return {
@@ -160,9 +192,27 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
             moreCallBack(choice, x);
         }
 
+        function a11yProps(index) {
+            return {
+                id: `scrollable-auto-tab-${index}`,
+                'aria-controls': `scrollable-auto-tabpanel-${index}`,
+            };
+        }
+
+        const handleChangeDialogValue = (e, newValue) => {
+            setDialogValue(newValue);
+            console.log(newValue);
+            setStatus({'\$in': [newValue + 1]});
+        };
+
         return (
             <Box>
                 <Card table>
+                    <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue} value={dialogValue}>
+                        <AntTab label="Scheduled" {...a11yProps(0)} />
+                        <AntTab label="Ongoing" {...a11yProps(1)} />
+                        <AntTab label="Completed" {...a11yProps(2)} />
+                    </AntTabs>
                     <CardBody>
                         <DraftTableComponent
                             columns={columns}
@@ -172,7 +222,7 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
-                            moreArray={[1,2]}
+                            moreArray={[1, 2]}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination

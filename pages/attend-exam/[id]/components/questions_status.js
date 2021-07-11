@@ -47,7 +47,7 @@ const QuestionStatus = ({currentIndex, onChanged, questions, onSubmit, isLoading
             </Typography>
             <Box m={1}/>
             <Box component={Divider} color={'#DDDDDD'} width={'100%'}/>
-            <Box component={Grid} container p={1}
+            <Box component={Grid} container p={1} spacing={0}
                  height={450} overflow="auto" alignItems={'flex-start'}
             >
                 {

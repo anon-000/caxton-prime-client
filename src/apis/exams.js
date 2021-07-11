@@ -6,13 +6,37 @@
  * @createdOn 29/06/21 6:42 pm
  */
 import {examService, resultService} from "../config/endpoints";
+import {useStore} from "laco-react";
+import userStore from "../store/userStore";
 
 
-export const getAllExams = ($skip, $limit, $search, type = 1, tags = []) => examService.find({
+
+export const getAllExams = ($skip, $limit, $search, type = 1, tags = [], status = {'\$in': [1, 2]}) => examService.find({
     query: {
         $skip,
         $limit,
         type,
+        status,
+        $sort: {createdAt: -1, scheduledAt: -1},
+        $or: [
+            {title: {$search}},
+            {description: {$search}},
+        ],
+        examTags: {
+            $in: tags,
+        }
+        // $search
+    }
+});
+
+
+export const getAllMyExams = ($skip, $limit, $search, type = 1, tags = [], status = {'\$in': [1, 2]}, userId) => examService.find({
+    query: {
+        $skip,
+        $limit,
+        type,
+        status,
+        createdBy: userId,
         $sort: {createdAt: -1, scheduledAt: -1},
         $or: [
             {title: {$search}},

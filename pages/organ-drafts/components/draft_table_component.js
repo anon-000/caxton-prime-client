@@ -46,6 +46,10 @@ const useStyles = makeStyles({
         padding: '14px 12px',
         border: '0px solid',
     },
+    head: {
+        borderRadius: '0px',
+        border: '0px '
+    },
     clickable: {
         cursor: "pointer",
         userSelect: "none",
@@ -101,7 +105,7 @@ const DraftTableComponent = ({
             <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow >
                             {columns.map((column) => (
                                 <TableCell
                                     key={column.id}
@@ -112,7 +116,7 @@ const DraftTableComponent = ({
                                         fontSize: '14px',
                                         backgroundColor: '#F03D5F',
                                         color: '#ffffff',
-                                        padding: '20px 20px'
+                                        padding: '20px 20px',
                                     }}
                                 >
                                     {column.label}
