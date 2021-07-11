@@ -1,13 +1,13 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {useSnackbar} from "notistack";
-import {getAllExams} from "../../../src/apis/exams";
+import {getAllExams, getAllMyExams} from "../../../src/apis/exams";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "./draft_table_component";
-import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
+import {useStore} from "laco-react";
+import userStore from "../../../src/store/userStore";
 
 /**
  *
@@ -19,24 +19,6 @@ import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
 
 
 
-const useStyles = makeStyles((theme) => ({
-    withHover: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        border: '1px solid',
-        '&:hover': {
-            backgroundColor: "#F03D5F",
-            color: '#ffffff',
-            border: '1px solid', borderColor: '#F03D5F',
-            fontWeight: '600'
-        }
-    },
-    skeleton: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        backgroundColor: '#FAF7F7'
-    }
-}));
 const columns = [
     {
         id: 'code',
@@ -80,23 +62,19 @@ const DraftTable = ({moreCallBack, refresh, search}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
-        const classes = useStyles();
+        const {user} = useStore(userStore);
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
 
-        // const headerStyles = makeStyles(styles);
-        // const headerClasses = headerStyles();
-
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
-            //Router.push(`/draft-details/${data[index]._id}`);
         };
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search)
+            getAllExams(skip, rowsPerPage, search, 1, [], {'\$in': [1, 2]}, user._id)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -145,7 +123,7 @@ const DraftTable = ({moreCallBack, refresh, search}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search)
+            getAllMyExams(0, rowsPerPage, search, 1, [], {'\$in': [1, 2]}, user._id)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
@@ -188,8 +166,6 @@ const DraftTable = ({moreCallBack, refresh, search}) => {
                             setRow={setRow}
                             moreTap={moreTapCallBack}
                         />
-                        {/*<ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}*/}
-                        {/*               confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>*/}
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
                                 color="primary"

@@ -5,9 +5,7 @@
  * @description exams.js
  * @createdOn 29/06/21 6:42 pm
  */
-import {examService, resultService} from "../config/endpoints";
-import {useStore} from "laco-react";
-import userStore from "../store/userStore";
+import {examService} from "../config/endpoints";
 
 
 
