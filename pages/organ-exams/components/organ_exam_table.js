@@ -18,24 +18,6 @@ import moment from "moment/moment";
 
 
 
-const useStyles = makeStyles((theme) => ({
-    withHover: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        border: '1px solid',
-        '&:hover': {
-            backgroundColor: "#F03D5F",
-            color: '#ffffff',
-            border: '1px solid', borderColor: '#F03D5F',
-            fontWeight: '600'
-        }
-    },
-    skeleton: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        backgroundColor: '#FAF7F7'
-    }
-}));
 const columns = [
     {
         id: 'code',
@@ -76,7 +58,7 @@ const columns = [
     },
 ];
 
-const OrganExamTable = ({moreCallBack, search}) => {
+const OrganExamTable = ({moreCallBack, search, refresh}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -86,13 +68,9 @@ const OrganExamTable = ({moreCallBack, search}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
-        const classes = useStyles();
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
-
-        // const headerStyles = makeStyles(styles);
-        // const headerClasses = headerStyles();
 
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
@@ -146,7 +124,7 @@ const OrganExamTable = ({moreCallBack, search}) => {
             setRows([]);
             setData([]);
             loadData();
-        }, [search]);
+        }, [search, refresh]);
 
 
         const loadData = () => {
@@ -194,6 +172,7 @@ const OrganExamTable = ({moreCallBack, search}) => {
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
+                            moreArray={[1,2]}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
