@@ -24,6 +24,6 @@ export const resultService = app.service('student-results');
 export const uploadFile = (file) => {
     const formData = new FormData();
     formData.append('uri[]', file);
-    formData.append('folderName', 'GWM');
+    formData.append('folderName', 'CaxtonPrime');
     return uploadService.create(formData);
 };
