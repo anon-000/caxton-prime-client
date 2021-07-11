@@ -123,7 +123,8 @@ const OrganDrafts = () => {
                     <CreateDraftDialog handleClose={handleClose} open={draftOpen}/>
                     <ScheduledExamDialog onChanged={() => setRefresh(!refresh)} examId={editId}
                                          handleClose={handleClose} open={scheduleOpen}/>
-                    <PracticeSetDialog examId={editId} handleClose={handleClose} open={practiceOpen}/>
+                    <PracticeSetDialog onChanged={() => setRefresh(!refresh)} examId={editId} handleClose={handleClose}
+                                       open={practiceOpen}/>
                     <ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}
                                    proceed={deleteDraft}
                                    confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>
