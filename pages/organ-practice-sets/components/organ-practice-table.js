@@ -1,11 +1,13 @@
-import {Box, makeStyles, TextField} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
-import {getAllExams} from "../../../src/apis/exams";
+import { getAllMyExams} from "../../../src/apis/exams";
 import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
+import {useStore} from "laco-react";
+import userStore from "../../../src/store/userStore";
 
 /**
  *
@@ -65,6 +67,7 @@ const OrganPracticeTable = ({moreCallBack, search, refresh}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
+        const {user} = useStore(userStore);
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
@@ -76,7 +79,7 @@ const OrganPracticeTable = ({moreCallBack, search, refresh}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 3)
+            getAllMyExams(skip, rowsPerPage, search, 3, [], {'\$in': [1, 2]}, user._id)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -125,7 +128,7 @@ const OrganPracticeTable = ({moreCallBack, search, refresh}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 3)
+            getAllMyExams(0, rowsPerPage, search, 3, [], {'\$in': [1, 2]}, user._id)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
@@ -166,7 +169,7 @@ const OrganPracticeTable = ({moreCallBack, search, refresh}) => {
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
-                            moreArray={[1,2]}
+                            moreArray={[1, 2]}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination

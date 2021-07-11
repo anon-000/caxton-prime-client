@@ -7,6 +7,8 @@ import Card from '../../../src/components/cards/Card';
 import ExamTableComponent from "./result_table_component";
 import {getAllResults} from "../../../src/apis/results";
 import moment from "moment/moment";
+import {useStore} from "laco-react";
+import userStore from "../../../src/store/userStore";
 
 
 /**
@@ -87,6 +89,7 @@ const ResultsTable = ({search}) => {
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
         // const classes = useStyles();
+        const {user} = useStore(userStore);
 
         const [data, setData] = useState([]);
         // const Router = useRouter();
@@ -103,7 +106,7 @@ const ResultsTable = ({search}) => {
 
         const loadResults = (skip) => {
             setLoading(true);
-            getAllResults(skip, rowsPerPage, search)
+            getAllResults(skip, rowsPerPage, search, user._id)
                 .then((res) => {
                     if (res.data) {
                         let _allResults = res.data.map(each => {
@@ -156,9 +159,9 @@ const ResultsTable = ({search}) => {
         const loadData = () => {
             console.log("use effect result table");
             setLoading(true);
-            getAllResults(0, rowsPerPage, search)
+            getAllResults(0, rowsPerPage, search, user._id)
                 .then((res) => {
-                    console.log("api response : ",res);
+                    console.log("api response : ", res);
                     setTotal(res.total);
                     let _allResults = res.data.map(each => {
                         return {

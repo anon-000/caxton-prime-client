@@ -20,6 +20,7 @@ import {Chip} from "@material-ui/core";
 import Popover from '@material-ui/core/Popover';
 import {useState} from "react";
 import Logo from '../../src/asset/appBarLogo.svg'
+import UserDialog from "../../pages/admin-users/components/user_dialog";
 
 
 // import SelectedAccountStore from '../store/selectedAccountStore';
@@ -67,13 +68,7 @@ function AdOrgHeader(props) {
     const {user} = useStore(UserStore);
     const Router = useRouter();
     const [current, setCurrent] = useState('');
-    // const { account } = useStore(SelectedAccountStore);
-    // const [selectedChip, setSelectedChip] = useState();
-
-    // const [accounts, setAccounts] = useState(user.accounts ? user.accounts : '');
-
-    // const [openSwitchAccount, setOpenSwitchAccount] = useState(false);
-
+    const [userOpen, setUserOpen] = useState(false);
 
     useEffect(() => {
         if (Router.route === '/organ-dashboard' || Router.route === '/admin-dashboard') {
@@ -84,12 +79,18 @@ function AdOrgHeader(props) {
             setCurrent('Exams');
         } else if (Router.route === '/organ-drafts') {
             setCurrent('Drafts');
-        }else if (Router.route === '/admin-requests') {
+        } else if (Router.route === '/admin-requests') {
             setCurrent('Pending Requests');
-        }else if (Router.route === '/admin-tags') {
+        } else if (Router.route === '/admin-tags') {
             setCurrent('Exam Tags');
-        }else if (Router.route === '/admin-users') {
+        } else if (Router.route === '/admin-users') {
             setCurrent('All Users');
+        } else if (Router.route === '/admin-drafts') {
+            setCurrent('Drafts');
+        } else if (Router.route === '/admin-exams') {
+            setCurrent('Exams');
+        } else if (Router.route === '/admin-sets') {
+            setCurrent('Practice sets');
         } else {
             setCurrent('');
         }
@@ -131,17 +132,10 @@ function AdOrgHeader(props) {
         setCurrent(i);
     }
 
-    // const selectAccountHandler = (acc) => {
-    //     setSelectedChip(acc);
-    // };
-
-    // const saveHandler = () => {
-    //     console.log(typeof selectedChip);
-    //     localStorage.setItem('selectedAccount', selectedChip);
-    //     SelectedAccountStore.set(() => ({ account: selectedChip }), 'account');
-    //     window.location.reload();
-    //     setOpenSwitchAccount(false);
-    // };
+    const handleMyProfile = () => {
+        setAnchorEl(null);
+        setUserOpen(true);
+    }
 
     return (
         <React.Fragment>
@@ -198,6 +192,14 @@ function AdOrgHeader(props) {
                                         display={'flex'}
                                         flexDirection={'column'}
                                     >
+                                        {
+                                            user.role === 2 ? <Button
+                                                onClick={() => handleMyProfile()}
+                                                color={"primary"}
+                                            >
+                                                {"My Profile"}
+                                            </Button> : <Box/>
+                                        }
                                         <Button
                                             onClick={() => handleLogout()}
                                             color={"primary"}
@@ -209,6 +211,9 @@ function AdOrgHeader(props) {
                             </Box>
                         </Grid>
                     </Grid>
+                    <UserDialog refresh={() => {
+                    }} open={userOpen} userId={user._id} title={'My Profile'}
+                                handleClose={() => setUserOpen(false)}/>
                 </Toolbar>
             </AppBar>
         </React.Fragment>

@@ -18,6 +18,7 @@ import Vector from "../../src/asset/student_onboarding_vector.svg"
 import Typography from "@material-ui/core/Typography";
 import SelectAvatar from "./components/select_avatar";
 import {userPatch} from "../../src/apis/users";
+import ImageUploadDialog from "../../src/components/dialogs/ImageUploadDialog";
 
 /**
  *
@@ -60,8 +61,9 @@ const StudentOnBoarding = () => {
 
     const [username, setUserName] = useState('');
     const [phone, setPhone] = useState('');
-    const [avatar, setAvatar] = useState('');
+    const [avatar, setAvatar] = useState('https://flyinryanhawks.org/wp-content/uploads/2016/08/profile-placeholder.png ');
     const [loading, setLoading] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const {enqueueSnackbar} = useSnackbar();
     const Router = useRouter();
     const {user} = useStore(userStore);
@@ -85,7 +87,7 @@ const StudentOnBoarding = () => {
             return;
         }
         setLoading(true);
-        userPatch(user['_id'], {"userName": username, phone})
+        userPatch(user['_id'], {"userName": username, phone, avatar})
             .then((response) => {
                 userStore.set(() => ({response}), 'user');
                 Router.replace('/');
@@ -96,6 +98,11 @@ const StudentOnBoarding = () => {
             setLoading(false);
         });
     };
+
+    const onAvatarEdit = (url) => {
+        console.log("uploaded", url);
+        setAvatar(url);
+    }
 
 
     return (
@@ -118,7 +125,7 @@ const StudentOnBoarding = () => {
                             <Box m={2}/>
                             <Box display={'flex'} flexDirection={'column'} alignItems={'center'}
                                  justifyContent={'center'} width={1}>
-                                <SelectAvatar/>
+                                <SelectAvatar avatar={avatar} onClick={() => setOpenDialog(true)}/>
                                 <Box m={0.6}/>
                                 <Box component={Typography} variant={'caption'} color={'#757575'}>
                                     Add Photo
@@ -155,6 +162,12 @@ const StudentOnBoarding = () => {
                         </Box>
                     </Grid>
                 </Grid>
+                <ImageUploadDialog
+                    openDialog={openDialog}
+                    setOpenDialog={setOpenDialog}
+                    setAvatar={onAvatarEdit}
+                    //setAvatarEdited={setAvatarEdited}
+                />
             </Container>
 
         </Box>

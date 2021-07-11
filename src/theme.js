@@ -37,7 +37,10 @@ let theme = createMuiTheme({
             dark: '#35DD8B'
         },
         background: {
-            default: '#ffffff'
+            default: '#ffffff',
+            stepper: '#F03D5F',
+            dialogActiveStepper: '#ff91a6',
+            dialogInActiveStepper: 'gray'
         },
     },
     typography: {

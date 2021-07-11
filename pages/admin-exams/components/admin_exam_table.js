@@ -1,4 +1,4 @@
-import {Box, makeStyles} from "@material-ui/core";
+import {Box, Tab, Tabs} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
 import {getAllExams} from "../../../src/apis/exams";
@@ -7,6 +7,7 @@ import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
 import {Pagination} from "@material-ui/lab";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 /**
  *
@@ -15,6 +16,35 @@ import {Pagination} from "@material-ui/lab";
  * @description admin_exam_table.js
  * @createdOn 11/07/21 1:33 am
  */
+
+
+
+
+const AntTabs = withStyles((theme) => ({
+    indicator: {
+        backgroundColor: '#F03D5F',
+        color: '#fff'
+    },
+}))(Tabs);
+
+const AntTab = withStyles((theme) => ({
+    root: {
+        background: '#ff6583',
+        borderRadius: '5px 5px 0px 0px',
+        color: '#FFFFFF',
+        fontStyle: 'normal',
+        fontWeight: 600,
+        fontSize: '16px',
+        lineHeight: '140.1%',
+        letterSpacing: '0.06em',
+        textTransform: 'none',
+        height: '60px'
+    },
+    selected: {
+        color: '#fff',
+        background: '#F03D5F',
+    },
+}))((props) => <Tab disableRipple {...props} />);
 
 const columns = [
     {
@@ -66,6 +96,9 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
+        const [status, setStatus] = useState({'\$in': [1]});
+        const [dialogValue, setDialogValue] = useState(0);
+
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
@@ -78,7 +111,7 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllExams(skip, rowsPerPage, search, 2, [], status)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -121,14 +154,15 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
             setExams([]);
             setRows([]);
             setData([]);
+            setStatus({'\$in': [1]});
             loadData();
-        }, [search, refresh]);
+        }, [search, refresh, dialogValue]);
 
 
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllExams(0, rowsPerPage, search, 2, [], status)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
@@ -158,9 +192,28 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
             moreCallBack(choice, x);
         }
 
+
+        function a11yProps(index) {
+            return {
+                id: `scrollable-auto-tab-${index}`,
+                'aria-controls': `scrollable-auto-tabpanel-${index}`,
+            };
+        }
+
+        const handleChangeDialogValue = (e, newValue) => {
+            setDialogValue(newValue);
+            console.log(newValue);
+            setStatus({'\$in': [newValue + 1]});
+        };
+
         return (
             <Box>
                 <Card table>
+                    <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue} value={dialogValue}>
+                        <AntTab label="Scheduled" {...a11yProps(0)} />
+                        <AntTab label="Ongoing" {...a11yProps(1)} />
+                        <AntTab label="Completed" {...a11yProps(2)} />
+                    </AntTabs>
                     <CardBody>
                         <DraftTableComponent
                             columns={columns}

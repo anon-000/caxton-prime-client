@@ -10,6 +10,8 @@ import app, {cookieStorage} from "../src/apis/index";
 import {SnackbarProvider} from "notistack";
 import userStore from "../src/store/userStore";
 import DefaultLayout from "../src/layout/Layout";
+import 'cropperjs/dist/cropper.css';
+
 
 const Noop = ({children}) => children;
 

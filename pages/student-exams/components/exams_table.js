@@ -101,7 +101,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2, selectedTags.map((e) => e._id))
+            getAllExams(skip, rowsPerPage, search, 2, selectedTags.map((e) => e._id), {'\$in': [1, 2]})
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
@@ -151,7 +151,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2, selectedTags.map((e) => e._id))
+            getAllExams(0, rowsPerPage, search, 2, selectedTags.map((e) => e._id), {'\$in': [1, 2]})
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);

@@ -20,6 +20,7 @@ import {Chip} from "@material-ui/core";
 import Popover from '@material-ui/core/Popover';
 import {useState} from "react";
 import Logo from '../../src/asset/appBarLogo.svg'
+import UserDialog from "../../pages/admin-users/components/user_dialog";
 
 
 // import SelectedAccountStore from '../store/selectedAccountStore';
@@ -67,13 +68,7 @@ function Header(props) {
     const {user} = useStore(UserStore);
     const Router = useRouter();
     const [current, setCurrent] = useState(0);
-    // const { account } = useStore(SelectedAccountStore);
-    // const [selectedChip, setSelectedChip] = useState();
-
-    // const [accounts, setAccounts] = useState(user.accounts ? user.accounts : '');
-
-    // const [openSwitchAccount, setOpenSwitchAccount] = useState(false);
-
+    const [userOpen, setUserOpen] = useState(false);
 
     useEffect(() => {
         if (Router.route === '/student-exams') {
@@ -123,17 +118,10 @@ function Header(props) {
         setCurrent(i);
     }
 
-    // const selectAccountHandler = (acc) => {
-    //     setSelectedChip(acc);
-    // };
-
-    // const saveHandler = () => {
-    //     console.log(typeof selectedChip);
-    //     localStorage.setItem('selectedAccount', selectedChip);
-    //     SelectedAccountStore.set(() => ({ account: selectedChip }), 'account');
-    //     window.location.reload();
-    //     setOpenSwitchAccount(false);
-    // };
+    const handleMyProfile = () => {
+        setAnchorEl(null);
+        setUserOpen(true);
+    }
 
     return (
         <React.Fragment>
@@ -263,6 +251,12 @@ function Header(props) {
                                         flexDirection={'column'}
                                     >
                                         <Button
+                                            onClick={() => handleMyProfile()}
+                                            color={"primary"}
+                                        >
+                                            {"My Profile"}
+                                        </Button>
+                                        <Button
                                             onClick={() => handleLogout()}
                                             color={"primary"}
                                         >
@@ -273,85 +267,11 @@ function Header(props) {
                             </Box>
                         </Grid>
                     </Grid>
+                    <UserDialog refresh={() => {
+                    }} open={userOpen} userId={user._id} title={'My Profile'}
+                                handleClose={() => setUserOpen(false)}/>
                 </Toolbar>
             </AppBar>
-            {/*<AppBar*/}
-            {/*    component="div"*/}
-            {/*    className={classes.secondaryBar}*/}
-            {/*    color="#ffffff"*/}
-            {/*    position="static"*/}
-            {/*    elevation={2}*/}
-            {/*>*/}
-            {/*    <Toolbar>*/}
-            {/*        <Grid container alignItems="center" spacing={1}>*/}
-            {/*            <Grid item xs>*/}
-            {/*                <Typography color="primary" variant="h3">*/}
-            {/*                    {title ? title : ""}*/}
-            {/*                </Typography>*/}
-            {/*            </Grid>*/}
-            {/*        </Grid>*/}
-            {/*    </Toolbar>*/}
-            {/*</AppBar>*/}
-
-            {/*<Dialog fullScreen open={openSwitchAccount}>*/}
-            {/*    <Box*/}
-            {/*        width={'100%'}*/}
-            {/*        height={'100%'}*/}
-            {/*        display={'flex'}*/}
-            {/*        justifyContent={'center'}*/}
-            {/*        alignItems={'center'}*/}
-            {/*    >*/}
-            {/*        <Box*/}
-            {/*            display={'flex'}*/}
-            {/*            justifyContent={'center'}*/}
-            {/*            flexDirection={'column'}*/}
-            {/*            alignItems={'center'}*/}
-            {/*            maxWidth={'500px'}*/}
-            {/*        >*/}
-            {/*            <img src={WelcomeImage} width={'80%'} />*/}
-            {/*            <Box my={4} />*/}
-            {/*            <Box*/}
-            {/*                width={'80%'}*/}
-            {/*            >*/}
-            {/*                <Typography variant={'body2'}>*/}
-            {/*                    {`Hi, `}<span><strong>{user.name}</strong></span>*/}
-            {/*                    <br />*/}
-            {/*                    {`You have ${accounts.length} accounts in our bank.`}*/}
-            {/*                    {' Please select one account to continue...'}*/}
-            {/*                </Typography>*/}
-            {/*            </Box>*/}
-            {/*            <Box*/}
-            {/*                width={'80%'}*/}
-            {/*                display={{ xs: 'block', sm: 'flex', }}*/}
-            {/*                justifyContent={'space-around'}*/}
-            {/*                my={3}*/}
-            {/*            >*/}
-            {/*                {*/}
-            {/*                    accounts.map(item => (*/}
-            {/*                        <Chip*/}
-            {/*                            color={'primary'}*/}
-            {/*                            onClick={() => selectAccountHandler(item.accountNumber)}*/}
-            {/*                            style={{ padding: '5px', height: '50px' }}*/}
-            {/*                            label={*/}
-            {/*                                <Typography variant={'caption'}>*/}
-            {/*                                    {item.accountType === 1 ? 'Savings' : 'Current'}*/}
-            {/*                                    <br />*/}
-            {/*                                    {`xxxx xxxx xxxx ${item.accountNumber.slice(11)}`}*/}
-            {/*                                </Typography>*/}
-            {/*                            }*/}
-            {/*                        />*/}
-            {/*                    ))*/}
-            {/*                }*/}
-            {/*            </Box>*/}
-            {/*            <Box display={'flex'} justifyContent={'center'} my={3}>*/}
-            {/*                <Button color={'primary'} variant={'contained'} disabled={!selectedChip}*/}
-            {/*                        onClick={() => saveHandler()}>*/}
-            {/*                    {'Save & Continue'}*/}
-            {/*                </Button>*/}
-            {/*            </Box>*/}
-            {/*        </Box>*/}
-            {/*    </Box>*/}
-            {/*</Dialog>*/}
         </React.Fragment>
     );
 }
