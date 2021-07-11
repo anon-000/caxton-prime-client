@@ -44,13 +44,6 @@ const columns = [
         align: 'left',
     },
     {
-        id: 'phone',
-        label: 'Phone',
-        minWidth: 150,
-        maxWidth: 150,
-        align: 'center',
-    },
-    {
         id: 'request',
         label: 'Actions',
         minWidth: 210,

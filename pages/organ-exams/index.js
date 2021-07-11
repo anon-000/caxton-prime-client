@@ -4,6 +4,9 @@ import Typography from "@material-ui/core/Typography";
 import React, {useState} from "react";
 import {useRouter} from "next/router";
 import OrganExamTable from "./components/organ_exam_table";
+import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
+import {removeDraft} from "../../src/apis/exams";
+import {useSnackbar} from "notistack";
 
 
 /**
@@ -14,36 +17,33 @@ import OrganExamTable from "./components/organ_exam_table";
  * @createdOn 04/07/21 5:11 am
  */
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    clickable: {
-        cursor: "pointer",
-        userSelect: "none",
-    },
-}));
 
 const OrganExams = () => {
-    const classes = useStyles();
     const [editId, setEditId] = useState('');
     const [query, setQuery] = useState('');
+    const [deleteExam, setDeleteExam] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const Router = useRouter();
+    const {enqueueSnackbar} = useSnackbar();
 
 
     const moreTableOptionCallBack = (i, id) => {
         console.log(id);
         setEditId(id);
-        // if (i === 1)
-        //     Router.push(`/draft-details/${id}`);
-        // else if (i === 3)
-        //     handleClickOpen(2);
-        // else if (i === 4)
-        //     handleClickOpen(3);
-        // else if (i === 2)
-        //     handleClickOpen(4);
+        if (i === 1)
+            Router.push(`/draft-details/${id}`);
+        else if (i === 2)
+            setDeleteExam(true);
+    }
+
+    const handleDelete = () => {
+        setDeleteExam(false);
+        removeDraft(editId).then((res) => {
+            setRefresh(!refresh);
+        }).catch((e) => {
+            enqueueSnackbar(e && e.message ? e.message : 'Something went wrong!', {variant: 'warning'});
+        }).finally(() => {
+        });
     }
 
     return (
@@ -60,7 +60,10 @@ const OrganExams = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganExamTable search={query} moreCallBack={moreTableOptionCallBack}/>
+            <OrganExamTable refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
+            <ConfirmDialog show={deleteExam} dismiss={() => setDeleteExam(false)} title={'Delete draft'}
+                           proceed={handleDelete}
+                           confirmation={'Are you sure to delete this exam?'} okLabel={'yes'}/>
         </Container>
     )
 }

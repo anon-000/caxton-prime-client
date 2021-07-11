@@ -1,25 +1,22 @@
-import {makeStyles} from "@material-ui/core/styles";
-import {Box, Button, Container, TextField} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
-import React, {useState} from "react";
-import {useRouter} from "next/router";
-import OrganPracticeTable from "./components/organ-practice-table";
-import {useSnackbar} from "notistack";
-import {removeDraft} from "../../src/apis/exams";
-import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
-
-
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
  * @description index.js
- * @createdOn 04/07/21 5:11 am
+ * @createdOn 10/07/21 7:10 pm
  */
+import Box from "@material-ui/core/Box";
+import React, {useState} from "react";
+import {Container, TextField} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import AdminPracticeTable from "./components/admin_practice_table";
+import {useRouter} from "next/router";
+import {removeDraft} from "../../src/apis/exams";
+import {useSnackbar} from "notistack";
+import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
 
 
-
-const OrganPracticeSets = () => {
+const AdminSets = () => {
     const [editId, setEditId] = useState('');
     const [query, setQuery] = useState('');
     const [deleteSet, setDeleteSet] = useState(false);
@@ -62,7 +59,7 @@ const OrganPracticeSets = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganPracticeTable refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
+            <AdminPracticeTable refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
             <ConfirmDialog show={deleteSet} dismiss={() => setDeleteSet(false)} title={'Delete draft'}
                            proceed={handleDelete}
                            confirmation={'Are you sure to delete this Practice set?'} okLabel={'yes'}/>
@@ -71,4 +68,4 @@ const OrganPracticeSets = () => {
 }
 
 
-export default OrganPracticeSets
+export default AdminSets

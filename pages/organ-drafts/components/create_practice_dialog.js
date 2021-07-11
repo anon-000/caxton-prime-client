@@ -9,7 +9,7 @@ import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import ExamTagsAutoComplete from "../../../src/components/TagsAutoComplete";
 import cross from "../../../src/asset/cross_icon.svg";
-import {createDraft, examPatch} from "../../../src/apis/exams";
+import {examPatch} from "../../../src/apis/exams";
 
 /**
  *
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function PracticeSetDialog({open, handleClose, examId}) {
+export default function PracticeSetDialog({open, handleClose, examId, onChanged}) {
 
     const classes = useStyles();
     const [tags, setTags] = useState([]);
@@ -127,6 +127,7 @@ export default function PracticeSetDialog({open, handleClose, examId}) {
             console.log(id);
             enqueueSnackbar("Practice set created successfully", {variant: "success"});
             handleClose(3);
+            onChanged();
         }).catch((error) => {
             enqueueSnackbar(
                 error.message && error.message

@@ -1,25 +1,24 @@
 import {makeStyles} from "@material-ui/core/styles";
+import React, {useState} from "react";
+import {useRouter} from "next/router";
+import {useSnackbar} from "notistack";
+import {removeDraft} from "../../src/apis/exams";
 import {Box, Button, Container, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import React, {useState} from "react";
-import DraftTable from "./components/draft_table";
 import Grid from "@material-ui/core/Grid";
-import CreateDraftDialog from "./components/create_draft_dialog";
-import ScheduledExamDialog from "./components/schedule_exam_dialog";
-import {useRouter} from "next/router";
-import PracticeSetDialog from "./components/create_practice_dialog";
+import CreateDraftDialog from "../organ-drafts/components/create_draft_dialog";
+import ScheduledExamDialog from "../organ-drafts/components/schedule_exam_dialog";
+import PracticeSetDialog from "../organ-drafts/components/create_practice_dialog";
 import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
-import {removeDraft} from "../../src/apis/exams";
-import {useSnackbar} from "notistack";
+import AdminDraftTable from "./components/admin_drafts_table";
 
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
  * @description index.js
- * @createdOn 04/07/21 5:09 am
+ * @createdOn 10/07/21 7:10 pm
  */
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const OrganDrafts = () => {
+const AdminDrafts = () => {
     const classes = useStyles();
     const [draftOpen, setDraftOpen] = useState();
     const [scheduleOpen, setScheduleOpen] = useState();
@@ -123,17 +122,16 @@ const OrganDrafts = () => {
                     <CreateDraftDialog handleClose={handleClose} open={draftOpen}/>
                     <ScheduledExamDialog onChanged={() => setRefresh(!refresh)} examId={editId}
                                          handleClose={handleClose} open={scheduleOpen}/>
-                    <PracticeSetDialog onChanged={() => setRefresh(!refresh)} examId={editId} handleClose={handleClose}
-                                       open={practiceOpen}/>
+                    <PracticeSetDialog examId={editId} handleClose={handleClose} open={practiceOpen}/>
                     <ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}
                                    proceed={deleteDraft}
                                    confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>
                 </Grid>
             </Grid>
-            <DraftTable search={query} refresh={refresh} moreCallBack={moreTableOptionCallBack}/>
+            <AdminDraftTable search={query} refresh={refresh} moreCallBack={moreTableOptionCallBack}/>
         </Container>
     )
 }
 
 
-export default OrganDrafts
+export default AdminDrafts

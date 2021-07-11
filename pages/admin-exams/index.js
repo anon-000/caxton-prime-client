@@ -1,12 +1,13 @@
+import Box from "@material-ui/core/Box";
 import {makeStyles} from "@material-ui/core/styles";
-import {Box, Button, Container, TextField} from "@material-ui/core";
+import {Container, TextField} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import React, {useState} from "react";
 import {useRouter} from "next/router";
-import OrganPracticeTable from "./components/organ-practice-table";
-import {useSnackbar} from "notistack";
-import {removeDraft} from "../../src/apis/exams";
+import AdminExamTable from "./components/admin_exam_table";
 import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
+import {removeDraft} from "../../src/apis/exams";
+import {useSnackbar} from "notistack";
 
 
 /**
@@ -14,15 +15,26 @@ import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
  * @description index.js
- * @createdOn 04/07/21 5:11 am
+ * @createdOn 10/07/21 7:10 pm
  */
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    clickable: {
+        cursor: "pointer",
+        userSelect: "none",
+    },
+}));
 
-
-const OrganPracticeSets = () => {
+const AdminExams = () => {
+    const classes = useStyles();
     const [editId, setEditId] = useState('');
     const [query, setQuery] = useState('');
-    const [deleteSet, setDeleteSet] = useState(false);
+    const [deleteExam, setDeleteExam] = useState(false);
     const [refresh, setRefresh] = useState(false);
     const Router = useRouter();
     const {enqueueSnackbar} = useSnackbar();
@@ -34,12 +46,11 @@ const OrganPracticeSets = () => {
         if (i === 1)
             Router.push(`/draft-details/${id}`);
         else if (i === 2)
-            setDeleteSet(true);
+            setDeleteExam(true);
     }
 
-
     const handleDelete = () => {
-        setDeleteSet(false);
+        setDeleteExam(false);
         removeDraft(editId).then((res) => {
             setRefresh(!refresh);
         }).catch((e) => {
@@ -52,7 +63,7 @@ const OrganPracticeSets = () => {
         <Container>
             <Box m={6}/>
             <Typography variant="h3">
-                Search for Practice Sets
+                Search for Scheduled Exams
             </Typography>
             <Box m={2}/>
             <TextField
@@ -62,13 +73,13 @@ const OrganPracticeSets = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganPracticeTable refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
-            <ConfirmDialog show={deleteSet} dismiss={() => setDeleteSet(false)} title={'Delete draft'}
+            <AdminExamTable refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
+            <ConfirmDialog show={deleteExam} dismiss={() => setDeleteExam(false)} title={'Delete draft'}
                            proceed={handleDelete}
-                           confirmation={'Are you sure to delete this Practice set?'} okLabel={'yes'}/>
+                           confirmation={'Are you sure to delete this exam?'} okLabel={'yes'}/>
         </Container>
     )
 }
 
 
-export default OrganPracticeSets
+export default AdminExams

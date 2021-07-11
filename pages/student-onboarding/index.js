@@ -80,6 +80,9 @@ const StudentOnBoarding = () => {
         } else if (phone === '') {
             enqueueSnackbar('Phone number is required', {variant: 'warning'});
             return;
+        } else if (phone.length !== 10) {
+            enqueueSnackbar('Enter a valid phone number', {variant: 'warning'});
+            return;
         }
         setLoading(true);
         userPatch(user['_id'], {"userName": username, phone})
@@ -136,6 +139,11 @@ const StudentOnBoarding = () => {
                                 onChange={event => setPhone(event.target.value)}
                                 variant="outlined"
                                 placeholder={'Phone number'}
+                                type={'number'}
+                                onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                                }}
+                                min={0}
                             />
                             <Box m={1}/>
                             <Button fullWidth disabled={loading} onClick={handleStudentOnBoarding} color="primary"
@@ -153,4 +161,5 @@ const StudentOnBoarding = () => {
     )
 }
 
+StudentOnBoarding.Layout = null
 export default StudentOnBoarding

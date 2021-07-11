@@ -6,7 +6,6 @@ import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
-import moment from "moment/moment";
 
 /**
  *
@@ -18,10 +17,28 @@ import moment from "moment/moment";
 
 
 
+const useStyles = makeStyles((theme) => ({
+    withHover: {
+        cursor: 'pointer',
+        userSelect: 'none',
+        border: '1px solid',
+        '&:hover': {
+            backgroundColor: "#F03D5F",
+            color: '#ffffff',
+            border: '1px solid', borderColor: '#F03D5F',
+            fontWeight: '600'
+        }
+    },
+    skeleton: {
+        cursor: 'pointer',
+        userSelect: 'none',
+        backgroundColor: '#FAF7F7'
+    }
+}));
 const columns = [
     {
         id: 'code',
-        label: 'Exam Id',
+        label: 'Draft Id',
         minWidth: 170,
         align: 'center',
     },
@@ -30,12 +47,6 @@ const columns = [
         label: 'Name',
         minWidth: 170,
         align: 'left',
-    },
-    {
-        id: 'formattedDate',
-        label: 'Scheduled At',
-        minWidth: 170,
-        align: 'center',
     },
     {
         id: 'duration',
@@ -49,7 +60,6 @@ const columns = [
         minWidth: 170,
         align: 'center',
     },
-
     {
         id: 'more',
         label: 'More',
@@ -58,7 +68,7 @@ const columns = [
     },
 ];
 
-const OrganExamTable = ({moreCallBack, search, refresh}) => {
+const AdminDraftTable = ({moreCallBack, refresh, search}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -68,9 +78,13 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
+        const classes = useStyles();
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
+
+        // const headerStyles = makeStyles(styles);
+        // const headerClasses = headerStyles();
 
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
@@ -80,13 +94,12 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllExams(skip, rowsPerPage, search, 2)
+            getAllExams(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
-                                formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                                 ...each,
                             };
                         });
@@ -130,14 +143,13 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllExams(0, rowsPerPage, search, 2)
+            getAllExams(0, rowsPerPage, search)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);
                     let _allCleaners = res.data.map(each => {
                         return {
                             code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
-                            formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
                             ...each,
                         };
                     });
@@ -160,6 +172,7 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
             moreCallBack(choice, x);
         }
 
+
         return (
             <Box>
                 <Card table>
@@ -172,8 +185,9 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
-                            moreArray={[1,2]}
                         />
+                        {/*<ConfirmDialog show={deleteOpen} dismiss={() => handleClose(4)} title={'Delete draft'}*/}
+                        {/*               confirmation={'Are you sure to delete this draft?'} okLabel={'yes'}/>*/}
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
                                 color="primary"
@@ -190,4 +204,4 @@ const OrganExamTable = ({moreCallBack, search, refresh}) => {
     }
 ;
 
-export default OrganExamTable;
+export default AdminDraftTable;

@@ -15,26 +15,6 @@ import DraftTableComponent from "../../organ-drafts/components/draft_table_compo
  * @createdOn 04/07/21 4:53 pm
  */
 
-
-
-const useStyles = makeStyles((theme) => ({
-    withHover: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        border: '1px solid',
-        '&:hover': {
-            backgroundColor: "#F03D5F",
-            color: '#ffffff',
-            border: '1px solid', borderColor: '#F03D5F',
-            fontWeight: '600'
-        }
-    },
-    skeleton: {
-        cursor: 'pointer',
-        userSelect: 'none',
-        backgroundColor: '#FAF7F7'
-    }
-}));
 const columns = [
     {
         id: 'code',
@@ -75,7 +55,7 @@ const columns = [
     },
 ];
 
-const OrganPracticeTable = ({moreCallBack, search}) => {
+const OrganPracticeTable = ({moreCallBack, search, refresh}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -85,18 +65,13 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
-        const classes = useStyles();
 
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
 
-        // const headerStyles = makeStyles(styles);
-        // const headerClasses = headerStyles();
-
         const setRow = (req) => {
             const index = data.findIndex(e => e._id.toString() === req._id.toString());
             setClickedRow(data[index]);
-            //Router.push(`/draft-details/${data[index]._id}`);
         };
 
         const loadCleaners = (skip) => {
@@ -144,7 +119,7 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
             setRows([]);
             setData([]);
             loadData();
-        }, [search]);
+        }, [search, refresh]);
 
 
         const loadData = () => {
@@ -187,10 +162,11 @@ const OrganPracticeTable = ({moreCallBack, search}) => {
                             columns={columns}
                             rows={rows}
                             loading={loading}
-                            notFound={'No Exams Found'}
+                            notFound={'No Practice sets Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
+                            moreArray={[1,2]}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
