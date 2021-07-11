@@ -13,6 +13,7 @@ import DefaultLayout from "../src/layout/Layout";
 import 'cropperjs/dist/cropper.css';
 
 
+
 const Noop = ({children}) => children;
 
 export default function MyApp(props) {
