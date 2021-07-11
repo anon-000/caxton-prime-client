@@ -143,7 +143,7 @@ function Navigator(props) {
             href: "/admin-drafts",
         },
         {
-            id: "Scheduled Exams",
+            id: "Exams",
             icon: <DnsRoundedIcon color={'#ffffff'}/>,
             active: Router.pathname === "/admin-exams",
             href: "/admin-exams",

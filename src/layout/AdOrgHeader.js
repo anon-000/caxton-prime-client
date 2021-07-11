@@ -84,12 +84,18 @@ function AdOrgHeader(props) {
             setCurrent('Exams');
         } else if (Router.route === '/organ-drafts') {
             setCurrent('Drafts');
-        }else if (Router.route === '/admin-requests') {
+        } else if (Router.route === '/admin-requests') {
             setCurrent('Pending Requests');
-        }else if (Router.route === '/admin-tags') {
+        } else if (Router.route === '/admin-tags') {
             setCurrent('Exam Tags');
-        }else if (Router.route === '/admin-users') {
+        } else if (Router.route === '/admin-users') {
             setCurrent('All Users');
+        } else if (Router.route === '/admin-drafts') {
+            setCurrent('Drafts');
+        } else if (Router.route === '/admin-exams') {
+            setCurrent('Exams');
+        } else if (Router.route === '/admin-sets') {
+            setCurrent('Practice sets');
         } else {
             setCurrent('');
         }
