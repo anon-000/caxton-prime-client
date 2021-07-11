@@ -53,6 +53,23 @@ export const getAllPendingOrgans = ($skip, $limit, $search) => UserService.find(
     }
 });
 
+
+export const getAllUsers = ($skip, $limit, $search) => UserService.find({
+    query: {
+        $skip,
+        $limit,
+        status: 2,
+        $sort: {createdAt: -1},
+        $or: [
+            {name: {$search}},
+            {phone: {$search}},
+            {email: {$search}},
+            {username: {$search}},
+        ]
+        // $search
+    }
+});
+
 export const getUserDetails = (id) => UserService.get(id, {
     query: {}
 });

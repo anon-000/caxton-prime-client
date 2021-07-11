@@ -181,7 +181,7 @@ const AdminDraftTable = ({moreCallBack, refresh, search}) => {
                             columns={columns}
                             rows={rows}
                             loading={loading}
-                            notFound={'No Exams Found'}
+                            notFound={'No Drafts Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}

@@ -12,6 +12,8 @@ import cross from "../../../src/asset/cross_icon.svg";
 import {getUserDetails, userPatch} from "../../../src/apis/users";
 import {error} from "next/dist/build/output/log";
 import userStore from "../../../src/store/userStore";
+import SelectAvatar from "../../student-onboarding/components/select_avatar";
+import ImageUploadDialog from "../../../src/components/dialogs/ImageUploadDialog";
 
 /**
  *
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function UserDialog({open, handleClose, userId, refresh}) {
+export default function UserDialog({open, handleClose, userId, refresh, title = 'User Details'}) {
 
     const classes = useStyles();
     const [user, setUser] = useState([]);
@@ -44,12 +46,14 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [avatar, setAvatar] = useState('https://flyinryanhawks.org/wp-content/uploads/2016/08/profile-placeholder.png ');
     const [userName, setUserName] = useState();
     const [lane, setLane] = useState();
     const [city, setCity] = useState();
     const [state, setState] = useState();
     const [pin, setPin] = useState();
     const [userLoading, setUserLoading] = useState(true);
+    const [openDialog, setOpenDialog] = useState(false);
     const {enqueueSnackbar} = useSnackbar();
 
     useEffect(() => {
@@ -61,6 +65,7 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
         setCity("");
         setState("");
         setPin("");
+        setAvatar('https://flyinryanhawks.org/wp-content/uploads/2016/08/profile-placeholder.png ');
 
         setUserLoading(true);
         getUserDetails(userId).then((res) => {
@@ -69,7 +74,8 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
             setEmail(res.email);
             setPhone(res.phone);
             if (res.role === 1) {
-                setUserName(res.username);
+                setUserName(res.userName);
+                setAvatar(res.avatar);
             } else if (res.role === 2 && res.address) {
                 setLane(res.address.lane);
                 setCity(res.address.state);
@@ -106,6 +112,7 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
             email,
             userName,
             phone,
+            avatar,
         } : {
             name,
             email,
@@ -123,7 +130,7 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
             .then((response) => {
                 handleClose();
                 refresh();
-                enqueueSnackbar("Userinfo updated successfully", {variant: "success"});
+                enqueueSnackbar("Updated successfully", {variant: "success"});
             })
             .catch(error => {
                 enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
@@ -132,15 +139,25 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
         });
     }
 
+    const onAvatarEdit = (url) => {
+        console.log("uploaded", url);
+        setAvatar(url);
+    }
+
     return (
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
-            <DialogCustomTitle children={'User Details'} onClose={handleClose}/>
+            <DialogCustomTitle children={title} onClose={handleClose}/>
             <DialogContent>
                 {
                     userLoading ? <Box className={classes.root}>
                         <CircularProgress size={64}/>
                     </Box> : <Box>
-
+                        {
+                            user.role === 1 ?
+                                <Box width={'100%'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                                    <SelectAvatar avatar={avatar} onClick={() => setOpenDialog(true)}/>
+                                </Box> : <Box/>
+                        }
                         <Typography className={classes.label}>
                             Name
                         </Typography>
@@ -248,6 +265,12 @@ export default function UserDialog({open, handleClose, userId, refresh}) {
                             {loading ? <CircularProgress size={24}/> : "Save"}
                         </Button>
                         <Box m={2}/>
+                        <ImageUploadDialog
+                            openDialog={openDialog}
+                            setOpenDialog={setOpenDialog}
+                            setAvatar={onAvatarEdit}
+                            //setAvatarEdited={setAvatarEdited}
+                        />
                     </Box>
                 }
             </DialogContent>

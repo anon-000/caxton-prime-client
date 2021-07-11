@@ -5,7 +5,7 @@ import Card from "../../../src/components/cards/Card";
 import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
 import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
-import {deleteUser, getAllPendingOrgans, userPatch} from "../../../src/apis/users";
+import {deleteUser, getAllPendingOrgans, getAllUsers, userPatch} from "../../../src/apis/users";
 import ConfirmDialog from "../../../src/components/confirm/ConfirmDialog";
 import UserDialog from "./user_dialog";
 
@@ -72,7 +72,7 @@ const AdminUsersTable = ({moreCallBack, search}) => {
 
         const loadRequests = (skip) => {
             setLoading(true);
-            getAllPendingOrgans(skip, rowsPerPage, search)
+            getAllUsers(skip, rowsPerPage, search)
                 .then((res) => {
                     if (res.data) {
                         let _allReq = res.data.map(each => {
@@ -121,7 +121,7 @@ const AdminUsersTable = ({moreCallBack, search}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllPendingOrgans(0, rowsPerPage, search)
+            getAllUsers(0, rowsPerPage, search)
                 .then((res) => {
                     console.log("api response : ");
                     setTotal(res.total);

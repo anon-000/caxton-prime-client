@@ -1,5 +1,4 @@
-import app from "./index";
-import {examService, resultService} from "../config/endpoints";
+import { resultService} from "../config/endpoints";
 
 /**
  *
@@ -12,10 +11,11 @@ import {examService, resultService} from "../config/endpoints";
 
 
 
-export const getAllResults = ($skip, $limit, $search) => resultService.find({
+export const getAllResults = ($skip, $limit, $search, userId) => resultService.find({
     query: {
         $skip,
         $limit,
+        createdBy: userId,
         $populate: ["studentAnswer.question", "exam"],
         $sort: {createdAt: -1},
         'examTitle': {$search}
