@@ -27,25 +27,19 @@ const PracticeExams = () => {
         }
     }
 
-    const removeTags = (tag) => {
-        if (tags.includes(tag)) {
-            let _temp = tags;
-            let index = _temp.indexOf(tag);
-            if (index !== -1) {
-                console.log(_temp);
-                _temp.splice(index, 1);
-            }
-            console.log(_temp);
-            selectTags([..._temp]);
-        }
+    const removeAtIndex = (index) => {
+        let _list = tags;
+        _list.splice(index, 1);
+        setTags([..._list]);
     }
+
 
     return (
         <Container>
             <Grid container>
                 <Grid item md={9} xs={12} sm={12}>
                     <Box m={6}/>
-                    <PracticeTable selectedTags={tags} onRemoveTag={removeTags}/>
+                    <PracticeTable selectedTags={tags} onRemoveTag={removeAtIndex}/>
                 </Grid>
                 <Grid item md={3} xs={12} sm={12}>
                     <TopicFilter onClicked={selectTags}/>

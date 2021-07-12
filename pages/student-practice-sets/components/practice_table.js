@@ -196,14 +196,14 @@ const PracticeTable = ({selectedTags, onRemoveTag}) => {
                 {
                     selectedTags.length === 0 ? <Box/> : <Box display={"flex"} flexWrap={'wrap'} mt={3} mb={-1}>
                         {
-                            selectedTags.map((e) => <Box
+                            selectedTags.map((e, i) => <Box
                                     display={'flex'}
                                     className={classes.withHover}
                                     my={0.8} mr={0.8} px={2} borderRadius={16}
                                     borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
                                     color={'#F03D5F'} py={0.6}>
                                     {e.name}
-                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(e)}>
+                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(i)}>
                                         <img src={cross} alt={'x'}/>
                                     </Box>
                                 </Box>

@@ -72,7 +72,7 @@ const columns = [
     },
 ];
 
-const ExamsTable = ({selectedTags, onRemoveTag}) => {
+const ExamsTable = ({selectedTags, search}) => {
 
         console.log(selectedTags);
         const [page, setPage] = React.useState(1);
@@ -82,7 +82,7 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
         const [total, setTotal] = React.useState(0);
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
-        const [search, setSearch] = React.useState('');
+        //const [search, setSearch] = React.useState('');
         const [clickedRow, setClickedRow] = React.useState(null);
         const classes = useStyles();
 
@@ -179,37 +179,6 @@ const ExamsTable = ({selectedTags, onRemoveTag}) => {
 
         return (
             <Box>
-                <Typography variant="h3">
-                    Search for Exams
-                </Typography>
-                <Box m={2}/>
-                <Box width={'50%'}>
-                    <TextField
-                        fullWidth
-                        value={search}
-                        onChange={(event) => setSearch(event.target.value)}
-                        variant="outlined"
-                        placeholder={"Type to search"}
-                    />
-                </Box>
-                {
-                    selectedTags.length === 0 ? <Box/> : <Box display={"flex"} flexWrap={'wrap'} mt={3} mb={-1}>
-                        {
-                            selectedTags.map((e, i) => <Box
-                                    display={'flex'}
-                                    className={classes.withHover}
-                                    my={0.8} mr={0.8} px={2} borderRadius={16}
-                                    borderColor={'#FFEEF2'} bgcolor={'#FFEEF2'}
-                                    color={'#F03D5F'} py={0.6}>
-                                    {e.name}
-                                    <Box ml={1.5} mt={0.2} onClick={() => onRemoveTag(i)}>
-                                        <img src={cross} alt={'x'}/>
-                                    </Box>
-                                </Box>
-                            )
-                        }
-                    </Box>
-                }
 
                 <Card table>
                     <CardBody>
