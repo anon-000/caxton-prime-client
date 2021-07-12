@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import {Button, CircularProgress, Divider, Grid} from "@material-ui/core";
@@ -35,7 +35,37 @@ const QuestionType = ({color, text}) => {
 
 const QuestionStatus = ({currentIndex, onChanged, questions, onSubmit, isLoading}) => {
 
+
+    const [notVisited, setNotVisited] = useState(0);
+    const [answered, setAnswered] = useState(0);
+    const [skipped, setSkipped] = useState(0);
+
+
     const classes = useStyles();
+
+    useEffect(() => {
+        setNotVisited(0);
+        setAnswered(0);
+        setSkipped(0);
+        //console.log(questions);
+        let nv = 0, sk = 0, ans = 0;
+        questions.forEach((e) => {
+            if (e.type === 1) {
+                /// not visited
+                nv += 1;
+            } else if (e.type === 2) {
+                /// skipped
+                sk += 1;
+            } else if (e.type === 3) {
+                /// answered
+                ans += 1;
+            }
+        });
+        setNotVisited(nv);
+        setSkipped(sk);
+        setAnswered(ans);
+    }, [currentIndex, questions]);
+
 
     return (
         <Box display={'flex'}
@@ -78,12 +108,12 @@ const QuestionStatus = ({currentIndex, onChanged, questions, onSubmit, isLoading
             <Box m={0.5}/>
             <Grid container>
                 <Grid item md={6} xs={6} sm={6}>
-                    <QuestionType color={"#EBF4FF"} text={'Not visited : 12'}/>
+                    <QuestionType color={"#EBF4FF"} text={`Not visited : ${notVisited}`}/>
                     <QuestionType color={"#F03D5F"} text={'Current'}/>
                 </Grid>
                 <Grid item md={6} xs={6} sm={6}>
-                    <QuestionType color={"#FFEEF2"} text={'Skipped : 5'}/>
-                    <QuestionType color={"#F5FFCC"} text={'Answered : 12'}/>
+                    <QuestionType color={"#FFEEF2"} text={`Skipped : ${skipped}`}/>
+                    <QuestionType color={"#F5FFCC"} text={`Answered : ${answered}`}/>
                 </Grid>
             </Grid>
             <Box m={0.5}/>
