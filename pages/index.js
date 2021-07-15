@@ -95,3 +95,5 @@ export default function Home() {
         </Box>
     )
 }
+
+Home.Layout = null

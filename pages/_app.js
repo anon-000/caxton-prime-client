@@ -91,12 +91,12 @@ export default function MyApp(props) {
                     });
                 });
         } else {
-            if (Router.pathname !== "/login" && Router.pathname !== "/signup") {
+            if (Router.pathname === "/login" || Router.pathname === "/signup" || Router.pathname === '/' || Router.pathname === '/LandingTest') {
+                    setLoading(false);
+            } else {
                 Router.replace("/login").then(() => {
                     setLoading(false);
                 });
-            } else {
-                setLoading(false);
             }
         }
     }, []);
