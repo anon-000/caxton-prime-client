@@ -63,7 +63,7 @@ const AdminExams = () => {
         <Container>
             <Box m={6}/>
             <Typography variant="h3">
-                Search for Scheduled Exams
+                Search for Exams
             </Typography>
             <Box m={2}/>
             <TextField

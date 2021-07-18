@@ -17,7 +17,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
-import styles from '../../../public/assets/jss/components/cardStyle';
+import styles from '../../../../src/components/cards/styles/card_style';
 
 export default function Card(props) {
     const useStyles = makeStyles(styles);

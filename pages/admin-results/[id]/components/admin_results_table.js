@@ -1,84 +1,46 @@
-import {Box, makeStyles, Tab, Tabs, TextField} from "@material-ui/core";
+import {Box, Tab, Tabs} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
-import {getAllMyExams} from "../../../src/apis/exams";
-import Card from "../../../src/components/cards/Card";
-import CardBody from "../../../src/components/cards/card_body";
 import {Pagination} from "@material-ui/lab";
-import DraftTableComponent from "../../organ-drafts/components/draft_table_component";
-import moment from "moment/moment";
-import withStyles from "@material-ui/core/styles/withStyles";
-import {useStore} from "laco-react";
-import userStore from "../../../src/store/userStore";
+import {getAllResultsOfExam} from "../../../../src/apis/results";
+import Card from "../../../../public/assets/jss/views/dashboardStyle";
+import CardBody from "../../../../src/components/cards/card_body";
+import DraftTableComponent from "../../../organ-drafts/components/draft_table_component";
 
 /**
  *
  * @createdBy Aurosmruti Das
  * @email aurosmruti.das@gmail.com
- * @description draft_table.js
- * @createdOn 04/07/21 4:53 pm
+ * @description admin_exam_table.js
+ * @createdOn 11/07/21 1:33 am
  */
 
 
-
-const AntTabs = withStyles((theme) => ({
-    indicator: {
-        backgroundColor: '#F03D5F',
-        color: '#fff'
-    },
-}))(Tabs);
-
-const AntTab = withStyles((theme) => ({
-    root: {
-        background: '#ff6583',
-        borderRadius: '5px 5px 0px 0px',
-        color: '#FFFFFF',
-        fontStyle: 'normal',
-        fontWeight: 600,
-        fontSize: '16px',
-        lineHeight: '140.1%',
-        letterSpacing: '0.06em',
-        textTransform: 'none',
-        height: '60px'
-    },
-    selected: {
-        color: '#fff',
-        background: '#F03D5F',
-    },
-}))((props) => <Tab disableRipple {...props} />);
-
 const columns = [
     {
-        id: 'code',
-        label: 'Exam Id',
-        minWidth: 170,
-        align: 'center',
-    },
-    {
-        id: 'title',
+        id: 'studentName',
         label: 'Name',
         minWidth: 170,
         align: 'left',
     },
     {
-        id: 'formattedDate',
-        label: 'Scheduled At',
+        id: 'studentMail',
+        label: 'Email',
+        minWidth: 170,
+        align: 'left',
+    },
+    {
+        id: 'totalMarks',
+        label: 'Total Marks',
         minWidth: 170,
         align: 'center',
     },
     {
-        id: 'duration',
-        label: 'Duration',
+        id: 'securedMarks',
+        label: 'Marks secured',
         minWidth: 170,
         align: 'center',
     },
-    {
-        id: 'questionCount',
-        label: 'No of Questions',
-        minWidth: 170,
-        align: 'center',
-    },
-
     {
         id: 'more',
         label: 'More',
@@ -87,7 +49,7 @@ const columns = [
     },
 ];
 
-const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
+const AdminResultsTable = ({moreCallBack, search, refresh, examId}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -97,10 +59,10 @@ const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
+        const [status, setStatus] = useState({'\$in': [1]});
         const [dialogValue, setDialogValue] = useState(0);
-        const [status, setStatus] = useState({'\$in': [result ? 3 : 1]});
 
-        const {user} = useStore(userStore);
+
         const [data, setData] = useState([]);
         const {enqueueSnackbar} = useSnackbar();
 
@@ -112,13 +74,14 @@ const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
 
         const loadCleaners = (skip) => {
             setLoading(true);
-            getAllMyExams(skip, rowsPerPage, search, 2, [], status, user._id)
+            getAllResultsOfExam(skip, rowsPerPage, search, examId)
                 .then((res) => {
                     if (res.data) {
                         let _allExams = res.data.map(each => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
-                                formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
+                                studentName: each.createdBy.name,
+                                studentMail: each.createdBy.email,
                                 ...each,
                             };
                         });
@@ -163,13 +126,15 @@ const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
         const loadData = () => {
             console.log("use effect");
             setLoading(true);
-            getAllMyExams(0, rowsPerPage, search, 2, [], status, user._id)
+            getAllResultsOfExam(0, rowsPerPage, search, examId)
                 .then((res) => {
+                    console.log("api response : ");
                     setTotal(res.total);
                     let _allCleaners = res.data.map(each => {
                         return {
                             code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
-                            formattedDate: moment(each.scheduledAt).format("HH:mm A, DD-MM-YYYY"),
+                            studentName: each.createdBy.name,
+                            studentMail: each.createdBy.email,
                             ...each,
                         };
                     });
@@ -192,41 +157,21 @@ const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
             moreCallBack(choice, x);
         }
 
-        function a11yProps(index) {
-            return {
-                id: `scrollable-auto-tab-${index}`,
-                'aria-controls': `scrollable-auto-tabpanel-${index}`,
-            };
-        }
-
-        const handleChangeDialogValue = (e, newValue) => {
-            setDialogValue(newValue);
-            console.log(newValue);
-            setStatus({'\$in': [newValue + 1]});
-        };
 
         return (
             <Box>
                 <Card table>
-                    {
-                        result ? <Box/> : <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue}
-                                                   value={dialogValue}>
-                            <AntTab label="Scheduled" {...a11yProps(0)} />
-                            <AntTab label="Ongoing" {...a11yProps(1)} />
-                            <AntTab label="Completed" {...a11yProps(2)} />
-                        </AntTabs>
-                    }
                     <CardBody>
                         <DraftTableComponent
                             columns={columns}
                             rows={rows}
                             loading={loading}
-                            notFound={'No Exams Found'}
+                            notFound={'No Results Found'}
                             pageLimit={rowsPerPage}
                             setRow={setRow}
                             moreTap={moreTapCallBack}
                             moreArray={[1, 2]}
-                            result={result}
+                            result={true}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
@@ -244,4 +189,7 @@ const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
     }
 ;
 
-export default OrganExamTable;
+export default AdminResultsTable;
+
+
+

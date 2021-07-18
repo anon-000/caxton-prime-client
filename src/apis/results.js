@@ -1,4 +1,4 @@
-import { resultService} from "../config/endpoints";
+import {resultService} from "../config/endpoints";
 
 /**
  *
@@ -23,5 +23,20 @@ export const getAllResults = ($skip, $limit, $search, userId) => resultService.f
     }
 });
 
+export const getAllResultsOfExam = ($skip, $limit, $search, examId) => resultService.find({
+    query: {
+        $skip,
+        $limit,
+        exam: examId,
+        $populate: ["studentAnswer.question", "exam", 'createdBy'],
+        $sort: {createdAt: -1},
+        'examTitle': {$search}
+        // $search
+    }
+});
+
 
 export const submitExamAnswer = (data) => resultService.create(data);
+
+
+export const deleteResult = (id) => resultService.remove(id);

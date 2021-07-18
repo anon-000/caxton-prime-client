@@ -61,7 +61,7 @@ const StudentExams = () => {
                 <Grid item md={9} xs={12} sm={12}>
                     <Box m={6}/>
                     <Typography variant="h3">
-                        Search for Exams {tags.length}
+                        Search for Exams
                     </Typography>
                     <Box m={2}/>
                     <Box width={'50%'}>

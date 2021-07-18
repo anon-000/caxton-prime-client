@@ -86,7 +86,7 @@ const columns = [
     },
 ];
 
-const AdminExamTable = ({moreCallBack, search, refresh}) => {
+const AdminExamTable = ({moreCallBack, search, refresh, result = false}) => {
 
         const [page, setPage] = React.useState(1);
         const [totalPages, setTotalPages] = React.useState(20);
@@ -96,7 +96,7 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
         const [rows, setRows] = React.useState([]);
         const [loading, setLoading] = React.useState(false);
         const [clickedRow, setClickedRow] = React.useState(null);
-        const [status, setStatus] = useState({'\$in': [1]});
+        const [status, setStatus] = useState({'\$in': [result ? 3 : 1]});
         const [dialogValue, setDialogValue] = useState(0);
 
 
@@ -209,11 +209,14 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
         return (
             <Box>
                 <Card table>
-                    <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue} value={dialogValue}>
-                        <AntTab label="Scheduled" {...a11yProps(0)} />
-                        <AntTab label="Ongoing" {...a11yProps(1)} />
-                        <AntTab label="Completed" {...a11yProps(2)} />
-                    </AntTabs>
+                    {
+                        result ? <Box/> : <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue}
+                                                   value={dialogValue}>
+                            <AntTab label="Scheduled" {...a11yProps(0)} />
+                            <AntTab label="Ongoing" {...a11yProps(1)} />
+                            <AntTab label="Completed" {...a11yProps(2)} />
+                        </AntTabs>
+                    }
                     <CardBody>
                         <DraftTableComponent
                             columns={columns}
@@ -224,6 +227,7 @@ const AdminExamTable = ({moreCallBack, search, refresh}) => {
                             setRow={setRow}
                             moreTap={moreTapCallBack}
                             moreArray={[1, 2]}
+                            result={result}
                         />
                         <Box display="flex" justifyContent="flex-end" m={3}>
                             <Pagination
