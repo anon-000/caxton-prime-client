@@ -8,7 +8,6 @@ import ConfirmDialog from "../../src/components/confirm/ConfirmDialog";
 import {removeDraft} from "../../src/apis/exams";
 import {useSnackbar} from "notistack";
 import AdminExamTable from "../admin-exams/components/admin_exam_table";
-import OrganExamTable from "../organ-exams/components/organ_exam_table";
 
 
 /**
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const OrganResults = () => {
+const AdminResults = () => {
     const classes = useStyles();
     const [editId, setEditId] = useState('');
     const [query, setQuery] = useState('');
@@ -74,7 +73,7 @@ const OrganResults = () => {
                 variant="outlined"
                 placeholder={"Type to search"}
             />
-            <OrganExamTable result={true} refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
+            <AdminExamTable result={true} refresh={refresh} search={query} moreCallBack={moreTableOptionCallBack}/>
             <ConfirmDialog show={deleteExam} dismiss={() => setDeleteExam(false)} title={'Delete draft'}
                            proceed={handleDelete}
                            confirmation={'Are you sure to delete this exam?'} okLabel={'yes'}/>
@@ -83,4 +82,4 @@ const OrganResults = () => {
 }
 
 
-export default OrganResults
+export default AdminResults

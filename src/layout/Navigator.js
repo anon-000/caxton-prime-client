@@ -110,6 +110,12 @@ function Navigator(props) {
             active: Router.pathname === "/organ-practice-sets",
             href: "/organ-practice-sets",
         },
+        {
+            id: "Results",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/organ-results",
+            href: "/organ-results",
+        },
     ]
     const adminOptions = [
         {
@@ -153,6 +159,12 @@ function Navigator(props) {
             icon: <DnsRoundedIcon color={'#ffffff'}/>,
             active: Router.pathname === "/admin-sets",
             href: "/admin-sets",
+        },
+        {
+            id: "Results",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-results",
+            href: "/admin-results",
         },
     ]
 

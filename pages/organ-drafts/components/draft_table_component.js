@@ -78,7 +78,8 @@ const DraftTableComponent = ({
                                  pageLimit,
                                  setRow,
                                  moreTap,
-                                 moreArray = [1, 2, 3, 4]
+                                 moreArray = [1, 2, 3, 4],
+                                 result = false,
                              }) => {
 
     const classes = useStyles();
@@ -99,13 +100,15 @@ const DraftTableComponent = ({
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
+    const options = result ? ["View Results", "Delete"] : ["Edit", "Delete", "Schedule", "Practice set"];
+
 
     return (
         <div>
             <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow >
+                        <TableRow>
                             {columns.map((column) => (
                                 <TableCell
                                     key={column.id}
@@ -197,7 +200,7 @@ const DraftTableComponent = ({
                                                                         }}
                                                                         color={"primary"}
                                                                     >
-                                                                        {e === 1 ? "Edit" : e === 2 ? "Delete" : e === 3 ? "Schedule" : "Practice set"}
+                                                                        {e === 1 ? options[0] : e === 2 ? options[1] : e === 3 ? options[2] : options[3]}
                                                                     </Button>)
                                                                 }
                                                             </Box>

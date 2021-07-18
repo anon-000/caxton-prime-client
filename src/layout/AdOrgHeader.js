@@ -79,6 +79,8 @@ function AdOrgHeader(props) {
             setCurrent('Exams');
         } else if (Router.route === '/organ-drafts') {
             setCurrent('Drafts');
+        } else if (Router.route === '/organ-results') {
+            setCurrent('Results');
         } else if (Router.route === '/admin-requests') {
             setCurrent('Pending Requests');
         } else if (Router.route === '/admin-tags') {
@@ -91,6 +93,8 @@ function AdOrgHeader(props) {
             setCurrent('Exams');
         } else if (Router.route === '/admin-sets') {
             setCurrent('Practice sets');
+        } else if (Router.route === '/admin-results') {
+            setCurrent('Results');
         } else {
             setCurrent('');
         }
