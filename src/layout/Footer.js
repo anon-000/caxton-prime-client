@@ -9,8 +9,10 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
 import {Button, Divider, Grid, Hidden, List, ListItem, TextField, Typography} from '@material-ui/core';
-import WhiteLogo from '../../public/vercel.svg';
+import WhiteLogo from '../../src/asset/appBarLogo.svg';
+import wave from '../../src/asset/Wave vector.svg';
 import Link from '../Link';
+import Box from "@material-ui/core/Box";
 
 
 const useStyles = makeStyles(theme => ({
@@ -18,6 +20,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#1E2833',
         color: '#fff',
         padding: '40px 0',
+        marginTop: '-8px',
 
         [theme.breakpoints.down('sm')]: {
             padding: '40px 20px',
@@ -44,7 +47,7 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#8f8f8f'
     },
     heading: {
-        color: '#8f8f8f',
+        color: '#e3e3e3',
         fontSize: '26px',
         fontWeight: 'normal',
         lineHeight: '30px',
@@ -191,6 +194,8 @@ const Footer = () => {
 
     return (
         <React.Fragment>
+            <Box mt={10} />
+            <img width={'100%'} src={wave} alt="white Logo"/>
             <Grid container className={classes.footerContainer} justify={'center'}>
                 <Grid item xs={12} sm={12} md={10}>
                     <Grid container>
@@ -264,7 +269,7 @@ const Footer = () => {
                             </div>
                             <div>
                                 <Typography className={classes.captionText} variant={'caption'}>
-                                    {'Email: imcabank@gmail.com'}
+                                    {'Email: caxtonprime@gmail.com'}
                                 </Typography>
                             </div>
                         </Grid>
@@ -297,20 +302,20 @@ const Footer = () => {
             </Grid>
             <div style={{
                 width: '100%',
-                backgroundColor: '#5F2EEA',
+                backgroundColor: '#F03D5F',
                 padding: '10px',
                 display: 'flex',
                 justifyContent: 'center'
             }}>
                 <Hidden xsDown>
                     <Typography className={classes.captionText} variant={'caption'} style={{color: '#fff'}}>
-                        {'(c) Copyright 2021, Imca Bank. All rights reserved'}
+                        {'(c) Copyright 2021, Caxton Prime. All rights reserved'}
                     </Typography>
                 </Hidden>
                 <Hidden smUp>
                     <Typography style={{fontSize: '10px', color: '#fff', textAlign: 'center'}}
                                 className={classes.captionText} variant={'caption'}>
-                        {'(c) Copyright 2020, Imca Bank.'}
+                        {'(c) Copyright 2021, Caxton Prime.'}
                         <br/>
                         {'All rights reserved'}
                     </Typography>

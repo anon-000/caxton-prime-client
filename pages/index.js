@@ -52,7 +52,7 @@ const LandingTest = () => {
                                 </Hidden>
                             </Box>
                             <Box>
-                                <Typography style={{color : '#515151', fontWeight: 200}} variant={"subtitle2"}>
+                                <Typography style={{color : '#515151', fontWeight: 200, marginTop: '10px'}} variant={"subtitle2"}>
                                     {'Lorem ipsum dolor sit amet, consectetur'}
                                     <br />
                                     {'adipiscing elit. Nam efficitur est ac '}
@@ -65,7 +65,7 @@ const LandingTest = () => {
                         </Box>
                         <Hidden smDown>
                             <Box width={{xs: '100%', sm: '50%' }}>
-                                <img src={Image1} width={'90%'} alt={'Image 1'} />
+                                <img src={Image1} width={'98%'} alt={'Image 1'} />
                             </Box>
                         </Hidden>
                         <Hidden mdUp>

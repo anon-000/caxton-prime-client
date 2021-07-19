@@ -20,7 +20,7 @@ import {
     Toolbar
 } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
-import Logo from '../../public/vercel.svg';
+import Logo from '../../src/asset/text_logo.svg';
 import React, {useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '../Link';
@@ -135,7 +135,7 @@ const HomeAppbar = () => {
                 className={onTop ? classes.topAppbar : classes.appbar}>
             <Toolbar component={Box} px={3} variant={'dense'} className={classes.marginToolbar} py={1}>
                 <Box width={'100px'}>
-                    <img width={'100%'} src={Logo} alt={'vector'}/>
+                    <img width={'180%'} src={Logo} alt={'vector'}/>
                 </Box>
                 <Box flex={1}/>
                 <Hidden smDown>
@@ -144,13 +144,13 @@ const HomeAppbar = () => {
                                     style={{textDecoration: 'none', color: '#F03D5F'}}>
                             {'Home'}
                         </Typography>
-                        <Typography component={Link} href={'/about'} as={'/about'}
+                        <Typography component={Link} href={'#why_us'} as={'#why_us'}
                                     style={{textDecoration: 'none', color: '#F03D5F'}}>
-                            {'About'}
+                            {'Why Us'}
                         </Typography>
-                        <Typography component={Link} href={'/request'} as={'/request'}
+                        <Typography component={Link} href={'#about_us'} as={'#about_us'}
                                     style={{textDecoration: 'none', color: '#F03D5F'}}>
-                            {'Request'}
+                            {'About Us'}
                         </Typography>
                         <Typography component={Link} href={'/contact'} as={'/contact'}
                                     style={{textDecoration: 'none', color: '#F03D5F'}}>
