@@ -21,8 +21,8 @@ import Image8 from '../../../src/asset/why8.svg';
 
 const OurServices = () => {
     return (
-        <Container maxWidth={'xl'} id={'why_us'}>
-            <Grid container component={Box} p={{xs: '5px', md: '20px'}}>
+        <Container style={{overflowX: 'hidden'}} maxWidth={'xl'} id={'why_us'}>
+            <Grid container component={Box} p={{xs: '5px', md: '20px'}} >
                 <Grid xs={12} item conatiner justify={'center'} alignItems={'center'}>
                     <Typography align={'center'} variant={'h2'} color={'primary'}>
                         {'Why Us ?'}
@@ -38,6 +38,7 @@ const OurServices = () => {
                     image={Image2}
                     percent={'60%'}
                     title={'In Depth Analysis'}
+                    isRight={true}
                     description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur est ac pretium ullamcorper. Sed sagittis, lorem a semper convallis, ex nisl '}
                 />
                 <AuroWhyUsSignleItem
@@ -49,6 +50,7 @@ const OurServices = () => {
                     image={Image4}
                     percent={'60%'}
                     title={'Progress Overview'}
+                    isRight={true}
                     description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur est ac pretium ullamcorper. Sed sagittis, lorem a semper convallis, ex nisl '}
                 /> <AuroWhyUsSignleItem
                 image={Image5}
@@ -59,6 +61,7 @@ const OurServices = () => {
                 image={Image6}
                 percent={'60%'}
                 title={'Caxton Cred Coins'}
+                isRight={true}
                 description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur est ac pretium ullamcorper. Sed sagittis, lorem a semper convallis, ex nisl '}
             /> <AuroWhyUsSignleItem
                 image={Image7}
@@ -69,6 +72,7 @@ const OurServices = () => {
                 image={Image8}
                 percent={'60%'}
                 title={'Fully Functional Platform'}
+                isRight={true}
                 description={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam efficitur est ac pretium ullamcorper. Sed sagittis, lorem a semper convallis, ex nisl '}
             />
             </Grid>

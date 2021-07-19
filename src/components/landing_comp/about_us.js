@@ -14,7 +14,7 @@ import Image2 from '../../../src/asset/about2.svg';
 
 const AboutUs = () => {
     return (
-        <div id={'about_us'}>
+        <div id={'about_us'} style={{overflow: 'hidden'}}>
             <Grid container >
                 <Grid xs={12} item conatiner justify={'center'} alignItems={'center'}>
                     <Typography align={'center'} variant={'h2'} color={'primary'}>
@@ -24,9 +24,9 @@ const AboutUs = () => {
                 </Grid>
 
                 <Grid container justify={'center'} alignItems={'center'} item xs={12} sm={4} md={6}>
-                    <img src={Image1} width={'80%'}/>
+                    <img data-aos="zoom-in" data-aos-delay="200"  data-aos-duration="800" src={Image1} width={'80%'}/>
                 </Grid>
-                <Grid container justify={'flex-start'} alignItems={'center'} item xs={12} sm={8} md={6}>
+                <Grid data-aos="fade-left" data-aos-delay="200"  data-aos-duration="800"  container justify={'flex-start'} alignItems={'center'} item xs={12} sm={8} md={6}>
                     <Typography style={{fontWeight: 900, marginBottom: '10px'}}
                                 variant={'h5'}>{'How it started and how it’s going'}</Typography>
                     <Typography variant={'body2'}>
@@ -41,7 +41,7 @@ const AboutUs = () => {
 
                 </Grid>
 
-                <Grid container justify={'flex-start'} alignItems={'center'} item xs={12} sm={8} md={6}>
+                <Grid data-aos="fade-right" data-aos-delay="200"  data-aos-duration="800" container justify={'flex-start'} alignItems={'center'} item xs={12} sm={8} md={6}>
                     <Typography style={{fontWeight: 900 , marginBottom: '10px'}}
                                 variant={'h5'}>{'None of us is as smart as all of us'}</Typography>
                     <Typography variant={'body2'}>
@@ -52,7 +52,7 @@ const AboutUs = () => {
                     </Typography>
                 </Grid>
                 <Grid container justify={'center'} alignItems={'center'} item xs={12} sm={4} md={6}>
-                    <img src={Image2} width={'80%'}/>
+                    <img src={Image2} width={'80%'} data-aos="zoom-in" data-aos-delay="200"  data-aos-duration="800"/>
                 </Grid>
             </Grid>
         </div>
