@@ -12,7 +12,9 @@ import userStore from "../src/store/userStore";
 import DefaultLayout from "../src/layout/Layout";
 import 'cropperjs/dist/cropper.css';
 
-
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import * as particlesJS from "react-dom/test-utils";
 
 const Noop = ({children}) => children;
 
@@ -29,6 +31,10 @@ export default function MyApp(props) {
     }
 
     React.useEffect(() => {
+        AOS.init();
+        // particlesJS.load('particles-js', particleJSON, function() {
+        //     console.log('callback - particles.js config loaded');
+        // });
         console.log("app useEffect called");
         // Remove the server-side injected CSS.
         const jssStyles = document.querySelector("#jss-server-side");
