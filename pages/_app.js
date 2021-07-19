@@ -89,13 +89,13 @@ export default function MyApp(props) {
                     console.log("catch method called");
                     await app.logout();
                     localStorage.removeItem('feathers-jwt');
-                    Router.replace('/login').then(() => {
+                    Router.replace('/').then(() => {
                         setLoading(false);
                     });
                 });
         } else {
             if (Router.pathname !== "/login" && Router.pathname !== "/signup") {
-                Router.replace("/login").then(() => {
+                Router.replace("/").then(() => {
                     setLoading(false);
                 });
             } else {
