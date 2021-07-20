@@ -63,20 +63,26 @@ const OrganQuestionCard = ({question, index, onDelete}) => {
 
 
         return (
-            <Box display={'flex'} alignItems={'flex-start'} justifyContent={'center'} flexDirection={'column'}
+            <Box data-aos="zoom-out"
+                 data-aos-duration="300" display={'flex'} alignItems={'flex-start'} justifyContent={'center'}
+                 flexDirection={'column'}
                  boxShadow={'2px 2px 6px rgba(18, 73, 84, 0.15)'}
                  bgcolor={'#ffffff'} p={3} mt={5}
                  borderRadius={3}>
                 <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'} width={'100%'}>
-                    <Typography variant="h3">
+                    <Typography data-aos="fade-right"
+                                data-aos-duration="400" variant="h3">
                         Q{index + 1} : {question.question}
                     </Typography>
-                    {
-                        loading ? <CircularProgress size={20}/> :
-                            <IconButton className={classes.deleteButton} onClick={() => setDeleteOpen(true)}>
-                                <DeleteOutlineIcon fontSize="default"/>
-                            </IconButton>
-                    }
+                    <Box data-aos="fade-left"
+                         data-aos-duration="400">
+                        {
+                            loading ? <CircularProgress size={20}/> :
+                                <IconButton className={classes.deleteButton} onClick={() => setDeleteOpen(true)}>
+                                    <DeleteOutlineIcon fontSize="default"/>
+                                </IconButton>
+                        }
+                    </Box>
                     <ConfirmDialog show={deleteOpen} dismiss={() => setDeleteOpen(false)} title={'Delete draft'}
                                    proceed={handleQuestionDelete}
                                    confirmation={'Are you sure to delete this question?'} okLabel={'yes'}/>

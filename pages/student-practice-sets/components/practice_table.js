@@ -180,12 +180,15 @@ const PracticeTable = ({selectedTags, onRemoveTag}) => {
 
         return (
             <Box>
-                <Typography variant="h3">
+                <Typography data-aos="fade-down"
+                            data-aos-duration="400" variant="h3">
                     Search for Practice Sets
                 </Typography>
                 <Box m={2}/>
                 <Box width={'50%'}>
                     <TextField
+                        data-aos="zoom-in"
+                        data-aos-duration="400"
                         fullWidth
                         value={search}
                         onChange={(event) => setSearch(event.target.value)}
@@ -212,27 +215,30 @@ const PracticeTable = ({selectedTags, onRemoveTag}) => {
                     </Box>
                 }
 
-                <Card table>
-                    <CardBody>
-                        <ExamTableComponent
-                            columns={columns}
-                            rows={rows}
-                            loading={loading}
-                            notFound={'No Exams Found'}
-                            pageLimit={rowsPerPage}
-                            setRow={setRow}
-                        />
-                        <Box display="flex" justifyContent="flex-end" m={3}>
-                            <Pagination
-                                color="primary"
-                                count={totalPages}
-                                onChange={handleChangePage}
-                                page={page}
-                                shape="rounded"
+                <Box data-aos="zoom-in"
+                     data-aos-duration="400">
+                    <Card table>
+                        <CardBody>
+                            <ExamTableComponent
+                                columns={columns}
+                                rows={rows}
+                                loading={loading}
+                                notFound={'No Exams Found'}
+                                pageLimit={rowsPerPage}
+                                setRow={setRow}
                             />
-                        </Box>
-                    </CardBody>
-                </Card>
+                            <Box display="flex" justifyContent="flex-end" m={3}>
+                                <Pagination
+                                    color="primary"
+                                    count={totalPages}
+                                    onChange={handleChangePage}
+                                    page={page}
+                                    shape="rounded"
+                                />
+                            </Box>
+                        </CardBody>
+                    </Card>
+                </Box>
             </Box>
         );
     }

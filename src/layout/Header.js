@@ -21,6 +21,7 @@ import Popover from '@material-ui/core/Popover';
 import {useState} from "react";
 import Logo from '../../src/asset/appBarLogo.svg'
 import UserDialog from "../../pages/admin-users/components/user_dialog";
+import ConfirmDialog from "../components/confirm/ConfirmDialog";
 
 
 // import SelectedAccountStore from '../store/selectedAccountStore';
@@ -69,6 +70,7 @@ function Header(props) {
     const Router = useRouter();
     const [current, setCurrent] = useState(0);
     const [userOpen, setUserOpen] = useState(false);
+    const [logoutOpen, setLogoutOpen] = useState(false);
 
     useEffect(() => {
         if (Router.route === '/student-exams') {
@@ -257,7 +259,7 @@ function Header(props) {
                                             {"My Profile"}
                                         </Button>
                                         <Button
-                                            onClick={() => handleLogout()}
+                                            onClick={() => setLogoutOpen(true)}
                                             color={"primary"}
                                         >
                                             {"Log Out"}
@@ -267,6 +269,9 @@ function Header(props) {
                             </Box>
                         </Grid>
                     </Grid>
+                    <ConfirmDialog show={logoutOpen} dismiss={() => setLogoutOpen(false)} title={'Logout'}
+                                   proceed={() => handleLogout()}
+                                   confirmation={'Are you sure you want to logout?'} okLabel={'yes'}/>
                     <UserDialog refresh={() => {
                     }} open={userOpen} userId={user._id} title={'My Profile'}
                                 handleClose={() => setUserOpen(false)}/>

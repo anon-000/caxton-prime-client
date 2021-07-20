@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         width: '35vw',
+        overflow: 'hidden',
         boxShadow: "2px 2px 6px rgba(18, 73, 84, 0.15)",
         //position: 'fixed',
         margin: '30px 30px',
@@ -158,93 +159,102 @@ const AddQuestionCard = ({examId, onNewQuestion}) => {
     }
 
     return (
-        <Box borderRadius={10} className={classes.root}>
-            <Box bgcolor={'#F03D5F'} color={'#ffffff'}
-                 py={3} display={'flex'} justifyContent={'center'}
-                 borderRadius={'20px 0px'}
-                 fontSize={18} fontWeight={600}>
-                Add Question
-            </Box>
-            <Box m={2}/>
-            <Typography className={classes.label}>
-                Question
-            </Typography>
-            <TextField
-                fullWidth
-                value={question}
-                onChange={(event) => setQuestion(event.target.value)}
-                variant="outlined"
-                placeholder={"Enter your question"}
-                className={classes.paddingX}
-            />
-            <Typography className={classes.label}>
-                Options
-            </Typography>
-            {
-                options.map((e, i) => <Box mx={2} borderRadius={5} mb={1.2} pl={2} py={0.4} bgcolor={'#EEF0F5'}
-                                           display={'flex'}
-                                           justifyContent={'space-between'} alignItems={'center'}>
-                    {e}
-                    <IconButton onClick={() => {
-                        removeAtIndex(i);
-                    }}>
-                        <CloseIcon fontSize="default"/>
-                    </IconButton>
-                </Box>)
-            }
-            {
-                options.length < 4 ? <TextField
+        <Box style={{overflow: 'hidden'}}>
+            <Box data-aos="zoom-out"
+                 data-aos-duration="400" borderRadius={10} className={classes.root}>
+                <Box bgcolor={'#F03D5F'} color={'#ffffff'}
+                     py={3} display={'flex'} justifyContent={'center'}
+                     borderRadius={'20px 0px'}
+                     fontSize={18} fontWeight={600}>
+                    Add Question
+                </Box>
+                <Box m={2}/>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
+                    Question
+                </Typography>
+                <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     fullWidth
-                    className={classes.paddingX}
-                    value={option}
-                    onChange={(event) => setOption(event.target.value)}
+                    value={question}
+                    onChange={(event) => setQuestion(event.target.value)}
                     variant="outlined"
-                    placeholder={"Enter your option"}
-                /> : <Box/>
-            }
-            <Box my={1}/>
-            {
-                options.length < 4 ? <Button className={classes.paddingX} color="primary" onClick={addMoreOption}>
-                    + Add more option
-                </Button> : <Box/>
-            }
-            <Box my={2}/>
-            {
-                options.length > 0 ? <Box px={2} display={'flex'} alignItems={'center'}>
-                    <Typography>
-                        Select right answer
-                    </Typography>
-                    <Box borderRadius={5} mb={1} ml={10} p={2} bgcolor={'#EEF0F5'} width={200}
-                         display={'flex'} onClick={handleMenuClick} className={classes.clickable}
-                         justifyContent={'space-between'} alignItems={'center'}>
-                        {answer === '' ? "Choose an option" : answer}
-                        <ArrowDropDownIcon/>
+                    placeholder={"Enter your question"}
+                    className={classes.paddingX}
+                />
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
+                    Options
+                </Typography>
+                {
+                    options.map((e, i) => <Box mx={2} borderRadius={5} mb={1.2} pl={2} py={0.4} bgcolor={'#EEF0F5'}
+                                               display={'flex'}
+                                               justifyContent={'space-between'} alignItems={'center'}>
+                        {e}
+                        <IconButton onClick={() => {
+                            removeAtIndex(i);
+                        }}>
+                            <CloseIcon fontSize="default"/>
+                        </IconButton>
+                    </Box>)
+                }
+                {
+                    options.length < 4 ? <TextField
+                        data-aos="zoom-in"
+                        data-aos-duration="400"
+                        fullWidth
+                        className={classes.paddingX}
+                        value={option}
+                        onChange={(event) => setOption(event.target.value)}
+                        variant="outlined"
+                        placeholder={"Enter your option"}
+                    /> : <Box/>
+                }
+                <Box my={1}/>
+                {
+                    options.length < 4 ? <Button className={classes.paddingX} color="primary" onClick={addMoreOption}>
+                        + Add more option
+                    </Button> : <Box/>
+                }
+                <Box my={2}/>
+                {
+                    options.length > 0 ? <Box px={2} mb={1} display={'flex'} alignItems={'center'}>
+                        <Typography>
+                            Select right answer
+                        </Typography>
+                        <Box borderRadius={5} mb={1} ml={10} p={2} bgcolor={'#EEF0F5'} width={200}
+                             display={'flex'} onClick={handleMenuClick} className={classes.clickable}
+                             justifyContent={'space-between'} alignItems={'center'}>
+                            {answer === '' ? "Choose an option" : answer}
+                            <ArrowDropDownIcon/>
 
-                    </Box>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={() => handleMenuClose(null)}
+                        </Box>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={() => handleMenuClose(null)}
+                        >
+                            {
+                                options.map((e) => <MenuItem className={classes.menu}
+                                                             onClick={() => handleMenuClose(e)}>{e}</MenuItem>)
+                            }
+                        </Menu>
+                    </Box> : <Box/>
+                }
+                <Box px={2} pb={2}>
+                    <Button
+                        fullWidth
+                        disabled={loading}
+                        onClick={handleQuestionCreation}
+                        color="primary"
+                        variant="contained"
                     >
-                        {
-                            options.map((e) => <MenuItem className={classes.menu}
-                                                         onClick={() => handleMenuClose(e)}>{e}</MenuItem>)
-                        }
-                    </Menu>
-                </Box> : <Box/>
-            }
-            <Box p={2}>
-                <Button
-                    fullWidth
-                    disabled={loading}
-                    onClick={handleQuestionCreation}
-                    color="primary"
-                    variant="contained"
-                >
-                    {loading ? <CircularProgress size={24}/> : "Create Question"}
-                </Button>
+                        {loading ? <CircularProgress size={24}/> : "Create Question"}
+                    </Button>
+                </Box>
             </Box>
         </Box>
     )

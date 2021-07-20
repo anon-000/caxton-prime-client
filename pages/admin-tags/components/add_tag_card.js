@@ -122,6 +122,8 @@ const AddTagCard = ({onNewTag}) => {
                 Tag name
             </Typography>
             <TextField
+                data-aos="zoom-in"
+                data-aos-duration="400"
                 fullWidth
                 value={tag}
                 onChange={(event) => setTag(event.target.value)}

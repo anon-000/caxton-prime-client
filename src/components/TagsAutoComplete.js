@@ -83,6 +83,8 @@ function ExamTagsAutoComplete({
             options={selectedOptions}
             renderInput={(params) => (
                 <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     autoFocus
                     //className={className ? className : null}
                     error={error}

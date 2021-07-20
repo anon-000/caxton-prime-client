@@ -189,7 +189,8 @@ const ResultsTable = ({search}) => {
 
 
         return (
-            <Box>
+            <Box data-aos="zoom-in"
+                 data-aos-duration="400">
                 <Card table>
                     <CardBody>
                         <ExamTableComponent

@@ -71,7 +71,7 @@ const OrganizationOnBoarding = () => {
 
     useEffect(() => {
         console.log("organization on-boarding page");
-        console.log(localStorage.getItem("feathers-jwt"));
+        //console.log(localStorage.getItem("feathers-jwt"));
     }, []);
 
     const handleOrganizationRequest = () => {
@@ -127,18 +127,25 @@ const OrganizationOnBoarding = () => {
                 <Grid container justify={'center'} alignItems={'center'} height={'80vh'}
                       component={Box} boxShadow={3} borderRadius={6} bgcolor={'background.default'}>
                     <Hidden smDown>
-                        <Grid xs={12} sm={12} md={7} item container justify={'center'} alignItems={'center'}>
+                        <Grid data-aos="zoom-in"
+                              data-aos-duration="400"
+                              data-aos-delay="300" xs={12} sm={12} md={7} item container justify={'center'}
+                              alignItems={'center'}>
                             <img src={Vector} alt={'login'} width={'60%'}/>
                         </Grid>
                     </Hidden>
                     <Grid xs={12} sm={12} md={5} item container justify={'center'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} width={'100%'} p={4}
                              alignItems={'flex-start'} height={'100%'}>
-                            <Typography variant={'h3'}>
+                            <Typography data-aos="fade-down"
+                                        data-aos-delay="300" variant={'h3'}>
                                 Contact Details
                             </Typography>
                             <Box m={1.5}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={phone}
                                 onChange={event => setPhone(event.target.value)}
@@ -151,11 +158,15 @@ const OrganizationOnBoarding = () => {
                                 min={0}
                             />
                             <Box m={1}/>
-                            <Box component={Typography} variant={'caption'} color={'#757575'}>
+                            <Box data-aos="fade-right"
+                                 data-aos-delay="300" component={Typography} variant={'caption'} color={'#757575'}>
                                 Address
                             </Box>
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={lane}
                                 onChange={event => setLane(event.target.value)}
@@ -164,6 +175,9 @@ const OrganizationOnBoarding = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={city}
                                 onChange={event => setCity(event.target.value)}
@@ -172,6 +186,9 @@ const OrganizationOnBoarding = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={state}
                                 onChange={event => setState(event.target.value)}
@@ -180,6 +197,9 @@ const OrganizationOnBoarding = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={pin}
                                 onChange={event => setPin(event.target.value)}

@@ -23,7 +23,9 @@ const OptionCard = ({option, isSelected, onClick}) => {
     const classes = useStyles();
 
     return (
-        <Box onClick={onClick} className={classes.clickable} display={'flex'} alignItems={'center'}
+        <Box data-aos="zoom-in"
+             data-aos-duration="400" onClick={onClick} className={classes.clickable} display={'flex'}
+             alignItems={'center'}
              justifyContent={'center'}
              width={'100%'} borderRadius={'50%'}>
             <Box

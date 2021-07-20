@@ -60,12 +60,15 @@ const StudentExams = () => {
             <Grid container>
                 <Grid item md={9} xs={12} sm={12}>
                     <Box m={6}/>
-                    <Typography variant="h3">
+                    <Typography data-aos="fade-down"
+                                data-aos-duration="400" variant="h3">
                         Search for Exams
                     </Typography>
                     <Box m={2}/>
                     <Box width={'50%'}>
                         <TextField
+                            data-aos="zoom-in"
+                            data-aos-duration="400"
                             fullWidth
                             value={query}
                             onChange={(event) => setQuery(event.target.value)}

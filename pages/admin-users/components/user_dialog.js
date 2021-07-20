@@ -1,17 +1,12 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import React, {useEffect, useState} from "react";
 import {useSnackbar} from "notistack";
-import {useRouter} from "next/router";
 import {CircularProgress, Dialog, DialogContent, Menu, MenuItem, TextField} from "@material-ui/core";
 import DialogCustomTitle from "../../../src/components/dialogs/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import ExamTagsAutoComplete from "../../../src/components/TagsAutoComplete";
-import cross from "../../../src/asset/cross_icon.svg";
 import {getUserDetails, userPatch} from "../../../src/apis/users";
-import {error} from "next/dist/build/output/log";
-import userStore from "../../../src/store/userStore";
 import SelectAvatar from "../../student-onboarding/components/select_avatar";
 import ImageUploadDialog from "../../../src/components/dialogs/ImageUploadDialog";
 
@@ -145,12 +140,13 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
+        <Dialog style={{overflow: 'hidden'}} open={open} onClose={handleClose} aria-labelledby="form-dialog-title"
+                fullWidth>
             <DialogCustomTitle children={title} onClose={handleClose}/>
             <DialogContent>
                 {
-                    userLoading ? <Box className={classes.root}>
-                        <CircularProgress size={64}/>
+                    userLoading ? <Box className={classes.root} height={500}>
+                        <CircularProgress size={34}/>
                     </Box> : <Box>
                         {
                             user.role === 1 ?
@@ -158,10 +154,13 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                                     <SelectAvatar avatar={avatar} onClick={() => setOpenDialog(true)}/>
                                 </Box> : <Box/>
                         }
-                        <Typography className={classes.label}>
+                        <Typography data-aos="fade-right"
+                                    data-aos-duration="400" className={classes.label}>
                             Name
                         </Typography>
                         <TextField
+                            data-aos="zoom-in"
+                            data-aos-duration="400"
                             fullWidth
                             value={name}
                             defaultValue={name}
@@ -170,10 +169,13 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                             placeholder={"Name"}
                         />
                         <Box my={0.4}/>
-                        <Typography className={classes.label}>
+                        <Typography data-aos="fade-right"
+                                    data-aos-duration="400" className={classes.label}>
                             Email
                         </Typography>
                         <TextField
+                            data-aos="zoom-in"
+                            data-aos-duration="400"
                             fullWidth
                             value={email}
                             defaultValue={email}
@@ -182,10 +184,13 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                             placeholder={"Email"}
                         />
                         <Box my={0.4}/>
-                        <Typography className={classes.label}>
+                        <Typography data-aos="fade-right"
+                                    data-aos-duration="400" className={classes.label}>
                             Phone
                         </Typography>
                         <TextField
+                            data-aos="zoom-in"
+                            data-aos-duration="400"
                             fullWidth
                             value={phone}
                             defaultValue={phone}
@@ -199,12 +204,15 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                             min={0}
                         />
                         <Box my={0.4}/>
-                        <Typography className={classes.label}>
+                        <Typography data-aos="fade-right"
+                                    data-aos-duration="400" className={classes.label}>
                             {user.role === 1 ? "Username" : "Address"}
                         </Typography>
                         {
                             user.role === 1 ? <TextField
                                 fullWidth
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
                                 value={userName}
                                 defaultValue={userName}
                                 onChange={(event) => setUserName(event.target.value)}
@@ -212,6 +220,8 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                                 placeholder={"Email"}
                             /> : <Box>
                                 <TextField
+                                    data-aos="zoom-in"
+                                    data-aos-duration="400"
                                     fullWidth
                                     value={lane}
                                     defaultValue={lane}
@@ -221,6 +231,8 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                                 />
                                 <Box m={1}/>
                                 <TextField
+                                    data-aos="zoom-in"
+                                    data-aos-duration="400"
                                     fullWidth
                                     value={city}
                                     defaultValue={city}
@@ -230,6 +242,8 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                                 />
                                 <Box m={1}/>
                                 <TextField
+                                    data-aos="zoom-in"
+                                    data-aos-duration="400"
                                     fullWidth
                                     value={state}
                                     defaultValue={state}
@@ -239,6 +253,8 @@ export default function UserDialog({open, handleClose, userId, refresh, title = 
                                 />
                                 <Box m={1}/>
                                 <TextField
+                                    data-aos="zoom-in"
+                                    data-aos-duration="400"
                                     fullWidth
                                     value={pin}
                                     defaultValue={pin}

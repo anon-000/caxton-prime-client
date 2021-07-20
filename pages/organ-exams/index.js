@@ -49,11 +49,14 @@ const OrganExams = () => {
     return (
         <Container>
             <Box m={6}/>
-            <Typography variant="h3">
+            <Typography data-aos="fade-down"
+                        data-aos-duration="400" variant="h3">
                 Search for Scheduled Exams
             </Typography>
             <Box m={2}/>
             <TextField
+                data-aos="zoom-in"
+                data-aos-duration="400"
                 fullWidth
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}

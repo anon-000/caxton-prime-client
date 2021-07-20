@@ -121,10 +121,10 @@ export default function ScheduledExamDialog({open, handleClose, examId, onChange
 
     const handleDraftCreation = () => {
         if (difficulty === 0) {
-            enqueueSnackbar("Name is required", {variant: "warning"});
+            enqueueSnackbar("Difficulty is required", {variant: "warning"});
             return;
         } else if (tags.length === 0) {
-            enqueueSnackbar("Guidelines are required", {variant: "warning"});
+            enqueueSnackbar("Exam Tags are required", {variant: "warning"});
             return;
         }
         setLoading(true);
@@ -156,7 +156,8 @@ export default function ScheduledExamDialog({open, handleClose, examId, onChange
         <Dialog open={open} onClose={() => handleClose(2)} aria-labelledby="form-dialog-title" fullWidth>
             <DialogCustomTitle children={'Schedule exam'} onClose={() => handleClose(2)}/>
             <DialogContent>
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Tags
                 </Typography>
                 <ExamTagsAutoComplete className={classes.autoComplete} onSelect={addMoreTags}
@@ -180,10 +181,12 @@ export default function ScheduledExamDialog({open, handleClose, examId, onChange
                     </Box>
                 }
                 <Box m={0.8}/>
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Difficulty Level
                 </Typography>
-                <Box borderRadius={5} mb={1} p={2} bgcolor={'#EEF0F5'} width={165}
+                <Box data-aos="zoom-in"
+                     data-aos-duration="400" borderRadius={5} mb={1} p={2} bgcolor={'#EEF0F5'} width={165}
                      display={'flex'} onClick={handleMenuClick} className={classes.clickable}
                      justifyContent={'space-between'} alignItems={'center'}>
                     {difficulty === 0 ? "Select difficulty" : difficulty === 1 ? "Easy" : difficulty === 2 ? "Medium" : "Hard"}
@@ -199,10 +202,13 @@ export default function ScheduledExamDialog({open, handleClose, examId, onChange
                     <MenuItem className={classes.paddingX} onClick={() => handleMenuClose(2)}>Medium</MenuItem>
                     <MenuItem className={classes.paddingX} onClick={() => handleMenuClose(3)}>Hard</MenuItem>
                 </Menu>
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Exam Date & Time
                 </Typography>
                 <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     id="datetime-local"
                     type="datetime-local"
                     //format="MM/dd/yyyy"
@@ -224,7 +230,7 @@ export default function ScheduledExamDialog({open, handleClose, examId, onChange
                     color="primary"
                     variant="contained"
                 >
-                    {loading ? <CircularProgress size={24}/> : "Create Draft"}
+                    {loading ? <CircularProgress size={24}/> : "Schedule"}
                 </Button>
                 <Box m={2}/>
             </DialogContent>

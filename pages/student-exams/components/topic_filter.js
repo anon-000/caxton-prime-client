@@ -59,7 +59,8 @@ const TopicFilter = ({onClicked}) => {
 
 
     return (
-        <Box mx={8} mt={28}>
+        <Box data-aos="fade-left"
+             data-aos-duration="400" mx={8} mt={28}>
             <Box display={'flex'}>
                 <img src={Tag} alt={'tag'}/>
                 <Box m={0.8}/>

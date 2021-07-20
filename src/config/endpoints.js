@@ -25,5 +25,5 @@ export const uploadFile = (file) => {
     const formData = new FormData();
     formData.append('uri[]', file);
     formData.append('folderName', 'CaxtonPrime');
-    return uploadService.create(formData);
+    return uploadService.create(formData, {headers: {'Authorization': `Bearer ${localStorage.getItem('feathers-jwt')}`}});
 };

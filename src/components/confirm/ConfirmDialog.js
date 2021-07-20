@@ -40,7 +40,9 @@ const ConfirmDialog = ({
                     </Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText style={{color: '#124954'}}>{confirmation}</DialogContentText>
+                    <DialogContentText ata-aos="fade-right"
+                                       data-aos-duration="400"
+                                       style={{color: '#124954'}}>{confirmation}</DialogContentText>
                     <Typography>{content && <DialogContentText>{content}</DialogContentText>}</Typography>
                 </DialogContent>
                 <DialogActions>

@@ -84,15 +84,17 @@ const StudentDashboard = () => {
 
     return (
         <Container>
-            <Grid container justify={"center"} spacing={6}
+            <Grid style={{overflow: 'hidden'}}  container justify={"center"} spacing={6}
                   alignItems={"flex-start"}>
                 <Grid item sm={12} xs={12} md={7}>
                     <Box m={6}/>
-                    <Typography variant="h2">
+                    <Typography data-aos="fade-down"
+                                data-aos-duration="800" variant="h2">
                         Hey {user["name"]},
                     </Typography>
                     <Box m={1}/>
-                    <Typography variant="h2">
+                    <Typography data-aos="fade-right"
+                                data-aos-duration="800" variant="h2">
                         Welcome to Caxton Prime 🤙
                     </Typography>
                     <Box m={3.5}/>
@@ -100,7 +102,9 @@ const StudentDashboard = () => {
                         {
                             data.map((e) => {
                                 return (
-                                    <Grid item md={6} xs={3} sm={3}>
+                                    <Grid data-aos="zoom-in"
+                                          data-aos-duration="400"
+                                          data-aos-delay="300" item md={6} xs={3} sm={3}>
                                         <InfoBox title={e.title} count={e.count}/>
                                     </Grid>
                                 )
@@ -110,9 +114,12 @@ const StudentDashboard = () => {
                     {/*<Box m={3}/>*/}
                     {/*<QuoteBox/>*/}
                     <Box m={6}/>
-                    <img src={wave} alt={'explore'} width={'100%'}/>
+                    <img data-aos="fade-up"
+                         data-aos-duration="400" src={wave} alt={'explore'} width={'100%'}/>
                 </Grid>
-                <Box component={Grid} className={classes.root} item sm={12} xs={12} md={5}>
+                <Box data-aos="zoom-in"
+                     data-aos-duration="400"
+                     component={Grid} className={classes.root} item sm={12} xs={12} md={5}>
                     <img src={vector} alt={'explore'} width={'100%'}/>
                 </Box>
             </Grid>
