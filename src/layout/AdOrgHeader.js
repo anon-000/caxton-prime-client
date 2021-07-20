@@ -95,6 +95,8 @@ function AdOrgHeader(props) {
             setCurrent('Practice sets');
         } else if (Router.route === '/admin-results') {
             setCurrent('Results');
+        } else if (Router.route === '/admin-query') {
+            setCurrent('User Queries');
         } else {
             setCurrent('');
         }

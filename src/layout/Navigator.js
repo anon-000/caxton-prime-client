@@ -131,6 +131,12 @@ function Navigator(props) {
             href: "/admin-requests",
         },
         {
+            id: "Queries",
+            icon: <DnsRoundedIcon color={'#ffffff'}/>,
+            active: Router.pathname === "/admin-query",
+            href: "/admin-query",
+        },
+        {
             id: "Exam Tags",
             icon: <DnsRoundedIcon color={'#ffffff'}/>,
             active: Router.pathname === "/admin-tags",
