@@ -14,3 +14,16 @@ export const QueryService = app.service("query");
 
 
 export const submitQuery = (data) => QueryService.create(data);
+
+
+export const getAllQueries = ($skip, $limit, $search) => QueryService.find({
+    query: {
+        $skip,
+        $limit,
+        $sort: {createdAt: -1},
+        $or: [
+            {name: {$search}},
+        ]
+        // $search
+    }
+});
