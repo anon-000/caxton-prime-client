@@ -157,7 +157,8 @@ const AdminPracticeTable = ({moreCallBack, search, refresh}) => {
         }
 
         return (
-            <Box>
+            <Box data-aos="fade-up"
+                 data-aos-duration="400">
                 <Card table>
                     <CardBody>
                         <DraftTableComponent

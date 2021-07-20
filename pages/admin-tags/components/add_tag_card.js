@@ -110,7 +110,8 @@ const AddTagCard = ({onNewTag}) => {
     }
 
     return (
-        <Box borderRadius={10} className={classes.shadow}>
+        <Box data-aos="zoom-out"
+             data-aos-duration="400" borderRadius={10} className={classes.shadow}>
             <Box bgcolor={'#F03D5F'} color={'#ffffff'}
                  py={3} display={'flex'} justifyContent={'center'}
                  borderRadius={'20px 0px'}
@@ -118,7 +119,8 @@ const AddTagCard = ({onNewTag}) => {
                 Add Exam Tags
             </Box>
             <Box m={2}/>
-            <Typography className={classes.label}>
+            <Typography data-aos="fade-right"
+                        data-aos-duration="400" className={classes.label}>
                 Tag name
             </Typography>
             <TextField
