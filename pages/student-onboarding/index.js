@@ -90,7 +90,7 @@ const StudentOnBoarding = () => {
         editUser(user['_id'], {"userName": username, phone, avatar})
             .then((response) => {
                 userStore.set(() => ({response}), 'user');
-                Router.replace('/');
+                Router.replace('/student-dashboard');
             })
             .catch(error => {
                 enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
@@ -110,20 +110,28 @@ const StudentOnBoarding = () => {
         <Box className={classes.root}>
             <Container maxWidth={'lg'}>
                 <Grid container justify={'center'} alignItems={'center'} height={'80vh'}
+                      data-aos="zoom-out"
+                      data-aos-duration="400"
                       component={Box} boxShadow={3} borderRadius={6} bgcolor={'background.default'}>
                     <Hidden smDown>
-                        <Grid xs={12} sm={12} md={7} item container justify={'center'} alignItems={'center'}>
+                        <Grid data-aos-delay="300"
+                              data-aos="zoom-in" xs={12} sm={12} md={7} item container justify={'center'}
+                              alignItems={'center'}>
                             <img src={Vector} alt={'login'} width={'60%'}/>
                         </Grid>
                     </Hidden>
                     <Grid xs={12} sm={12} md={5} item container justify={'center'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} width={'100%'} p={4}
                              alignItems={'flex-start'} height={'100%'}>
-                            <Typography variant={'h3'}>
+                            <Typography data-aos="fade-right"
+                                        data-aos-duration="400"
+                                        data-aos-delay="300" variant={'h3'}>
                                 Basic Details
                             </Typography>
                             <Box m={2}/>
-                            <Box display={'flex'} flexDirection={'column'} alignItems={'center'}
+                            <Box data-aos="zoom-in"
+                                 data-aos-duration="400"
+                                 data-aos-delay="300" display={'flex'} flexDirection={'column'} alignItems={'center'}
                                  justifyContent={'center'} width={1}>
                                 <SelectAvatar avatar={avatar} onClick={() => setOpenDialog(true)}/>
                                 <Box m={0.6}/>
@@ -133,6 +141,9 @@ const StudentOnBoarding = () => {
                             </Box>
                             <Box m={1.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={username}
                                 onChange={event => setUserName(event.target.value)}
@@ -141,6 +152,9 @@ const StudentOnBoarding = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={phone}
                                 onChange={event => setPhone(event.target.value)}

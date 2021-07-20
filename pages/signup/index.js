@@ -141,19 +141,32 @@ const SignUp = () => {
 
         <Box className={classes.root}>
             <Container maxWidth={'lg'}>
-                <Grid container justify={'center'} alignItems={'center'} height={'80vh'}
+                <Grid data-aos="zoom-out"
+                      data-aos-duration="400"
+                      container justify={'center'}
+                      alignItems={'center'}
+                      height={'80vh'}
                       component={Box} boxShadow={3} borderRadius={6} bgcolor={'background.default'}>
                     <Hidden smDown>
-                        <Grid xs={12} sm={12} md={7} item container justify={'center'} alignItems={'center'}>
+                        <Grid
+                            xs={12} sm={12} md={7}
+                            item container justify={'center'} alignItems={'center'}
+                            data-aos="fade-right"
+                            data-aos-delay="300"
+                        >
                             <img src={Vector} alt={'login'} width={'80%'}/>
                         </Grid>
                     </Hidden>
                     <Grid xs={12} sm={12} md={5} item container justify={'center'} alignItems={'center'}>
                         <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} width={'100%'} p={4}
                              alignItems={'center'} height={'100%'}>
-                            <img src={textLogo} alt={'login'}/>
+                            <img data-aos="fade-down"
+                                 data-aos-delay="300" src={textLogo} alt={'login'}/>
                             <Box m={2}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={name}
                                 onChange={event => setName(event.target.value)}
@@ -162,6 +175,9 @@ const SignUp = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={email}
                                 onChange={event => setEmail(event.target.value)}
@@ -170,6 +186,9 @@ const SignUp = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 style={{backgroundColor: '#EEF0F5', height: 55, borderRadius: 6}}
                                 fullWidth
                                 value={password}
@@ -194,7 +213,8 @@ const SignUp = () => {
                             <Box m={1}/>
                             <RoleSelection type={role} onChanged={setRole}/>
                             <Box m={1.5}/>
-                            <Button fullWidth disabled={loading} onClick={() => handleLogin()} color="primary"
+                            <Button fullWidth disabled={loading} onClick={() => handleLogin()}
+                                    color="primary"
                                     variant="contained">
                                 {loading ? <CircularProgress
                                     size={24}

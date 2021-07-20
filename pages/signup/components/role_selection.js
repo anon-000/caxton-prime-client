@@ -29,11 +29,12 @@ const RoleCard = ({name, isActive, onClick}) => {
     const classes = useStyles();
 
     return (
-        <Box borderRadius={6} border={isActive ? 1.5 : 1} py={1} width={1}
-             className={isActive ? classes.withoutHover : classes.withHover}
-             bgcolor={isActive ? '#FBCBD7' : '#ffffff'} fontWeight={isActive ? '600' : '500'}
-             color={isActive ? '#F03D5F' : '#6A6A6A'} display={'flex'} alignItems={'center'} justifyContent={'center'}
-             onClick={onClick} borderColor={isActive ? '#F03D5F' : '#6A6A6A'}>
+        <Box
+            borderRadius={6} border={isActive ? 1.5 : 1} py={1} width={1}
+            className={isActive ? classes.withoutHover : classes.withHover}
+            bgcolor={isActive ? '#FBCBD7' : '#ffffff'} fontWeight={isActive ? '600' : '500'}
+            color={isActive ? '#F03D5F' : '#6A6A6A'} display={'flex'} alignItems={'center'} justifyContent={'center'}
+            onClick={onClick} borderColor={isActive ? '#F03D5F' : '#6A6A6A'}>
             {name}
         </Box>
     )

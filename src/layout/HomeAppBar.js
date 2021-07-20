@@ -152,7 +152,7 @@ const HomeAppbar = () => {
                                     style={{textDecoration: 'none', color: '#F03D5F'}}>
                             {'About Us'}
                         </Typography>
-                        <Typography component={Link} href={'/contact'} as={'/contact'}
+                        <Typography component={Link} href={'#contact_us'} as={'#contact_us'}
                                     style={{textDecoration: 'none', color: '#F03D5F'}}>
                             {'Contact'}
                         </Typography>

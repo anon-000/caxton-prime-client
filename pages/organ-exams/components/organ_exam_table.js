@@ -206,7 +206,8 @@ const OrganExamTable = ({moreCallBack, search, refresh, result = false}) => {
         };
 
         return (
-            <Box>
+            <Box data-aos="zoom-in"
+                 data-aos-duration="400">
                 <Card table>
                     {
                         result ? <Box/> : <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue}

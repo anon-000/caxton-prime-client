@@ -30,11 +30,13 @@ const DialogCustomTitle = withStyles((theme) => ({
 }))((props) => {
     const {children, classes, onClose} = props;
     return (
-        <MuiDialogTitle className={classes.dialogTitleRoot} disableTypography>
-            <div className={classes.dialogTitleContainer}>
-                <Typography>{children}</Typography>
+        <MuiDialogTitle  className={classes.dialogTitleRoot} disableTypography>
+            <div  className={classes.dialogTitleContainer}>
+                <Typography data-aos="fade-down"
+                            data-aos-duration="400">{children}</Typography>
                 {onClose ? (
-                    <IconButton className={classes.closeButton} onClick={onClose}>
+                    <IconButton data-aos="fade-down"
+                                data-aos-duration="400" className={classes.closeButton} onClick={onClose}>
                         <CloseIcon fontSize="default"/>
                     </IconButton>
                 ) : null}

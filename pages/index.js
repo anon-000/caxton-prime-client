@@ -8,6 +8,7 @@ import Image1 from '../public/Group 546.svg';
 import particleConfig from '../src/config/particlesjs-config.json';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Particles from 'react-particles-js';
+import ContactUs from "../src/components/landing_comp/contact_us";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -94,6 +95,11 @@ const LandingTest = () => {
                 width={'100%'}
             >
                 <AboutUs/>
+            </Box>
+            <Box my={10}/>
+            <Box px={{xs: 2, sm: 2, md: 7}}
+                 width={'100%'}>
+                <ContactUs/>
             </Box>
             <Box my={3}/>
             <Footer/>

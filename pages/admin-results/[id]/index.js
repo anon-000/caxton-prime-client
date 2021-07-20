@@ -47,11 +47,14 @@ const ExamResults = () => {
     return (
         <Container>
             <Box m={6}/>
-            <Typography variant="h3">
+            <Typography data-aos="fade-right"
+                        data-aos-duration="400" variant="h3">
                 Search for Student Results
             </Typography>
             <Box m={2}/>
             <TextField
+                data-aos="fade-left"
+                data-aos-duration="400"
                 fullWidth
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}

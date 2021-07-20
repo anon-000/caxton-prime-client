@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function CreateDraftDialog({open,handleClose }) {
+export default function CreateDraftDialog({open, handleClose}) {
 
     const classes = useStyles();
     const [name, setName] = useState('');
@@ -104,22 +104,28 @@ export default function CreateDraftDialog({open,handleClose }) {
 
     return (
         <Dialog open={open} onClose={() => handleClose(1)} aria-labelledby="form-dialog-title" fullWidth>
-            <DialogCustomTitle children={'Create Draft'} onClose={() => handleClose(1) }/>
+            <DialogCustomTitle children={'Create Draft'} onClose={() => handleClose(1)}/>
             <DialogContent>
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Name
                 </Typography>
                 <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     fullWidth
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     variant="outlined"
                     placeholder={"Enter name of the exam"}
                 />
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Description
                 </Typography>
                 <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     fullWidth
                     value={desc}
                     onChange={(event) => setDesc(event.target.value)}
@@ -127,10 +133,13 @@ export default function CreateDraftDialog({open,handleClose }) {
                     rowsMax={2}
                     placeholder={"Enter description of the exam"}
                 />
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Duration
                 </Typography>
                 <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     fullWidth
                     type={'number'}
                     value={duration}
@@ -138,7 +147,8 @@ export default function CreateDraftDialog({open,handleClose }) {
                     variant="outlined"
                     placeholder={"Enter duration of the exam"}
                 />
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Guidelines
                 </Typography>
                 {
@@ -154,6 +164,8 @@ export default function CreateDraftDialog({open,handleClose }) {
                     </Box>)
                 }
                 <TextField
+                    data-aos="zoom-in"
+                    data-aos-duration="400"
                     fullWidth
                     value={guideLine}
                     onChange={(event) => setGuideLine(event.target.value)}

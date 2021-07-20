@@ -104,9 +104,11 @@ const DraftDetails = () => {
                             <Box display={'flex'} justifyContent={'center'} alignItems={'center'} height={'100vh'}>
                                 <CircularProgress size={64}/>
                             </Box> : <Box px={3} className={classes.leftPanel}>
-                                <Typography variant="h1">{examData.title}</Typography>
+                                <Typography data-aos="fade-down"
+                                            data-aos-duration="400" variant="h1">{examData.title}</Typography>
                                 <Box m={1}/>
-                                <Box display={"flex"} flexWrap={'wrap'}>
+                                <Box data-aos="fade-left"
+                                     data-aos-duration="400" display={"flex"} flexWrap={'wrap'}>
                                     {examData.examTags.map((e, i) => (
                                         <Box
                                             fontSize={12}
@@ -125,7 +127,8 @@ const DraftDetails = () => {
                                     ))}
                                 </Box>
                                 <Box m={1.5}/>
-                                <Typography variant="body2">
+                                <Typography data-aos="fade-right"
+                                            data-aos-duration="400" variant="body2">
                                     {examData.description}
                                 </Typography>
                                 <Box m={2}/>
@@ -133,6 +136,8 @@ const DraftDetails = () => {
                                     <AddQuestionCard onNewQuestion={onNewQuestionAdd} examId={id}/>
                                 </Hidden>
                                 <Box
+                                    data-aos="fade-right"
+                                    data-aos-duration="400"
                                     component={Typography}
                                     variant="subtitle2"
                                     borderBottom={2}
@@ -157,7 +162,7 @@ const DraftDetails = () => {
                 </Grid>
                 <Box component={Grid} width={'100%'} height={'100%'} citem xs={12} sm={12} md={5}>
                     <Hidden smDown>
-                        <Box position={'fixed'} top={2} right={15}  overflow="auto">
+                        <Box position={'fixed'} top={2} right={15} overflow="auto">
                             <AddQuestionCard onNewQuestion={onNewQuestionAdd} examId={id}/>
                         </Box>
                     </Hidden>
@@ -167,5 +172,5 @@ const DraftDetails = () => {
     )
 }
 
-DraftDetails.Layout=null
+DraftDetails.Layout = null
 export default DraftDetails

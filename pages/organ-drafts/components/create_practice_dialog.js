@@ -144,7 +144,8 @@ export default function PracticeSetDialog({open, handleClose, examId, onChanged}
         <Dialog open={open} onClose={() => handleClose(3)} aria-labelledby="form-dialog-title" fullWidth>
             <DialogCustomTitle children={'Practice Set'} onClose={() => handleClose(3)}/>
             <DialogContent>
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Tags
                 </Typography>
                 <ExamTagsAutoComplete className={classes.autoComplete} onSelect={addMoreTags}
@@ -168,10 +169,12 @@ export default function PracticeSetDialog({open, handleClose, examId, onChanged}
                     </Box>
                 }
                 <Box my={0.4}/>
-                <Typography className={classes.label}>
+                <Typography data-aos="fade-right"
+                            data-aos-duration="400" className={classes.label}>
                     Difficulty Level
                 </Typography>
-                <Box borderRadius={5} mb={1} p={2} bgcolor={'#EEF0F5'} width={165}
+                <Box data-aos="zoom-in"
+                     data-aos-duration="400" borderRadius={5} mb={1} p={2} bgcolor={'#EEF0F5'} width={165}
                      display={'flex'} onClick={handleMenuClick} className={classes.clickable}
                      justifyContent={'space-between'} alignItems={'center'}>
                     {difficulty === 0 ? "Select difficulty" : difficulty === 1 ? "Easy" : difficulty === 2 ? "Medium" : "Hard"}

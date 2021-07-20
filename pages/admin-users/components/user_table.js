@@ -38,6 +38,12 @@ const columns = [
         align: 'left',
     },
     {
+        id: 'roleString',
+        label: 'Role',
+        minWidth: 170,
+        align: 'center',
+    },
+    {
         id: 'more',
         label: 'Actions',
         minWidth: 170,
@@ -79,6 +85,7 @@ const AdminUsersTable = ({moreCallBack, search}) => {
                             return {
                                 code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                                 ...each,
+                                roleString: each.role === 1 ? 'Student' : 'Organisation'
                             };
                         });
                         setRows(_allReq);
@@ -129,6 +136,7 @@ const AdminUsersTable = ({moreCallBack, search}) => {
                         return {
                             code: each._id.slice(each._id.length - 6, each._id.length).toUpperCase(),
                             ...each,
+                            roleString: each.role === 1 ? 'Student' : 'Organisation'
                         };
                     });
                     setRequests(_allRequests);

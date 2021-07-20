@@ -18,7 +18,7 @@ import DraftTableComponent from "../../organ-drafts/components/draft_table_compo
 const columns = [
     {
         id: 'code',
-        label: 'Exam Id',
+        label: 'Tag Id',
         minWidth: 170,
         align: 'center',
     },

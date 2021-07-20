@@ -148,6 +148,8 @@ const Login = () => {
                     boxShadow={3}
                     borderRadius={6}
                     bgcolor={"background.default"}
+                    data-aos="zoom-out"
+                    data-aos-duration="400"
                 >
                     <Hidden smDown>
                         <Grid
@@ -158,6 +160,8 @@ const Login = () => {
                             container
                             justify={"center"}
                             alignItems={"center"}
+                            data-aos="fade-right"
+                            data-aos-delay="300"
                         >
                             <img src={Vector} alt={"login"}/>
                         </Grid>
@@ -180,11 +184,14 @@ const Login = () => {
                             alignItems={"center"}
                             height={"100%"}
                         >
-                            <img src={logo} alt={"login"}/>
+                            <img data-aos="zoom-in" data-aos-delay="300" src={logo} alt={"login"}/>
                             <Box m={1}/>
-                            <img src={textLogo} alt={"login"}/>
+                            <img data-aos="zoom-in" data-aos-delay="300" src={textLogo} alt={"login"}/>
                             <Box m={2}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 fullWidth
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
@@ -193,6 +200,9 @@ const Login = () => {
                             />
                             <Box m={0.6}/>
                             <TextField
+                                data-aos="zoom-in"
+                                data-aos-duration="400"
+                                data-aos-delay="300"
                                 style={{
                                     backgroundColor: "#EEF0F5",
                                     height: 55,
