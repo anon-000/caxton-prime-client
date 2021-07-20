@@ -207,7 +207,8 @@ const AdminExamTable = ({moreCallBack, search, refresh, result = false}) => {
         };
 
         return (
-            <Box>
+            <Box data-aos="fade-up"
+                 data-aos-duration="400">
                 <Card table>
                     {
                         result ? <Box/> : <AntTabs aria-label="disabled tabs example" onChange={handleChangeDialogValue}
