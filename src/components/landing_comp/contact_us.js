@@ -12,6 +12,7 @@ import Image1 from '../../../src/asset/contact.svg';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useSnackbar} from "notistack";
 import Button from "@material-ui/core/Button";
+import {submitQuery} from "../../apis/query";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,8 +66,44 @@ const ContactUs = () => {
     const [email, setEmail] = useState('');
     const [msg, setMsg] = useState('');
 
-
+    const validateEmail = (email) => {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
     const handleSubmit = () => {
+        if (name === '') {
+            enqueueSnackbar('Name is required', {variant: 'warning'});
+            return;
+        } else if (phone === '') {
+            enqueueSnackbar('Phone number is required', {variant: 'warning'});
+            return;
+        } else if (email === '') {
+            enqueueSnackbar('Email is required', {variant: 'warning'});
+            return;
+        } else if (!validateEmail(email)) {
+            enqueueSnackbar('Email is invalid', {variant: 'warning'});
+            return;
+        } else if (msg === '') {
+            enqueueSnackbar('Query is required', {variant: 'warning'});
+            return;
+        }
+        setLoading(true);
+        submitQuery({
+            name,
+            email,
+            phone,
+            msg,
+        }).then((res) => {
+            enqueueSnackbar('Query submitted successfully', {variant: 'success'});
+            setName('');
+            setPhone('');
+            setEmail('');
+            setMsg('');
+        }).catch((error) => {
+            enqueueSnackbar(error.message && error.message ? error.message : 'Something went wrong!', {variant: 'warning'});
+        }).finally(() => {
+            setLoading(false);
+        })
     }
 
 
@@ -81,16 +118,17 @@ const ContactUs = () => {
                 </Grid>
 
                 <Grid container justify={'center'} alignItems={'center'} item xs={12} sm={4} md={7}>
-                    <img  data-aos="zoom-in" data-aos-delay="200" data-aos-duration="800" src={Image1} width={'80%'}
+                    <img data-aos="zoom-in" data-aos-delay="200" data-aos-duration="800" src={Image1} width={'80%'}
                          alt={''}/>
                 </Grid>
                 <Grid data-aos="fade-left" data-aos-delay="200" data-aos-duration="800" container justify={'flex-start'}
                       alignItems={'center'} item xs={12} sm={8} md={5}>
                     <Box className={classes.shadow}>
-                        <Box m={4} />
+                        <Box m={4}/>
                         <Box className={classes.paddingX} color={'#757575'}>
                             <Typography>
-                                For further queries, feel free to call us at 6371824546 or mail us at info@caxtonprime.com.
+                                For further queries, feel free to call us at 6371824546 or mail us at
+                                info@caxtonprime.com.
                             </Typography>
                         </Box>
                         <TextField
@@ -115,6 +153,11 @@ const ContactUs = () => {
                             variant="outlined"
                             placeholder={"Your contact number"}
                             className={classes.paddingX}
+                            type={'number'}
+                            onInput={(e) => {
+                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10)
+                            }}
+                            min={0}
                         />
                         <TextField
                             data-aos="zoom-in"
